@@ -46,7 +46,6 @@ class input_data:
             cv.imwrite(eimage_name, combined)
             break
 
-    # TODO
     def get_disease_area_information_from_rgb(self, images_nps):
         """get_disease_area_information_from_rgb
             using k-means which k is 2 to extract disease area from whole image
@@ -90,9 +89,11 @@ class input_data:
             output:
                 no
         """
+        plt.figure()
+        plt.plot(image_np)
+        plt.show()
+        plt.close()
 
-
-    # TODO
     def generate_save_disease_area_information_as_images(self, images_nps, save_directory):
         """generate_save_disease_area_information_as_images
             using cv to generate binary picture and concatenate corresponding
@@ -104,7 +105,7 @@ class input_data:
             plt.subplot(1, 2, 1)
             plt.imshow(image_np)
             plt.subplot(1, 2, 2)
-            plt.imshow(images_processed_as_one_and_zero_batch[i], 'Greys')
+            plt.imshow(images_processed_as_one_and_zero_batch[idx], 'Greys')
             plt.savefig(save_directory)
             plt.close()
 
