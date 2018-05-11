@@ -55,12 +55,30 @@ class input_data:
             inputs:
                 images_nps: a list containing many images in numpy with rgb mode
                         [images_np, ...]
-                        images_np.shape = (3,row, col)
+                        images_np.shape = (3, row, col)
             outputs:
-                a list with same size as images_nps
+                a list with same numbers as images_nps
                 [(images_processed_as_one_and_zero, disease_area_nums, pixels_num),
                 ...]
         """
+        output_list = []
+        from sklearn.cluster import KMeans
+        for images_np in images_nps:
+            kmeans = KMeans(n_clusters=2, random_state=0)
+            images_np_trans = np.transpose(images_np, (1, 2, 0))
+            images_np_vector = np.reshape(images_np_trans, (-1, 3))
+            kmeans.fit(images_np_vector)
+            images_processed_as_one_and_zero = np.reshape(kmeans.predict(images_nps_trans), images_nps_trans.shape)
+            disease_area_nums = np.sum(images_processed_as_one_and_zero.flatten())
+            pixels_num = images_np_trans.shape[0] * images_np_trans.shape[1]
+            # Assuming that valid area is less than 50% of image
+            # Numbers of valid area are all ones, and others are zones.
+            if disease_area_nums >= 0.5 * pixels_num:
+                images_processed_as_one_and_zero = np.ones(images_processed_as_one_and_zero.shape, dtype=int) - images_processed_as_one_and_zero
+                disease_area_nums = pixels_num - disease_area_nums
+            triple_list = [images_processed_as_one_and_zero, disease_area_nums, pixels_num]
+            output_list.append(triple_list)
+        return output_list
 
     # TODO
     def __visual_diease_area_one_image__(self, image_np):
@@ -73,13 +91,22 @@ class input_data:
                 no
         """
 
+
     # TODO
     def generate_save_disease_area_information_as_images(self, images_nps, save_directory):
         """generate_save_disease_area_information_as_images
             using cv to generate binary picture and concatenate corresponding
-            images in vertical way and save them under save_directory
+            images in horizontal way and save them under save_directory
         """
-
+        images_processed_as_one_and_zero_batch = get_disease_area_information_from_rgb(images_nps)[0]
+        for idx, image_np in enumerate(images_np):
+            plt.figure()
+            plt.subplot(1, 2, 1)
+            plt.imshow(image_np)
+            plt.subplot(1, 2, 2)
+            plt.imshow(images_processed_as_one_and_zero_batch[i], 'Greys')
+            plt.savefig(save_directory)
+            plt.close()
 
     def load_image_with_all(self, directory, images_path, gray=True):
         # add prefix path
