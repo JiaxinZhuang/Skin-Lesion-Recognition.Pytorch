@@ -44,9 +44,7 @@ class input_data:
             assert processed_img.shape[1] == eimage_np.shape[1]
             print(eimage_name)
             cv.imwrite(eimage_name, combined)
-            break
 
-    # TODO
     def get_disease_area_information_from_rgb(self, images_nps):
         """get_disease_area_information_from_rgb
             using k-means which k is 2 to extract disease area from whole image
@@ -55,7 +53,7 @@ class input_data:
             inputs:
                 images_nps: a list containing many images in numpy with rgb mode
                         [images_np, ...]
-                        images_np.shape = (3, row, col)
+                        images_np.shape = (row, col, 3)
             outputs:
                 a list with same numbers as images_nps
                 [(images_processed_as_one_and_zero, disease_area_nums, pixels_num),
@@ -65,18 +63,20 @@ class input_data:
         from sklearn.cluster import KMeans
         for images_np in images_nps:
             kmeans = KMeans(n_clusters=2, random_state=0)
-            images_np_trans = np.transpose(images_np, (1, 2, 0))
-            images_np_vector = np.reshape(images_np_trans, (-1, 3))
+            images_np_vector = np.reshape(images_np, (-1, 3))
             kmeans.fit(images_np_vector)
-            images_processed_as_one_and_zero = np.reshape(kmeans.predict(images_nps_trans), images_nps_trans.shape)
+            images_processed_as_one_and_zero = np.reshape(kmeans.labels_,
+                    (images_np.shape[:2]))
+            print(images_processed_as_one_and_zero.shape)
             disease_area_nums = np.sum(images_processed_as_one_and_zero.flatten())
-            pixels_num = images_np_trans.shape[0] * images_np_trans.shape[1]
+            pixels_num = images_np.shape[0] * images_np.shape[1]
             # Assuming that valid area is less than 50% of image
             # Numbers of valid area are all ones, and others are zones.
-            if disease_area_nums >= 0.5 * pixels_num:
+            threshold = 0.5
+            if disease_area_nums >= threshold * pixels_num:
                 images_processed_as_one_and_zero = np.ones(images_processed_as_one_and_zero.shape, dtype=int) - images_processed_as_one_and_zero
                 disease_area_nums = pixels_num - disease_area_nums
-            triple_list = [images_processed_as_one_and_zero, disease_area_nums, pixels_num]
+            triple_list = (images_processed_as_one_and_zero, disease_area_nums, pixels_num)
             output_list.append(triple_list)
         return output_list
 
@@ -120,7 +120,6 @@ class input_data:
             else:
                 img = cv.imread(filepath)
             output.append(img)
-            break
         return output
 
     def get_images_path_from_directory(self, directory):
@@ -145,5 +144,6 @@ class input_data:
 if __name__=='__main__':
     data = input_data()
     images_list = data.get_images_path_from_directory(data.ISIC2018_Task3_Training_Input_path)
-    imgs = data.load_image_with_all(data.ISIC2018_Task3_Training_Input_path, images_list)
-    data.process_images_with_threshold_from_gray(imgs, images_list)
+    imgs = data.load_image_with_all(data.ISIC2018_Task3_Training_Input_path, images_list, gray=False)
+    #data.process_images_with_threshold_from_gray(imgs, images_list)
+    data.get_disease_area_information_from_rgb(imgs)

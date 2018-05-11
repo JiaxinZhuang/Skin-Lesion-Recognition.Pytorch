@@ -3,3 +3,5 @@ opencv-python
 matplotlib
 pandas
 numpy
+sklearn
+scipy
