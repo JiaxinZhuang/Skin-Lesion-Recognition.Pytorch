@@ -1,2 +1,3 @@
 data/*
 src/.hsftp
+src/__pycache__/*

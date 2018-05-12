@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DATA_URL	data_utils.py	/^DATA_URL='..\/data'$/;"	v
+FLAGS	data_utils.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+KMeans	data_utils.py	/^        from sklearn.cluster import KMeans$/;"	i
+__init__	data_utils.py	/^    def __init__(self):$/;"	m	class:input_data
+__init__	process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
+__init__	timer.py	/^    def __init__(self):$/;"	m	class:timer
+__visual_diease_area_one_image__	data_utils.py	/^    def __visual_diease_area_one_image__(self, image_np):$/;"	m	class:input_data	file:
+batch_size	data_utils.py	/^    batch_size = 128$/;"	v	class:input_data
+count	data_utils.py	/^    count = 0$/;"	v	class:input_data
+cv	data_utils.py	/^import cv2 as cv$/;"	i
+data	data_utils.py	/^    data = input_data()$/;"	v	class:input_data
+datetime	timer.py	/^from datetime import datetime$/;"	i
+disease_areas	data_utils.py	/^    disease_areas = []$/;"	v	class:input_data
+generate_and_save_pickle	data_utils.py	/^    def generate_and_save_pickle(self, train_data_path):$/;"	m	class:input_data
+get_disease_area_information_from_rgb_by_batch	data_utils.py	/^    def get_disease_area_information_from_rgb_by_batch(self, images_nps, batch_size):$/;"	m	class:input_data
+get_duration	timer.py	/^    def get_duration(self):$/;"	m	class:timer
+get_ground_truth	data_utils.py	/^    def get_ground_truth(self, filename):$/;"	m	class:input_data
+get_images_path_from_directory	data_utils.py	/^    def get_images_path_from_directory(self, directory):$/;"	m	class:input_data
+get_np_from_csv	data_utils.py	/^    def get_np_from_csv(self, filename, header=0):$/;"	m	class:input_data
+ground_truth	data_utils.py	/^    ground_truth = data.get_ground_truth(data.ISIC2018_Task3_Training_GroundTruth_path)$/;"	v	class:input_data
+images_area	data_utils.py	/^    images_area = []$/;"	v	class:input_data
+input_data	data_utils.py	/^class input_data:$/;"	c
+load_image_from_directory	data_utils.py	/^    def load_image_from_directory(self, directory, images_path, gray=True):$/;"	m	class:input_data
+load_image_from_pickle	data_utils.py	/^    def load_image_from_pickle(self, filename):$/;"	m	class:input_data
+logging	data_utils.py	/^import logging$/;"	i
+math	process_bar.py	/^import math$/;"	i
+np	data_utils.py	/^import numpy as np$/;"	i
+os	data_utils.py	/^import os$/;"	i
+output	data_utils.py	/^    output = data.get_disease_area_information_from_rgb_by_batch(images_nps, batch_size)$/;"	v	class:input_data
+pd	data_utils.py	/^import pandas as pd$/;"	i
+pickle	data_utils.py	/^        import pickle$/;"	i
+plt	data_utils.py	/^from matplotlib import pyplot as plt$/;"	i
+process_bar	data_utils.py	/^import process_bar$/;"	i
+process_bar	process_bar.py	/^class process_bar():$/;"	c
+reset	process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
+save_disease_area_csv	data_utils.py	/^    def save_disease_area_csv(self, disease_areas, images_area, images_path,  ground_truth, filename):$/;"	m	class:input_data
+save_disease_area_information_as_images	data_utils.py	/^    def save_disease_area_information_as_images(self, pro_images_nps,images_nps, images_path, save_directory):$/;"	m	class:input_data
+save_pickle	data_utils.py	/^    def save_pickle(self, filename, data):$/;"	m	class:input_data
+set_maxstep	process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+show_process	process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
+sys	process_bar.py	/^import sys$/;"	i
+tf	data_utils.py	/^import tensorflow as tf$/;"	i
+time	timer.py	/^import time$/;"	i
+timedelta	timer.py	/^from datetime import timedelta$/;"	i
+timer	data_utils.py	/^import timer$/;"	i
+timer	timer.py	/^class timer():$/;"	c
+timer_	data_utils.py	/^    timer_ = timer.timer()$/;"	v	class:input_data
+unpickle	data_utils.py	/^    def unpickle(self, filename):$/;"	m	class:input_data
+x	data_utils.py	/^    x = next(output)$/;"	v	class:input_data
