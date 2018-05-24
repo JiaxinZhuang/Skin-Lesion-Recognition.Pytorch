@@ -26,3 +26,11 @@ data (You have to copy dataset into data directory)
 ├── ISIC2018_Task3_Training_GroundTruth
 └── ISIC2018_Task3_Training_Input
 ```
+
+## Using Jihan's method to process data
+```
+python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/ggw_p2s3
+python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/gw
+python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/sog6
+python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/wpr1
+```

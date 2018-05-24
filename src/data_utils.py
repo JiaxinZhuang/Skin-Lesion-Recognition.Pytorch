@@ -16,8 +16,6 @@ import process_bar
 
 FLAGS = tf.flags.FLAGS
 
-#tf.flags.DEFINE_string('data_skin_dir', '../data/ISIC-2017/ISIC2017_train',
-#                        """Directory put skin data""")
 tf.flags.DEFINE_integer('batch_size', 128,
                         """batch size for train and test""")
 tf.flags.DEFINE_integer('k_fold', 10,
@@ -30,11 +28,6 @@ tf.flags.DEFINE_string('ISIC2018_Task3_Training_Input', '../data/ISIC2018/ISIC20
 tf.flags.DEFINE_string('ISIC2018', '../data/ISIC2018',
                         """ISIC2018 Task3 path""")
 
-#width=32
-#height=32
-#train_total_size=50000
-#valid_total_size=10000
-#test_total_size=10000
 
 class ISIC2018_data():
     def __init__(self):

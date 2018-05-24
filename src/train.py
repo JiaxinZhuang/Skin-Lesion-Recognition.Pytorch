@@ -36,8 +36,9 @@ tf.flags.DEFINE_integer('feature_size', 64,
                         """feature size""")
 tf.flags.DEFINE_integer('start_k', -1,
                         """start k from""")
-tf.flags.DEFINE_integer('valid_frequency', 1,
+tf.flags.DEFINE_integer('valid_frequency', 9,
                         """valid_frequency valid at % valid_frequency, at least from 1!!Less than epoch""")
+
 # where to put log and parameters
 tf.flags.DEFINE_string('logdir', '../logs/',
                        """Directory where to write graph logs """)
