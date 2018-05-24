@@ -1,253 +1,385 @@
-"""data_utils
-    used to process and analyse ISIC-2018 data
-"""
+"""Codes for data process"""
 
-import pandas as pd
 import numpy as np
 import tensorflow as tf
-import cv2 as cv
-from matplotlib import pyplot as plt
-import logging
+import pickle
+#import random
 import os
-import process_bar
+import logging
+import pandas as pd
+from collections import defaultdict
+import cv2 as cv
+import math
+import time
 import timer
-
+import process_bar
 
 FLAGS = tf.flags.FLAGS
-tf.flags.DEFINE_string("ISIC2018_Task3_Training_GroundTruth",
-                       "ISIC2018_Task3_Training_GroundTruth/ISIC2018_Task3_Training_GroundTruth.csv",
-                       """Name of Task3_Training_GroundTruth csv file""")
-tf.flags.DEFINE_string("ISIC2018_Task3_Training_Input",
-                        "ISIC2018_Task3_Training_Input",
-                        """Name of ISIC2018_Task3_Training_Input directory""")
 
-logging.basicConfig(level=logging.INFO)
+#tf.flags.DEFINE_string('data_skin_dir', '../data/ISIC-2017/ISIC2017_train',
+#                        """Directory put skin data""")
+tf.flags.DEFINE_integer('batch_size', 128,
+                        """batch size for train and test""")
+tf.flags.DEFINE_integer('k_fold', 10,
+                        """k_cross validation""")
 
-DATA_URL='../data'
+tf.flags.DEFINE_string('ISIC2018_Task3_Training_GroundTruth', '../data/ISIC2018/ISIC2018_Task3_Training_GroundTruth/ISIC2018_Task3_Training_GroundTruth.csv',
+                        """ISIC2018 Task3 Training GroundTruth path""")
+tf.flags.DEFINE_string('ISIC2018_Task3_Training_Input', '../data/ISIC2018/ISIC2018_Task3_Training_Input',
+                        """ISIC2018 Task3 Training Input path""")
+tf.flags.DEFINE_string('ISIC2018', '../data/ISIC2018',
+                        """ISIC2018 Task3 path""")
 
-class input_data:
-    """input data including training input and ground truth
-    """
+#width=32
+#height=32
+#train_total_size=50000
+#valid_total_size=10000
+#test_total_size=10000
+
+class ISIC2018_data():
     def __init__(self):
-        self.ISIC2018_Task3_Training_Input_path = os.path.join(DATA_URL, FLAGS.ISIC2018_Task3_Training_Input)
-        self.ISIC2018_Task3_Training_GroundTruth_path = os.path.join(DATA_URL,
-                FLAGS.ISIC2018_Task3_Training_GroundTruth)
-        self.batch_size = 128
-        logging.info('ISIC2018_Task3_Training_Input %s' % self.ISIC2018_Task3_Training_Input_path)
-        logging.info('ISIC2018_Task3_Training_GroundTruth %s' % self.ISIC2018_Task3_Training_GroundTruth_path)
+        self.task3_training_groundtruth = FLAGS.ISIC2018_Task3_Training_GroundTruth
+        self.task3_training_input = FLAGS.ISIC2018_Task3_Training_Input
+        self.ISIC2018 = FLAGS.ISIC2018
+        self.k_fold = FLAGS.k_fold
+        tf.logging.info('ISIC2018_Task3_Training_GroundTruth %s' % self.task3_training_groundtruth)
+        tf.logging.info('ISIC2018_Task3_Training_Input %s' % self.task3_training_input)
+        self.task3_training_groundtruth_ = pd.read_csv(self.task3_training_groundtruth)
+        self.size = self.task3_training_groundtruth_.values.shape[0]
+        self.batch_size = FLAGS.batch_size
+        self.num_classes = 7
+        self.inputs_data = defaultdict(list)
+        self.labels_data = defaultdict(list)
+        self.labels_name_hard_encode = ['MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC']
+        self.rescale = True # 15
+        #self.nWid = 224
+        #self.nHei = 224
+        #self.nWid = 112
+        #self.nHei = 112
+        self.nWid = 40
+        self.nHei = 30
+        self._inputs()
 
-    #def process_images_with_threshold_from_gray(self, images_nps, images_path):
-
-    #    for eimage_name, eimage_np in zip(images_path, images_nps):
-    #        img_blur = cv.medianBlur(eimage_np,5)
-    #        processed_img = cv.adaptiveThreshold(img_blur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY,11,2)
-    #        combined = np.concatenate((processed_img, eimage_np), axis=0)
-    #        assert processed_img.shape[0] == eimage_np.shape[0]
-    #        assert processed_img.shape[1] == eimage_np.shape[1]
-    #        print(eimage_name)
-    #        cv.imwrite(eimage_name, combined)
-
-    def get_ground_truth(self, filename):
-        ground_truth = self.get_np_from_csv(filename)
-        return ground_truth
-
-    def get_disease_area_information_from_rgb_by_batch(self, images_nps, batch_size):
-        """get_disease_area_information_from_rgb
-            using k-means which k is 2 to extract disease area from whole image
-            here we get a triple information from each image
-
-            inputs:
-                images_nps: a list containing many images in numpy with rgb mode
-                        [images_np, ...]
-                        images_np.shape = (row, col, 3)
-                batch_size
-            outputs:
-                a list with same numbers as images_nps
-                [(images_processed_as_one_and_zero, disease_area_nums, pixels_num),
-                ...]
-        """
-        output_list = []
-        logging.info('get disease area information from rgb')
-        process_bar_ = process_bar.process_bar(len(images_nps))
-        from sklearn.cluster import KMeans
-        count = 0
-        for images_np in images_nps:
-            count = count + 1
-            process_bar_.show_process()
-            kmeans = KMeans(n_clusters=2, random_state=0)
-            images_np_vector = np.reshape(images_np, (-1, 3))
-            kmeans.fit(images_np_vector)
-            images_processed_as_one_and_zero = np.reshape(kmeans.labels_,
-                    (images_np.shape[:2]))
-            disease_area_nums = np.sum(images_processed_as_one_and_zero.flatten())
-            pixels_num = images_np.shape[0] * images_np.shape[1]
-            # Assuming that valid area is less than 50% of image
-            # Numbers of valid area are all ones, and others are zones.
-            threshold = 0.5
-            if disease_area_nums >= threshold * pixels_num:
-                images_processed_as_one_and_zero = np.ones(images_processed_as_one_and_zero.shape, dtype=int) - images_processed_as_one_and_zero
-                disease_area_nums = pixels_num - disease_area_nums
-            triple_list = [images_processed_as_one_and_zero, disease_area_nums, pixels_num]
-            output_list.append(triple_list)
-            if count >= batch_size:
-                yield output_list
-                output_list = []
-                count = 0
-        if count > 0:
-            yield output_list
-        #return output_list
-
-    # TODO
-    def __visual_diease_area_one_image__(self, image_np):
-        """visual_diease_area_one_image
-            visual disease area, and show it to help debug
-
-            inputs:
-                image_np: a image numpy from get_disease_area_information_from_rgb
-            output:
-                no
-        """
-        plt.figure()
-        plt.plot(image_np)
-        plt.show()
-        plt.close()
-
-    def save_disease_area_information_as_images(self, pro_images_nps,images_nps, images_path, save_directory):
-        """generate_save_disease_area_information_as_images
-            using cv to generate binary picture and concatenate corresponding
-            images in horizontal way and save them under save_directory
-        """
-        logging.info('generate save disease area information as images')
-        process_bar_ = process_bar.process_bar(len(pro_images_nps))
-        for image_name, image_np, pro_image_np in zip(images_path, images_nps, pro_images_nps):
-            image_name = os.path.join(save_directory, image_name)
-            image_name = image_name.replace('.jpg', '.png')
-            image_np = cv.cvtColor(image_np, cv.COLOR_RGB2GRAY)
-            pro_image_np = pro_image_np * 255
-            #print(image_np)
-            #print(pro_image_np)
-            combined = np.concatenate((image_np, pro_image_np), axis=0)
-            #logging.info('save images_name %s' % image_name)
-            cv.imwrite(image_name, combined)
-            #cv.waitKey(0)
-            process_bar_.show_process()
-
-        #images_processed_as_one_and_zero_batch = get_disease_area_information_from_rgb(images_nps)[0]
-        #for idx, image_np in enumerate(images_np):
-        #    plt.figure()
-        #    plt.subplot(1, 2, 1)
-        #    plt.imshow(image_np)
-        #    plt.subplot(1, 2, 2)
-        #    plt.imshow(images_processed_as_one_and_zero_batch[idx], 'Greys')
-        #    plt.savefig(save_directory)
-        #    plt.close()
-
-    def load_image_from_pickle(self, filename):
-        if not os.path.exists(filename):
-            logging.info('No pickle file')
-            sys.exit(-1)
+    def get_groups(self, i):
+        if self.inputs_data[i] == [] or self.labels_data[i] == []:
+            with open(self.datas_path[i], 'rb') as fo:
+                data = pickle.load(fo)
+                inputs = data['inputs']
+                labels = data['labels']
+                self.inputs_data[i] = np.array(inputs)
+                self.labels_data[i] = np.array(labels)
         else:
-            logging.info('load_image_from_pickle')
-            data = self.unpickle(filename)
-            images_path = data['images_path']
-            images_nps = data['images_nps']
-            return images_path, images_nps
+            inputs = self.inputs_data[i]
+            labels = self.labels_data[i]
 
-    def load_image_from_directory(self, directory, images_path, gray=True):
-        # add prefix path
-        images_path_with_prefix = map(lambda x: os.path.join(directory, x), images_path)
-        images_path_with_prefix = list(images_path_with_prefix)
-        output = []
+        for x, y in zip(inputs, labels):
+            yield x, y
 
-        logging.info("loading image with all")
-        process_bar_ = process_bar.process_bar(len(images_path))
-        for filename, filepath in zip(images_path, images_path_with_prefix):
+
+    def _inputs(self):
+        data_dir = self.ISIC2018
+        #data_dir = os.path.join(data_dir, 'task3_%d_224_224' % self.batch_size)
+        #data_dir = os.path.join(data_dir, 'task3_%d_30_40' % self.batch_size)
+        output_filename = 'task3_{}_{}_{}'.format(self.batch_size, self.nHei, self.nWid)
+        tf.logging.info('data_dir %s' % data_dir)
+        data_dir = os.path.join(data_dir, output_filename)
+        self.datas_path = []
+        for i in range(self.k_fold):
+            self.datas_path.append(os.path.join(data_dir, 'task3_norm_%d' %i))
+        #train_xs = []
+        #train_ys = []
+        #validation_x = []
+        #validation_y = []
+        #if mode == train:
+        #    pass
+        #elif mode == 'validation':
+        #    pass
+
+        #train_batches = np.load(
+
+    def get_shape(self):
+        return (self.nHei,self.nWid,3)
+
+    def get_bsize(self):
+        return int(math.ceil(self.size/self.k_fold))
+
+    def output_amount_class(self):
+        filename = self.task3_training_groundtruth
+        self._amount_each_class_from_csv(filename)
+        for name in self.imagepath_each_class:
+            logging.info('%s : %d' % (name, len(self.imagepath_each_class[name])))
+
+    def generate_inputs_by_batch(self):
+        filenames = self.task3_training_groundtruth
+        self._amount_each_class_from_csv(filenames)
+        groups = self._divide_groups_xy()
+
+        prefix_directory = self.task3_training_input
+        index = 0
+        for filenames_np, labels in groups:
+            self._generate_batch_by_batch(prefix_directory, filenames_np, labels, index)
+            index += 1
+
+    def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):
+        np.random.seed(int(time.time()))
+        combine = [(f, l) for f, l in zip(filenames, labels)]
+        np.random.shuffle(combine)
+        filenames = list(map(lambda x: x[0], combine))
+        labels = list(map(lambda x: x[1], combine))
+        data = self._load_imgs_by_batch(prefix_directory, filenames)
+
+        groups = int(math.ceil(len(labels)/FLAGS.batch_size))
+        labels_ = []
+        lens = len(labels)
+        for i in range(groups):
+            f_ = i*FLAGS.batch_size
+            e_ = min((i+1)*FLAGS.batch_size, lens)
+            sub_g = labels[f_:e_]
+            labels_.append(sub_g)
+
+        process_bar_ = process_bar.process_bar(groups)
+            # 10015/64 -> 157
+        logging.info('%d has %d batches' % (index, groups))
+        batches = []
+        for batch_img in data:
+            batch = []
+            # Norm
+            for img in batch_img:
+                batch.append(((img-np.mean(img))/np.std(img)))
+            # Not Norm TODO
+            #batches.append(batch_img)
+            batches.append(batch)
             process_bar_.show_process()
-            if gray == True:
-                img = cv.imread(filepath, 0)
+        assert len(batches) == len(labels_)
+        pdata = {'inputs': batches, 'labels': labels_}
+        if self.rescale:
+            output_filename = 'task3_{}_{}_{}/task3_norm_{}'.format(FLAGS.batch_size, self.nHei, self.nWid,index)
+        else:
+            output_filename = 'task3_{}/task3_norm_{}'.format(FLAGS.batch_size,index)
+
+        with open(output_filename, 'wb') as fo:
+            pickle.dump(pdata, fo)
+
+        #np.save('task3_inputs_norm', batches)
+        #np.save('task3_labels', labels)
+
+    def _divide_groups_xy(self):
+        label_corresponding = np.zeros((self.num_classes, self.num_classes))
+        dia = np.arange(self.num_classes)
+        label_corresponding[dia, dia] = 1.0
+
+        xs_path = self.imagepath_each_class
+        lens = np.array([len(xs_path[name]) for name in self.labels_name_hard_encode])
+        glen = lens//self.k_fold
+        for i in range(self.k_fold):
+            xs_data = []
+            ys_data = []
+            for j, name in enumerate(self.labels_name_hard_encode):
+                f_ = i*glen[j]
+                if i != self.k_fold - 1:
+                    e_ = (i+1)*glen[j]
+                else:
+                    e_ = lens[j]
+                xs = xs_path[name][f_:e_]
+                ys = [label_corresponding[j]] * (e_-f_)
+                assert len(xs) == len(ys)
+                xs_data.extend(xs)
+                ys_data.extend(ys)
+            if i >= 0 and i < 9:
+                assert len(xs_data) == 998
             else:
-                img = cv.imread(filepath)
-            output.append(img)
-        return output
-
-    def unpickle(self, filename):
-        import pickle
-        with open(filename, 'rb') as fo:
-            data = pickle.load(fo)
-        return data
-
-    def save_pickle(self, filename, data):
-        import pickle
-        with open(filename, 'wb') as fo:
-            pickle.dump(data, fo)
-
-    def get_images_path_from_directory(self, directory):
-        logging.info('Start loading images from directory %s' % directory)
-        images_path = os.listdir(directory)
-        # get rid of unrelated file
-        images_path = filter(lambda x: x.split('.')[-1] == 'jpg', images_path)
-        images_path = list(images_path)
-
-        return images_path
-
-    def get_np_from_csv(self, filename, header=0):
-        """
-            filename
-            header: start from first line of the csvfile
-        """
-        csvfile = pd.read_csv(filename, header=header)
-        filename_np = csvfile.values
-        return filename_np
-
-    def save_disease_area_csv(self, disease_areas, images_area, images_path,  ground_truth, filename):
-        convert_vec = [0,1,2,3,4,5,6]
-        images_path = list(map(lambda x: x.split('.')[0], images_path))
-        ground_truth_ = []
-        for i in images_path:
-            raw_label_vec = list(filter(lambda x:x[0] == i, ground_truth))
-            assert len(raw_label_vec) == 1
-            label_vec = raw_label_vec[0][1:]
-            assert len(label_vec) == 7
-            label = np.dot(convert_vec, label_vec)
-            ground_truth_.append(label)
-        assert len(disease_areas) == len(images_area)
-        assert len(ground_truth_) == len(images_path)
-        data = {'images_path': images_path, 'disease_areas': disease_areas, 'images_area': images_area, 'disease_areas_ratio': np.array(disease_areas)/np.array(images_area), 'ground_truth': ground_truth_}
-        pd.DataFrame(data).to_csv(filename)
-
-    def generate_and_save_pickle(self, train_data_path):
-        logging.info('generate_and_save_pickle %s' % train_data_path)
-        images_path = self.get_images_path_from_directory(train_data_path)
-        images_nps = self.load_image_from_directory(images_path, images, gray=False)
-        dicts = {'images_path': images_nps, 'images_nps': images_nps}
-        self.save_pickle(train_data_path + '_pickle', dicts)
+                assert len(xs_data) == 1033
+            yield xs_data, ys_data
 
 
+    def _load_imgs_by_batch(self, prefix_directory, filenames):
+        nWid = self.nWid
+        nHei = self.nHei
+        groups = len(filenames)
+        for i in range(int(math.ceil(groups/self.batch_size))):
+            f_ = i*self.batch_size
+            e_ = min((i+1)*self.batch_size, groups)
+            data = []
+            for filename in filenames[f_:e_]:
+                filename = os.path.join(prefix_directory, filename)
+                filename = filename + '.jpg'
+                image_np = cv.imread(filename)
+                if self.rescale:
+                    # wierd!! shape return (nHei, nWid)
+                    # resize have the order, (nWid. nHei)
+                    image_np= cv.resize(image_np, (nWid, nHei))
+                    assert image_np.shape == (nHei, nWid, 3)
+                data.append(image_np)
+            yield data
+
+    def _amount_each_class_from_csv(self, filename):
+        imagepath_each_class = defaultdict(list)
+        data = self.task3_training_groundtruth_
+        data_np = data.values
+        data_column_names = data.columns.values[1:] # skip first columns
+        count = 0
+        for index, col_names in enumerate(data_column_names, start=1):
+            a_class = list(filter(lambda x: x[index] == 1.0, data_np))
+            image_names = list(map(lambda x: x[0], a_class))
+            imagepath_each_class[col_names].extend(image_names)
+            count += len(image_names)
+        self.imagepath_each_class = imagepath_each_class
+        assert count == 10015
+
+
+#def unpickle(filename):
+#    with open(filename, 'rb') as fo:
+#        dicts = pickle.load(fo, encoding='bytes')
+#    return dicts
+#
+#def inputs_skin_lesion(data_skin_dir=FLAGS.data_skin_dir):
+#    dicts = unpickle(data_skin_dir)
+#    data = dicts[b'data']
+#    labels = dicts[b'label']
+#
+#    images_total_size = data.shape[0]
+#    batch_size = FLAGS.batch_size
+#    logging.info('images_total_size %d' % images_total_size)
+#    logging.info('batch_size %d' % batch_size)
+#
+#    combinations = [(pdata, plabels) for pdata, plabels in zip(data, labels)]
+#    random.shuffle(combinations)
+#    combinations = combinations[0:images_total_size]
+#
+#    xs = []
+#    ys = []
+#    for x, y in combinations:
+#        xs.append(x)
+#        ys.append(y)
+#
+#    #xs_mean = np.mean(xs, axis=1)
+#    xs = np.array(xs, dtype=np.float32)
+#    result = []
+#    for x in xs:
+#        result.append((x-np.mean(x))/np.std(x))
+#    #xs_mean = np.reshape(xs_mean, (rows_xs, 1))
+#    #xs_std = np.std(xs, axis=1)
+#    #xs_std = np.reshape(xs_std, (rows_xs, 1))
+#    #xs = (xs-xs_mean)/xs_std
+#    xs = np.array(result, dtype=np.float32)
+#    #rows_xs = xs.shape[0]
+#    #xs_mean = np.mean(xs, axis=1)
+#    #xs_mean = np.reshape(xs_mean, (rows_xs, 1))
+#    #xs_std = np.std(xs, axis=1)
+#    #xs_std = np.reshape(xs_std, (rows_xs, 1))
+#    #xs = (xs-xs_mean)/xs_std
+#    ys = np.array(ys, dtype=np.uint8)
+#
+#    while True:
+#        for i in range(images_total_size//batch_size):
+#            batch_x = xs[i*batch_size:(i+1)*batch_size]
+#            batch_x = np.reshape(batch_x, [-1, width, height, 3])
+#            assert batch_x.shape[0] == batch_size
+#            batch_y = ys[i*batch_size:(i+1)*batch_size]
+#            #print(batch_y)
+#            #print(batch_y.shape)
+#            yield batch_x, batch_y
+#
+#
+#
+## mode
+##   Train data
+##   Test data
+##   Validation data
+#def inputs(mode='train'):
+#    batch_size = FLAGS.batch_size
+#    data_dir = FLAGS.data_dir
+#    if mode == 'train':
+#        filename_list = [os.path.join(data_dir, 'data_batch_%d') % i for i in range(1,6)]
+#        images_total_size = train_total_size
+#    elif mode == 'validation':
+#        filename_list = [os.path.join(data_dir, 'data_batch_%d') % i for i in range(1,6)]
+#        images_total_size = valid_total_size
+#    elif mode == 'test':
+#        filename_list = [os.path.join(data_dir, 'test_batch')]
+#        images_total_size = test_total_size
+#    else:
+#        # filename eg. xx_5000_50
+#        filename = os.path.join(data_dir, mode)
+#        if not os.path.exists(filename):
+#            sys.exit(-1)
+#        filename_list = [filename]
+#        more_pics = int(mode.split('_')[0]) * 6
+#        less_pics = int(mode.split('_')[1]) * 4
+#        images_total_size = more_pics + less_pics
+#
+#    logging.info('mode is %s' % mode)
+#
+#    data = []
+#    labels = []
+#
+#    for filename in filename_list:
+#        logging.info('files contains: %s' % filename)
+#        dicts = unpickle(filename)
+#        data.extend(dicts[b'data'])
+#        labels.extend(dicts[b'labels'])
+#
+#
+#    combinations = [(pdata, plabels) for pdata, plabels in zip(data, labels)]
+#    random.shuffle(combinations)
+#    combinations = combinations[0:images_total_size]
+#
+#    xs = []
+#    ys = []
+#    for x, y in combinations:
+#        xs.append(x)
+#        ys.append(y)
+#
+#    xs = np.array(xs, dtype=np.float32)
+#    rows_xs = xs.shape[0]
+#    xs_mean = np.mean(xs, axis=1)
+#    xs_mean = np.reshape(xs_mean, (rows_xs, 1))
+#    xs_std = np.std(xs, axis=1)
+#    xs_std = np.reshape(xs_std, (rows_xs, 1))
+#    xs = (xs-xs_mean)/xs_std
+#    ys = np.array(ys, dtype=np.uint8)
+#
+#    while True:
+#        for i in range(images_total_size//FLAGS.batch_size):
+#            batch_x = xs[i*batch_size:(i+1)*batch_size]
+#            batch_x = np.reshape(batch_x, [-1, width, height, 3])
+#            assert batch_x.shape[0] == FLAGS.batch_size
+#            batch_y = ys[i*batch_size:(i+1)*batch_size]
+#            yield batch_x, batch_y
+#
+#
+#
+#
+## test batch_data
 if __name__=='__main__':
+    logging.basicConfig(level=logging.INFO)
     timer_ = timer.timer()
-    batch_size = 128
-    data = input_data()
-    # generate images from directory and save as pickle
-    #data.generate_and_save_pickle(FLAGS.ISIC2018_Task3_Training_Input)
-    # load images from pickle
-    ground_truth = data.get_ground_truth(data.ISIC2018_Task3_Training_GroundTruth_path)
-    images_path, images_nps = data.load_image_from_pickle(data.ISIC2018_Task3_Training_Input_path+'_pickle')
-    output = data.get_disease_area_information_from_rgb_by_batch(images_nps, batch_size)
-    count = 0
-    disease_areas = []
-    images_area = []
-    x = next(output)
-    while len(x) > 0:
-        index = count *  batch_size
-        index_end = min((count+1) * batch_size, len(images_path))
-        logging.info('\nfrom index %d to index_end %d' % (index, index_end-1))
-        pro_images_nps = []
-        for xx in x:
-            pro_images_nps.append(xx[0])
-            disease_areas.append(xx[1])
-            images_area.append(xx[2])
-        data.save_disease_area_information_as_images(pro_images_nps, images_nps[index:index_end], images_path[index:index_end], '../data/bio_image')
-        count = count + 1
-        x = next(output)
-    data.save_disease_area_csv(disease_areas, images_area, images_path, ground_truth, '../data/bio_disease_areas.csv')
+    ISIC2018_data_ =  ISIC2018_data()
+    ISIC2018_data_.generate_inputs_by_batch()
+    #ISIC2018_data_.output_amount_class()
     timer_.get_duration()
+
+#    # train
+#    #data = inputs(mode='train')
+#    #total_size = train_total_size
+#    # test
+#    #data = inputs(mode='test')
+#    #total_size = test_total_size
+#    # validation
+#    #data = inputs(mode='validation')
+#    #total_size = valid_total_size
+#
+#    #i = 0
+#    #for i in range(total_size//FLAGS.batch_size):
+#    #    xx, yy = next(data)
+#    #    assert xx.shape == (128,width, height, 3)
+#    #    assert yy.shape == (128, )
+#    #    i = i+1
+#    #assert i == total_size//FLAGS.batch_size
+#    #logging.info('all is well')
+#    #logging.info('image width %d' % width)
+#    #logging.info('image height %d' % height)
+#    #logging.info('numbers of pictures is %d' % (total_size//FLAGS.batch_size*FLAGS.batch_size))
+#    #print(xx)
+#    #print(yy)
+#
