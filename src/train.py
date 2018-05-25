@@ -26,7 +26,7 @@ tf.flags.DEFINE_string('model', 'ResNet',
                        """Cnn or Vgg or ResNet""")
 tf.flags.DEFINE_string('with_memory', False,
                        """integrate memory to train model""")
-tf.flags.DEFINE_integer('epoch', 120,
+tf.flags.DEFINE_integer('epoch', 100,
                         """Counts to run all the images""")
 tf.flags.DEFINE_bool('remove', False,
                      """remove logs and parameters""")
@@ -40,12 +40,12 @@ tf.flags.DEFINE_integer('valid_frequency', 9,
                         """valid_frequency valid at % valid_frequency, at least from 1!!Less than epoch""")
 
 # where to put log and parameters
-tf.flags.DEFINE_string('logdir', '../logs/',
+tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_/logs/',
                        """Directory where to write graph logs """)
-tf.flags.DEFINE_string('parameters', '../parameters/',
+tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_/parameters/',
                        """Directory where to write event logs """
                        """and checkpoint.""")
-tf.flags.DEFINE_string('checkpoint_dir', '../save_128_30_40_/parameters/model_train_ResNet_False_{}',
+tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}/parameters/model_train_ResNet_False_{}',
                        """checkpoint_dir""")
 
 # constants
@@ -55,7 +55,7 @@ tf.flags.DEFINE_string('device_cpu', '/cpu:0',
                         """Using cpu to compute""")
 tf.flags.DEFINE_string('device_gpu', '/device:GPU:',
                         """Using GPU to compute""")
-tf.flags.DEFINE_string('CUDA_VISIBLE_DEVICE', '0',
+tf.flags.DEFINE_string('CUDA_VISIBLE_DEVICE', '1',
                                 """CUDA_VISBLE_DEVICE""")
 
 os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICE
@@ -65,11 +65,24 @@ os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICE
 def train(hps, val_index):
     """Train model for a number of steps"""
 
+    # select dataset
+    with tf.device(FLAGS.device_cpu):
+        if FLAGS.data == 'ISIC2018':
+            data = data_utils.ISIC2018_data()
+        else:
+            tf.logging.info('Give dataset name')
+            sys.exit(-1)
+        # get data information, width, height from data_utils
+        width, height, channel = data.get_shape()
+        data.set_valid_index(val_index)
+
+    parameters = FLAGS.parameters.format(FLAGS.batch_size, data.nHei, data.nWid)
+    logdir = FLAGS.logdir.format(FLAGS.batch_size, data.nHei, data.nWid)
     #tf.logging.info('Epoch is %d' % FLAGS.epoch)
     psuffix = 'model_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
     lsuffix = 'log_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
-    train_model = os.path.join(FLAGS.parameters, psuffix)
-    train_graph = os.path.join(FLAGS.logdir, lsuffix)
+    train_model = os.path.join(parameters, psuffix)
+    train_graph = os.path.join(logdir, lsuffix)
 
     tf.logging.info('train model %s' % train_model)
     tf.logging.info('train graph %s' % train_graph)
@@ -95,7 +108,7 @@ def train(hps, val_index):
             tf.logging.info('Fail to restore, start from %d' % sepoch)
 
     if FLAGS.with_memory:
-        ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir.format(val_index))
+        ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir.format(FLAGS.batch_size, data.nHei, data.nWid, val_index))
         if ckpt and ckpt.model_checkpoint_path:
             all_model_checkpoint_paths = ckpt.all_model_checkpoint_paths
             model_path_template = all_model_checkpoint_paths[0].split('-')[0]
@@ -107,16 +120,6 @@ def train(hps, val_index):
             tf.logging.info('Fail to restore for memory')
             sys.exit(-1)
 
-    # select dataset
-    with tf.device(FLAGS.device_cpu):
-        if FLAGS.data == 'ISIC2018':
-            data = data_utils.ISIC2018_data()
-        else:
-            tf.logging.info('Give dataset name')
-            sys.exit(-1)
-        # get data information, width, height from data_utils
-        width, height, channel = data.get_shape()
-        #bsize = data.get_bsize()
 
     gpu = FLAGS.device_gpu + str(0)
     with tf.device(gpu):

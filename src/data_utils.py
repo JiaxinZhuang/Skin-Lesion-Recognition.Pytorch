@@ -16,7 +16,7 @@ import process_bar
 
 FLAGS = tf.flags.FLAGS
 
-tf.flags.DEFINE_integer('batch_size', 128,
+tf.flags.DEFINE_integer('batch_size', 32,
                         """batch size for train and test""")
 tf.flags.DEFINE_integer('k_fold', 10,
                         """k_cross validation""")
@@ -44,26 +44,60 @@ class ISIC2018_data():
         self.inputs_data = defaultdict(list)
         self.labels_data = defaultdict(list)
         self.labels_name_hard_encode = ['MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC']
+        # 10-fold
+        # _mean_train, _variance_train means, when index used as validation set, all other train mean and variance
+        self._mean_train = []
+        self._variance_train = []
+        self._mean_valid = []
+        self._variance_valid = []
         self.rescale = True # 15
+        self.nWid = 400
+        self.nHei = 300
         #self.nWid = 224
         #self.nHei = 224
         #self.nWid = 112
         #self.nHei = 112
-        self.nWid = 40
-        self.nHei = 30
+        #self.nWid = 40
+        #self.nHei = 30
+        #self.nWid = 120
+        #self.nHei = 90
+        #self.nWid = 96
+        #self.nHei = 96
         self._inputs()
 
+    def set_valid_index(self, i):
+        self.val_index= i
+        self._load_data_and_norm()
+
+    def _load_data_and_norm(self):
+        with open(self.datas_path[self.val_indexi], 'rb') as fo:
+            data = pickle.load(fo)
+            inputs = np.array(data['inputs'])
+            labels = np.array(data['labels'])
+            self.inputs_data[self.val_index] = (inputs-np.mean(inputs))/np.std(inputs)
+            self.labels_data[self.val_index] = np.array(labels)
+
+        trains_data = []
+        for i in range(self.k_fold):
+            if i == self.val_index:
+                continue
+            else:
+                with open(self.datas_path[i], 'rb') as fo:
+                    data = pickle.load(fo)
+                    inputs = np.array(data['inputs'])
+                    labels = np.array(data['labels'])
+                    self.labels_data[i] = np.array(labels)
+                    self.inputs_data[i] = (inputs-np.mean(inputs))/np.std(inputs)
+                    trains_data.append(inputs)
+
+        for i in range(self.k_fold):
+            if i == self.val_index:
+                self.inputs_data[i] = (self.inputs_data[i]-np.mean(trains_data))/np.std(trains_data)
+
+
     def get_groups(self, i):
-        if self.inputs_data[i] == [] or self.labels_data[i] == []:
-            with open(self.datas_path[i], 'rb') as fo:
-                data = pickle.load(fo)
-                inputs = data['inputs']
-                labels = data['labels']
-                self.inputs_data[i] = np.array(inputs)
-                self.labels_data[i] = np.array(labels)
-        else:
-            inputs = self.inputs_data[i]
-            labels = self.labels_data[i]
+        inputs = self.inputs_data[i]
+        labels = self.labels_data[i]
 
         for x, y in zip(inputs, labels):
             yield x, y
@@ -71,18 +105,12 @@ class ISIC2018_data():
 
     def _inputs(self):
         data_dir = self.ISIC2018
-        #data_dir = os.path.join(data_dir, 'task3_%d_224_224' % self.batch_size)
-        #data_dir = os.path.join(data_dir, 'task3_%d_30_40' % self.batch_size)
         output_filename = 'task3_{}_{}_{}'.format(self.batch_size, self.nHei, self.nWid)
-        tf.logging.info('data_dir %s' % data_dir)
         data_dir = os.path.join(data_dir, output_filename)
+        tf.logging.info('data_dir %s' % data_dir)
         self.datas_path = []
         for i in range(self.k_fold):
             self.datas_path.append(os.path.join(data_dir, 'task3_norm_%d' %i))
-        #train_xs = []
-        #train_ys = []
-        #validation_x = []
-        #validation_y = []
         #if mode == train:
         #    pass
         #elif mode == 'validation':
@@ -109,9 +137,24 @@ class ISIC2018_data():
 
         prefix_directory = self.task3_training_input
         index = 0
+        img_names = defaultdict(list)
         for filenames_np, labels in groups:
+            img_names[str(index)] = filenames_np
             self._generate_batch_by_batch(prefix_directory, filenames_np, labels, index)
             index += 1
+        self._generate_each_fold_img_name_as_csv(img_names)
+
+    def _generate_each_fold_img_name_as_csv(self, data):
+        """output
+            output is a dict
+        """
+        output_filename = 'each_fold_img_name.csv'
+        col_names = [str(i) for i in range(10)]
+        output = dict([(k, pd.Series(v)) for k, v in data.items()])
+        df = pd.DataFrame(output, columns=col_names)
+        with open(output_filename, 'w', newline="") as fo:
+            df.to_csv(fo)
+
 
     def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):
         np.random.seed(int(time.time()))
@@ -135,12 +178,12 @@ class ISIC2018_data():
         logging.info('%d has %d batches' % (index, groups))
         batches = []
         for batch_img in data:
-            batch = []
+            #batch = []
             # Norm
-            for img in batch_img:
-                batch.append(((img-np.mean(img))/np.std(img)))
+            #for img in batch_img:
+                #batch.append(((img-np.mean(img))/np.std(img)))
             # Not Norm TODO
-            #batches.append(batch_img)
+            batch = batch_img
             batches.append(batch)
             process_bar_.show_process()
         assert len(batches) == len(labels_)
@@ -220,130 +263,6 @@ class ISIC2018_data():
         assert count == 10015
 
 
-#def unpickle(filename):
-#    with open(filename, 'rb') as fo:
-#        dicts = pickle.load(fo, encoding='bytes')
-#    return dicts
-#
-#def inputs_skin_lesion(data_skin_dir=FLAGS.data_skin_dir):
-#    dicts = unpickle(data_skin_dir)
-#    data = dicts[b'data']
-#    labels = dicts[b'label']
-#
-#    images_total_size = data.shape[0]
-#    batch_size = FLAGS.batch_size
-#    logging.info('images_total_size %d' % images_total_size)
-#    logging.info('batch_size %d' % batch_size)
-#
-#    combinations = [(pdata, plabels) for pdata, plabels in zip(data, labels)]
-#    random.shuffle(combinations)
-#    combinations = combinations[0:images_total_size]
-#
-#    xs = []
-#    ys = []
-#    for x, y in combinations:
-#        xs.append(x)
-#        ys.append(y)
-#
-#    #xs_mean = np.mean(xs, axis=1)
-#    xs = np.array(xs, dtype=np.float32)
-#    result = []
-#    for x in xs:
-#        result.append((x-np.mean(x))/np.std(x))
-#    #xs_mean = np.reshape(xs_mean, (rows_xs, 1))
-#    #xs_std = np.std(xs, axis=1)
-#    #xs_std = np.reshape(xs_std, (rows_xs, 1))
-#    #xs = (xs-xs_mean)/xs_std
-#    xs = np.array(result, dtype=np.float32)
-#    #rows_xs = xs.shape[0]
-#    #xs_mean = np.mean(xs, axis=1)
-#    #xs_mean = np.reshape(xs_mean, (rows_xs, 1))
-#    #xs_std = np.std(xs, axis=1)
-#    #xs_std = np.reshape(xs_std, (rows_xs, 1))
-#    #xs = (xs-xs_mean)/xs_std
-#    ys = np.array(ys, dtype=np.uint8)
-#
-#    while True:
-#        for i in range(images_total_size//batch_size):
-#            batch_x = xs[i*batch_size:(i+1)*batch_size]
-#            batch_x = np.reshape(batch_x, [-1, width, height, 3])
-#            assert batch_x.shape[0] == batch_size
-#            batch_y = ys[i*batch_size:(i+1)*batch_size]
-#            #print(batch_y)
-#            #print(batch_y.shape)
-#            yield batch_x, batch_y
-#
-#
-#
-## mode
-##   Train data
-##   Test data
-##   Validation data
-#def inputs(mode='train'):
-#    batch_size = FLAGS.batch_size
-#    data_dir = FLAGS.data_dir
-#    if mode == 'train':
-#        filename_list = [os.path.join(data_dir, 'data_batch_%d') % i for i in range(1,6)]
-#        images_total_size = train_total_size
-#    elif mode == 'validation':
-#        filename_list = [os.path.join(data_dir, 'data_batch_%d') % i for i in range(1,6)]
-#        images_total_size = valid_total_size
-#    elif mode == 'test':
-#        filename_list = [os.path.join(data_dir, 'test_batch')]
-#        images_total_size = test_total_size
-#    else:
-#        # filename eg. xx_5000_50
-#        filename = os.path.join(data_dir, mode)
-#        if not os.path.exists(filename):
-#            sys.exit(-1)
-#        filename_list = [filename]
-#        more_pics = int(mode.split('_')[0]) * 6
-#        less_pics = int(mode.split('_')[1]) * 4
-#        images_total_size = more_pics + less_pics
-#
-#    logging.info('mode is %s' % mode)
-#
-#    data = []
-#    labels = []
-#
-#    for filename in filename_list:
-#        logging.info('files contains: %s' % filename)
-#        dicts = unpickle(filename)
-#        data.extend(dicts[b'data'])
-#        labels.extend(dicts[b'labels'])
-#
-#
-#    combinations = [(pdata, plabels) for pdata, plabels in zip(data, labels)]
-#    random.shuffle(combinations)
-#    combinations = combinations[0:images_total_size]
-#
-#    xs = []
-#    ys = []
-#    for x, y in combinations:
-#        xs.append(x)
-#        ys.append(y)
-#
-#    xs = np.array(xs, dtype=np.float32)
-#    rows_xs = xs.shape[0]
-#    xs_mean = np.mean(xs, axis=1)
-#    xs_mean = np.reshape(xs_mean, (rows_xs, 1))
-#    xs_std = np.std(xs, axis=1)
-#    xs_std = np.reshape(xs_std, (rows_xs, 1))
-#    xs = (xs-xs_mean)/xs_std
-#    ys = np.array(ys, dtype=np.uint8)
-#
-#    while True:
-#        for i in range(images_total_size//FLAGS.batch_size):
-#            batch_x = xs[i*batch_size:(i+1)*batch_size]
-#            batch_x = np.reshape(batch_x, [-1, width, height, 3])
-#            assert batch_x.shape[0] == FLAGS.batch_size
-#            batch_y = ys[i*batch_size:(i+1)*batch_size]
-#            yield batch_x, batch_y
-#
-#
-#
-#
-## test batch_data
 if __name__=='__main__':
     logging.basicConfig(level=logging.INFO)
     timer_ = timer.timer()
@@ -351,28 +270,3 @@ if __name__=='__main__':
     ISIC2018_data_.generate_inputs_by_batch()
     #ISIC2018_data_.output_amount_class()
     timer_.get_duration()
-
-#    # train
-#    #data = inputs(mode='train')
-#    #total_size = train_total_size
-#    # test
-#    #data = inputs(mode='test')
-#    #total_size = test_total_size
-#    # validation
-#    #data = inputs(mode='validation')
-#    #total_size = valid_total_size
-#
-#    #i = 0
-#    #for i in range(total_size//FLAGS.batch_size):
-#    #    xx, yy = next(data)
-#    #    assert xx.shape == (128,width, height, 3)
-#    #    assert yy.shape == (128, )
-#    #    i = i+1
-#    #assert i == total_size//FLAGS.batch_size
-#    #logging.info('all is well')
-#    #logging.info('image width %d' % width)
-#    #logging.info('image height %d' % height)
-#    #logging.info('numbers of pictures is %d' % (total_size//FLAGS.batch_size*FLAGS.batch_size))
-#    #print(xx)
-#    #print(yy)
-#
