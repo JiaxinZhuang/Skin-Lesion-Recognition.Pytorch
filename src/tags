@@ -9,40 +9,59 @@ FLAGS	train.py	/^FLAGS = tf.flags.FLAGS$/;"	v
 HParams	resNet.py	/^HParams = namedtuple('HParams',$/;"	v
 ISIC2018_data	data_utils.py	/^class ISIC2018_data():$/;"	c
 ISIC2018_data_	data_utils.py	/^    ISIC2018_data_ =  ISIC2018_data()$/;"	v	class:ISIC2018_data
+Memory	memory.py	/^class Memory():$/;"	c
 ResNet	resNet.py	/^class ResNet():$/;"	c
 __init__	data_utils.py	/^    def __init__(self):$/;"	m	class:ISIC2018_data
+__init__	memory.py	/^    def __init__(self, hps, key_dim=192, memory_size=8192, choose_k=1, alpha=0.1, correct_in_top=1, age_noise=8.0, threshold=0.5):$/;"	m	class:Memory
 __init__	process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
-__init__	resNet.py	/^    def __init__(self, hps, images, labels, mode):$/;"	m	class:ResNet
+__init__	resNet.py	/^    def __init__(self, hps, images, labels, mode, learning_rate):$/;"	m	class:ResNet
 __init__	timer.py	/^    def __init__(self):$/;"	m	class:timer
 _amount_each_class_from_csv	data_utils.py	/^    def _amount_each_class_from_csv(self, filename):$/;"	m	class:ISIC2018_data
 _batch_norm	resNet.py	/^    def _batch_norm(self, name, x):$/;"	m	class:ResNet
 _bottleneck_residual	resNet.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):$/;"	m	class:ResNet
 _build_model	resNet.py	/^    def _build_model(self):$/;"	m	class:ResNet
 _build_train_op	resNet.py	/^    def _build_train_op(self):$/;"	m	class:ResNet
+_compute_mean_std_for_val_index_others	data_utils.py	/^    def _compute_mean_std_for_val_index_others(self):$/;"	m	class:ISIC2018_data
 _conv	resNet.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:ResNet
 _decay	resNet.py	/^    def _decay(self):$/;"	m	class:ResNet
 _divide_groups_xy	data_utils.py	/^    def _divide_groups_xy(self):$/;"	m	class:ISIC2018_data
 _fully_connected	resNet.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:ResNet
+_generate	data_utils.py	/^        def _generate(files, ofiles):$/;"	f	function:ISIC2018_data.generate_train_valid
 _generate_batch_by_batch	data_utils.py	/^    def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):$/;"	m	class:ISIC2018_data
+_generate_each_fold_img_name_as_csv	data_utils.py	/^    def _generate_each_fold_img_name_as_csv(self, data):$/;"	m	class:ISIC2018_data
 _global_avg_pool	resNet.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
 _inputs	data_utils.py	/^    def _inputs(self):$/;"	m	class:ISIC2018_data
+_load_data_and_norm	data_utils.py	/^    def _load_data_and_norm(self):$/;"	m	class:ISIC2018_data
 _load_imgs_by_batch	data_utils.py	/^    def _load_imgs_by_batch(self, prefix_directory, filenames):$/;"	m	class:ISIC2018_data
+_pre_process_images	data_utils.py	/^    def _pre_process_images(self, x):$/;"	m	class:ISIC2018_data
+_pre_process_images	resNet.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
 _relu	resNet.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
 _residual	resNet.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
 _stride_arr	resNet.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
 build_graph	resNet.py	/^    def build_graph(self):$/;"	m	class:ResNet
 evaluate	train.py	/^def evaluate(hps):$/;"	f
+general_gray_world	color_constancy.py	/^def general_gray_world(img, power=2, sigma=3):$/;"	f
 generate_inputs_by_batch	data_utils.py	/^    def generate_inputs_by_batch(self):$/;"	m	class:ISIC2018_data
+generate_train_valid	data_utils.py	/^    def generate_train_valid(self):$/;"	m	class:ISIC2018_data
 get_bsize	data_utils.py	/^    def get_bsize(self):$/;"	m	class:ISIC2018_data
 get_duration	timer.py	/^    def get_duration(self):$/;"	m	class:timer
 get_groups	data_utils.py	/^    def get_groups(self, i):$/;"	m	class:ISIC2018_data
+get_hint_pool_idxs	memory.py	/^    def get_hint_pool_idxs(self, normalized_query):$/;"	m	class:Memory
 get_shape	data_utils.py	/^    def get_shape(self):$/;"	m	class:ISIC2018_data
+gray_world	color_constancy.py	/^def gray_world(img):$/;"	f
 main	train.py	/^def main(argv=None):$/;"	f
+make_update_op	memory.py	/^        def make_update_op():$/;"	f	function:Memory.query_and_make_update
+make_update_op	memory.py	/^    def make_update_op(self, upd_idxs, upd_keys, upd_vals, batch_size):$/;"	m	class:Memory
 output_amount_class	data_utils.py	/^    def output_amount_class(self):$/;"	m	class:ISIC2018_data
 process_bar	process_bar.py	/^class process_bar():$/;"	c
+query	memory.py	/^    def query(self, query_vec):$/;"	m	class:Memory
+query_and_make_update	memory.py	/^    def query_and_make_update(self, query_vec, intended_output):$/;"	m	class:Memory
 reset	process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
 set_maxstep	process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+set_valid_index	data_utils.py	/^    def set_valid_index(self, i):$/;"	m	class:ISIC2018_data
+shade_of_gray	color_constancy.py	/^def shade_of_gray(img, power=6, gamma=None):$/;"	f
 show_process	process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
 timer	timer.py	/^class timer():$/;"	c
 timer_	data_utils.py	/^    timer_ = timer.timer()$/;"	v	class:ISIC2018_data
 train	train.py	/^def train(hps, val_index):$/;"	f
+white_patch_retinex	color_constancy.py	/^def white_patch_retinex(img, para):$/;"	f

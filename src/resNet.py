@@ -11,14 +11,20 @@ import numpy as np
 
 from tensorflow.python.training import moving_averages
 
+#HParams = namedtuple('HParams',
+#                     'feature_size, batch_size, num_classes, min_lrn_rate, '
+#                     'lrn_rate, num_residual_units, use_bottleneck, '
+#                     'weight_decay_rate, relu_leakiness, optimizer, '
+#                     'weight_sample, use_weight_sample')
 HParams = namedtuple('HParams',
-                     'feature_size, batch_size, num_classes, min_lrn_rate, '
-                     'lrn_rate, num_residual_units, use_bottleneck, '
-                     'weight_decay_rate, relu_leakiness, optimizer')
+                     'feature_size, batch_size, num_classes, '
+                     'num_residual_units, use_bottleneck, '
+                     'weight_decay_rate, relu_leakiness, optimizer, '
+                     'weight_sample, use_weight_sample')
 
 
 class ResNet():
-    def __init__(self, hps, images, labels, mode):
+    def __init__(self, hps, images, labels, mode, learning_rate):
         """ResNet constructor
 
         Args:
@@ -28,12 +34,21 @@ class ResNet():
             mode : 'train' or 'eval'
         """
         self.hps = hps
-        self._images = images
+        self.image_size=224
+        self._images = self._pre_process_images(images)
         self.labels = labels
+        self.lrn_rate = learning_rate
         self.mode = mode
+        # TODO
+        self.weights_sample = tf.constant(self.hps.weight_sample)
 
         self._extra_train_ops = []
 
+    def _pre_process_images(self, x):
+        images = tf.image.resize_image_with_crop_or_pad(x, self.image_size+4, self.image_size+4)
+        images = tf.map_fn(lambda img: tf.random_crop(img, [self.image_size, self.image_size, 3]), images)
+        images = tf.map_fn(lambda img: tf.image.random_flip_left_right(img), images)
+        return images
 
     def build_graph(self):
         self.global_step = tf.train.get_or_create_global_step()
@@ -45,39 +60,50 @@ class ResNet():
     def _build_model(self):
         """Build the core model within the graph"""
         with tf.variable_scope('extract_feature_map'):
-            with tf.variable_scope('init'):
-                x = self._images
-                x = self._conv('init_conv', x, 3, 3, 16, self._stride_arr(1))
 
-            strides = [1, 2, 2]
-            activate_before_residual = [True, False, False]
+            strides = [2, 1, 2, 2, 2]
+            activate_before_residual = [True, False, False, False]
+            # TODO
             if self.hps.use_bottleneck:
                 res_func = self._bottleneck_residual
                 filters = [16, 64, 128, 256]
             else:
                 res_func = self._residual
-                filters = [16, 16, 32, 64]
+                filters = [64, 64, 128, 256, 512]
 
-            with tf.variable_scope('unit_1_0'):
-                x = res_func(x, filters[0], filters[1], self._stride_arr(strides[0]),
+            with tf.variable_scope('unit_1'):
+                x = self._images
+                x = self._conv('unit_1', x, 7, 3, filters[0], self._stride_arr(strides[0]))
+
+            with tf.variable_scope('unit_2_0'):
+                x = tf.nn.max_pool(x, [1,3,3,1], [1,2,2,1], padding='SAME', name='max_pool')
+                x = res_func(x, filters[0], filters[1], self._stride_arr(strides[1]),
                         activate_before_residual[0])
-            for i in range(1, self.hps.num_residual_units):
+            # num_residual_units is a list [0,2,3,5,2]
+            for i in range(1, self.hps.num_residual_units[1]):
                 with tf.variable_scope('unit_1_%d' % i):
                     x = res_func(x, filters[1], filters[1], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_2_0'):
-                x = res_func(x, filters[1], filters[2], self._stride_arr(strides[1]),
+            with tf.variable_scope('unit_3_0'):
+                x = res_func(x, filters[1], filters[2], self._stride_arr(strides[2]),
                         activate_before_residual[1])
-            for i in range(1, self.hps.num_residual_units):
-                with tf.variable_scope('unit_2_%d' % i):
+            for i in range(1, self.hps.num_residual_units[2]):
+                with tf.variable_scope('unit_3_%d' % i):
                     x = res_func(x, filters[2], filters[2], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_3_0'):
-                x = res_func(x, filters[2], filters[3], self._stride_arr(strides[2]),
+            with tf.variable_scope('unit_4_0'):
+                x = res_func(x, filters[2], filters[3], self._stride_arr(strides[3]),
                         activate_before_residual[2])
-            for i in range(1, self.hps.num_residual_units):
-                with tf.variable_scope('unit_3_%d' %i):
+            for i in range(1, self.hps.num_residual_units[3]):
+                with tf.variable_scope('unit_4_%d' %i):
                     x = res_func(x, filters[3], filters[3], self._stride_arr(1), False)
+
+            with tf.variable_scope('unit_5_0'):
+                x = res_func(x, filters[3], filters[4], self._stride_arr(strides[4]),
+                        activate_before_residual[2])
+            for i in range(1, self.hps.num_residual_units[4]):
+                with tf.variable_scope('unit_5_%d' %i):
+                    x = res_func(x, filters[4], filters[4], self._stride_arr(1), False)
 
             with tf.variable_scope('unit_last'):
                 x = self._batch_norm('final_bn', x)
@@ -89,8 +115,13 @@ class ResNet():
             self.predictions  = tf.nn.softmax(logits)
 
         with tf.variable_scope('costs'):
+            if self.hps.use_weight_sample:
+                logits = tf.multiply(logits, self.weights_sample)
+
             xent = tf.nn.softmax_cross_entropy_with_logits(
                     logits=logits, labels=self.labels)
+            #xent = tf.losses.sparse_softmax_cross_entropy(
+            #        logits=logits, labels=labels, weights=self.weights_sample)
             self.cost = tf.reduce_mean(xent, name='xent')
             self.cost += self._decay()
 
@@ -99,7 +130,7 @@ class ResNet():
 
     def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):
         """Bottleneck residual unit with 3 sub layers"""
-        if activate_beforeeesidual == True:
+        if activate_before_residual == True:
             with tf.variable_scope('common_bn_relu'):
                 x = self._batch_norm('init_bn', x)
                 x = self._relu(x, self.hps.relu_leakiness)
@@ -128,7 +159,7 @@ class ResNet():
                 orig_x = self._conv('project', orig_x, 1, in_filter, out_filter, stride)
             x += orig_x
 
-        #tf.logging.info('image after unit %s', (tf.shape(x),))
+        tf.logging.info('image after unit %s', (tf.shape(x),))
         return x
 
     def _residual(self, x, in_filter, out_filter, stride,
@@ -166,7 +197,7 @@ class ResNet():
 
     def _build_train_op(self):
         """Build training specific ops for the graph"""
-        self.lrn_rate = tf.constant(self.hps.lrn_rate, tf.float32)
+        #self.lrn_rate = tf.constant(self.hps.lrn_rate, tf.float32)
         tf.summary.scalar('learning_rate', self.lrn_rate)
 
         trainable_variables = tf.trainable_variables()
