@@ -34,3 +34,7 @@ python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-S
 python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/sog6
 python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/wpr1
 ```
+
+## Ref
+1. [Tensorflow — Dealing with imbalanced data](https://blog.node.us.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701)
+

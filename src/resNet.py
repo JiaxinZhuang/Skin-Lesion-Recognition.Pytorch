@@ -11,6 +11,7 @@ import numpy as np
 
 from tensorflow.python.training import moving_averages
 
+
 #HParams = namedtuple('HParams',
 #                     'feature_size, batch_size, num_classes, min_lrn_rate, '
 #                     'lrn_rate, num_residual_units, use_bottleneck, '
@@ -116,16 +117,39 @@ class ResNet():
 
         with tf.variable_scope('costs'):
             if self.hps.use_weight_sample:
-                logits = tf.multiply(logits, self.weights_sample)
+		# Median-class weight
+                xent = self._median_weight_class_loss(self.labels, logits)
+		# Focal loss class weight
+                #xent = self._focal_loss(self.labels, logits)
+            else:
+                xent = tf.nn.softmax_cross_entropy_with_logits(
+                        logits=logits, labels=self.labels)
 
-            xent = tf.nn.softmax_cross_entropy_with_logits(
-                    logits=logits, labels=self.labels)
-            #xent = tf.losses.sparse_softmax_cross_entropy(
-            #        logits=logits, labels=labels, weights=self.weights_sample)
             self.cost = tf.reduce_mean(xent, name='xent')
             self.cost += self._decay()
 
             tf.summary.scalar('cost', self.cost)
+
+
+    def _median_weight_class_loss(self, labels, logits):
+        epsilon = tf.constant(value=1e-10)
+        logits = logits + epsilon
+        softmax = tf.nn.softmax(logits)
+
+        xent = -tf.reduce_sum(tf.multiply(labels * tf.log(softmax + epsilon), self.hps.weight_sample), axis=1, keep_dims=True)
+        return xent
+
+
+    def _focal_loss(self, labels, logits, gamma=2.0, alpha=4.0):
+        epsilon = tf.constant(value=1e-9)
+        softmax = tf.nn.softmax(logits)
+        model_out = tf.add(softmax, epsilon)
+        ce = tf.multiply(labels, -tf.log(model_out))
+        weight = tf.multiply(labels, tf.pow(tf.subtract(1., model_out), gamma))
+        fl = tf.multiply(alpha, tf.multiply(weight, ce))
+        reduced_fl = tf.reduce_sum(fl, axis=1, keep_dims=True)
+
+        return reduced_fl
 
 
     def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):

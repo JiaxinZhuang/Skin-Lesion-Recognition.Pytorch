@@ -16,6 +16,7 @@ import timer
 
 import memory
 import resNet
+import vgg19
 
 FLAGS = tf.flags.FLAGS
 
@@ -26,7 +27,7 @@ tf.flags.DEFINE_string('model', 'ResNet',
                        """Cnn or Vgg or ResNet""")
 tf.flags.DEFINE_string('with_memory', False,
                        """integrate memory to train model""")
-tf.flags.DEFINE_integer('epoch', 150,
+tf.flags.DEFINE_integer('epoch', 250,
                         """Counts to run all the images""")
 tf.flags.DEFINE_bool('remove', False,
                      """remove logs and parameters""")
@@ -40,12 +41,12 @@ tf.flags.DEFINE_integer('valid_frequency', 9,
                         """valid_frequency valid at % valid_frequency, at least from 1!!Less than epoch""")
 
 # where to put log and parameters
-tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_CW/logs/',
+tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_Vgg/logs/',
                        """Directory where to write graph logs """)
-tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_CW/parameters/',
+tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_Vgg/parameters/',
                        """Directory where to write event logs """
                        """and checkpoint.""")
-tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_CW/parameters/model_train_ResNet_False_{}',
+tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_Vgg/parameters/model_train_ResNet_False_{}',
                        """checkpoint_dir""")
 
 # constants
@@ -74,7 +75,8 @@ def train(hps, val_index):
             sys.exit(-1)
         # get data information, width, height from data_utils
         width, height, channel = data.get_shape()
-        data.set_valid_index(val_index)
+        #data.set_valid_index(val_index, norm=True)
+        data.set_valid_index(val_index, norm=False)
 
     parameters = FLAGS.parameters.format(FLAGS.batch_size, data.nHei, data.nWid)
     logdir = FLAGS.logdir.format(FLAGS.batch_size, data.nHei, data.nWid)
@@ -129,27 +131,27 @@ def train(hps, val_index):
             # define variables
             xs = tf.placeholder(tf.float32, [None, width, height, channel])
             ys = tf.placeholder(tf.float32, [None, hps.num_classes])
+            train_mode = tf.placeholder(tf.bool)
             learning_rate = tf.placeholder(tf.float32, [], name='learning_rate')
             #val = tf.placeholder(tf.float32)
 
+            if FLAGS.model == 'ResNet':
+                model = resNet.ResNet(hps, xs, ys, train_mode, learning_rate)
+                model.build_graph()
+            elif FLAGS.model == 'Vgg19':
+                model = vgg19.Vgg19(hps, xs, ys, learning_rate, vgg19_npy_path='../data/vgg19.npy')
+                model.build_graph(train_mode)
 
-           #image = tf.image.resize_image_with_crop_or_pad(
-           #     image, image_size+4, image_size+4)
-           #image = tf.random_crop(image, [image_size, image_size, 3])
-           #image = tf.image.random_flip_left_right(image)
-
-            resnet_model = resNet.ResNet(hps, xs, ys, 'train', learning_rate)
-            resnet_model.build_graph()
             # Use memory
             if FLAGS.with_memory:
                 memory_layer = memory.Memory(hps, key_dim=FLAGS.feature_size)
-                train_op = memory_layer.query_and_make_update(resnet_model.feature_map, ys)
+                train_op = memory_layer.query_and_make_update(model.feature_map, ys)
                 summaries = tf.summary.merge_all()
-                predictions = memory_layer.query(resnet_model.feature_map)
+                predictions = memory_layer.query(model.feature_map)
             else:
-                train_op = resnet_model.train_op
-                summaries = resnet_model.summaries
-                predictions = resnet_model.predictions
+                train_op = model.train_op
+                summaries = model.summaries
+                predictions = model.predictions
             # define train process
             #feature_vec = model.inference(xs, FLAGS.model)
             #    logits = model.memory(feature_vec)
@@ -168,7 +170,7 @@ def train(hps, val_index):
                                         scope='extract_feature_map')
                 saver = tf.train.Saver(get_restored_variables ,max_to_keep=FLAGS.epoch)
             else:
-                saver = tf.train.Saver(max_to_keep=FLAGS.epoch)
+                saver = tf.train.Saver(max_to_keep=50)
 
             summary_writer = tf.summary.FileWriter(train_graph, g)
 
@@ -183,11 +185,19 @@ def train(hps, val_index):
 
                 for i in range(sepoch, FLAGS.epoch):
                     tf.logging.info("%s: Epoch %d, val_index is %d" % (datetime.now(), i, val_index))
-                    if i < 60:
+                    #if i < 60:
+                    #    learning_rate_ = 0.1
+                    #elif i < 80:
+                    #    learning_rate_ = 0.01
+                    #elif i < 130:
+                    #    learning_rate_ = 0.001
+                    #else:
+                    #    learning_rate_ = 0.0001
+                    if i < 100:
                         learning_rate_ = 0.1
-                    elif i < 100:
+                    elif i < 150:
                         learning_rate_ = 0.01
-                    elif i < 130:
+                    elif i < 200:
                         learning_rate_ = 0.001
                     else:
                         learning_rate_ = 0.0001
@@ -200,7 +210,8 @@ def train(hps, val_index):
                                         [train_op, summaries],
                                         feed_dict={ xs:batch_x,
                                                     ys:batch_y,
-                                                    learning_rate: learning_rate_
+                                                    learning_rate: learning_rate_,
+                                                    train_mode: True
                                                     })
                                 summary_writer.add_summary(summary_op_, step)
                                 step += 1
@@ -220,7 +231,8 @@ def train(hps, val_index):
                                             predictions,
                                             feed_dict={
                                                 xs:batch_x,
-                                                ys:batch_y})
+                                                ys:batch_y,
+                                                train_mode: False})
                                 assert predictions_.shape == np.array(batch_y).shape
                                 batch_y_ = np.argmax(batch_y, axis=1)
                                 predictions_ = np.argmax(predictions_, axis=1)
@@ -234,7 +246,7 @@ def train(hps, val_index):
                                     if y == ypred:
                                         counter[y] += 1
                                         all_cor += 1
-                        output_filename = '../save_{}_{}_{}_CW/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Vgg/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -257,7 +269,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Training Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_CW/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Vgg/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}
@@ -280,7 +292,8 @@ def train(hps, val_index):
                                         predictions,
                                         feed_dict={
                                             xs:batch_x,
-                                            ys:batch_y})
+                                            ys:batch_y,
+                                            train_mode:False})
                             assert predictions_.shape == np.array(batch_y).shape
                             batch_y_ = np.argmax(batch_y, axis=1)
                             predictions_ = np.argmax(predictions_, axis=1)
@@ -294,7 +307,7 @@ def train(hps, val_index):
                                 if y == ypred:
                                     counter[y] += 1
                                     all_cor += 1
-                        output_filename = '../save_{}_{}_{}_CW/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Vgg/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -317,7 +330,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Validation Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_CW/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Vgg/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}
@@ -350,8 +363,13 @@ def main(argv=None):
     #                     optimizer='mom')
 
     #weight_sample = [1113,6705,514,327,1099,115,142]
-    #weight_sample = np.array([1113,6705,514,327,1099,115,142])/10015
-    weight_sample_ = [6.02425876, 1.0, 13.04474708, 20.50458716, 6.10100091, 58.30434783, 47.21830986]
+
+    #weight_sample_ = [6.02425876, 1.0, 13.04474708, 20.50458716, 6.10100091, 58.30434783, 47.21830986]
+    #weight_sample_ = [2.02425876, 1.0, 3.04474708, 4.50458716, 1.10100091, 10.30434783, 9.21830986]
+
+    weight_sample_ = np.array([1113,6705,514,327,1099,115,142])/10015
+    weight_sample_ = 0.05132302/weight_sample_
+    #[0.46181496 0.07665922 1.00000009 1.57186558 0.46769795 4.46956561, 3.61971863]
 
     hps = resNet.HParams(
                          feature_size=FLAGS.feature_size,

@@ -109,9 +109,9 @@ class ISIC2018_data():
         _generate(test_path, test_path_)
 
 
-    def set_valid_index(self, i):
+    def set_valid_index(self, i, norm=True):
         self.val_index= i
-        self._load_data_and_norm()
+        self._load_data_and_norm(norm)
 
 
     def _pre_process_images(self, x):
@@ -120,54 +120,45 @@ class ISIC2018_data():
         images = tf.map_fn(lambda img: tf.image.random_flip_left_right(img), images)
         return images
 
-    def _load_data_and_norm(self):
+    def _load_data_and_norm(self, norm=True):
         output_filename = '2018_5_28'
         output_filename = os.path.join(self.ISIC2018, output_filename)
         output_filename = os.path.join(output_filename, self.mean_val_tra_path)
-        if not os.path.exists(output_filename):
-            print('Give mean std file')
-            sys.exit(-1)
-        #with open(self.mean_std_val_tra_path, 'rb') as fo:
-        #    data = pickle.load(fo)
-            #mean_for_val, std_for_val, mean_for_tra, std_for_tra = data[self.val_index]
-            # old sub mean for normalization
-        data = pd.read_csv(output_filename)
-        mean_for_val = data[str(self.val_index)+'_train'].values
-        mean_for_tra = data[str(self.val_index)+'_val'].values
-        assert mean_for_tra.shape[0] == 3
-        assert mean_for_val.shape[0] == 3
-
-        print(mean_for_val)
-        #print(std_for_val)
-        print(mean_for_tra)
-        #print(std_for_tra)
+        if norm:
+            if not os.path.exists(output_filename):
+                print('Give mean std file')
+                sys.exit(-1)
+            data = pd.read_csv(output_filename)
+            mean_for_val = data[str(self.val_index)+'_train'].values
+            mean_for_tra = data[str(self.val_index)+'_val'].values
+            assert mean_for_tra.shape[0] == 3
+            assert mean_for_val.shape[0] == 3
+            print(mean_for_val)
+            #print(std_for_val)
+            print(mean_for_tra)
+            #print(std_for_tra)
 
         with open(self.datas_path[self.val_index], 'rb') as fo:
             data = pickle.load(fo)
             inputs = np.array(data['inputs'])
             labels = np.array(data['labels'])
 
-            #lens = len(inputs)
-            #vals_data = []
-            #vals_data.extend(inputs[:lens-1].flatten())
-            #vals_data.extend(inputs[lens-1].flatten())
-            #mean = np.mean(vals_data)
-            #std = np.std(vals_data)
-
-            #inputs_ = []
-            #for x in inputs:
-            #    x = (x-mean)/std
-            #    inputs_.append(x)
-            # sub mean
             inputs_ = []
-            for x in inputs:
-                inputs_.append(np.array(x-mean_for_val))
-            #inputs_ = (inputs-mean_for_val)/std_for_val
+            if norm:
+                for x in inputs:
+                    inputs_.append(np.array(x-mean_for_val))
+                #inputs_ = (inputs-mean_for_val)/std_for_val
+            else:
+                for x in inputs:
+                    inputs_.append(np.array(x))
+
             labels_ = []
             for label in labels:
                 labels_.append(np.array(label))
+
             self.inputs_data[self.val_index] = inputs_
             self.labels_data[self.val_index] = labels_
+
 
         for i in range(self.k_fold):
             if i == self.val_index:
@@ -184,24 +175,15 @@ class ISIC2018_data():
                     self.labels_data[i] = labels_
 
                     inputs_ = []
-                    for x in inputs:
-                        inputs_.append(np.array(x-mean_for_tra))
+                    if norm:
+                        for x in inputs:
+                            inputs_.append(np.array(x-mean_for_tra))
+                    else:
+                        for x in inputs:
+                            inputs_.append(np.array(x))
 
                     self.inputs_data[i] = inputs_
-                    #trains_data.extend(inputs[0:lens-1].flatten())
-                    #trains_data.extend(inputs[lens-1].flatten())
 
-        #mean = np.mean(trains_data)
-        #std = np.std(trains_data)
-        #for i in range(self.k_fold):
-        #    if i != self.val_index:
-        #        inputs = self.inputs_data[i]
-        #        inputs_ = []
-        #        #inputs_ = (inputs-mean_for_tra)/std_for_tra
-        #        #for x in inputs:
-        #        #    x = (x-mean)/std
-        #        #    inputs_.append(x)
-        #        self.inputs_data[i] = np.array(inputs_)
 
     def get_groups(self, i):
         inputs = self.inputs_data[i]
