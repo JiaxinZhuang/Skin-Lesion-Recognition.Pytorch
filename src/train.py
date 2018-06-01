@@ -24,7 +24,7 @@ FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_string('mode', 'train',
                        """train or test""")
 tf.flags.DEFINE_string('model', 'ResNet',
-                       """Cnn or Vgg or ResNet""")
+                       """Cnn or Vgg19 or ResNet""")
 tf.flags.DEFINE_string('with_memory', False,
                        """integrate memory to train model""")
 tf.flags.DEFINE_integer('epoch', 250,
@@ -41,12 +41,12 @@ tf.flags.DEFINE_integer('valid_frequency', 9,
                         """valid_frequency valid at % valid_frequency, at least from 1!!Less than epoch""")
 
 # where to put log and parameters
-tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_Vgg/logs/',
+tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_Fc/logs/',
                        """Directory where to write graph logs """)
-tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_Vgg/parameters/',
+tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_Fc/parameters/',
                        """Directory where to write event logs """
                        """and checkpoint.""")
-tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_Vgg/parameters/model_train_ResNet_False_{}',
+tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_Fc/parameters/model_train_ResNet_False_{}',
                        """checkpoint_dir""")
 
 # constants
@@ -246,7 +246,7 @@ def train(hps, val_index):
                                     if y == ypred:
                                         counter[y] += 1
                                         all_cor += 1
-                        output_filename = '../save_{}_{}_{}_Vgg/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Fc/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -269,7 +269,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Training Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_Vgg/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Fc/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}
@@ -307,7 +307,7 @@ def train(hps, val_index):
                                 if y == ypred:
                                     counter[y] += 1
                                     all_cor += 1
-                        output_filename = '../save_{}_{}_{}_Vgg/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Fc/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -330,7 +330,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Validation Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_Vgg/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_Fc/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}

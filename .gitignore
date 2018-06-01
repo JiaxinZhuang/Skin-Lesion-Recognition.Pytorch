@@ -1,3 +1,4 @@
 data/*
 src/.hsftp
 src/__pycache__/*
+*.ipynb
