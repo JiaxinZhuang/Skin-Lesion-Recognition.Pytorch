@@ -16,7 +16,7 @@ Vgg19	vgg19.py	/^class Vgg19:$/;"	c
 __init__	data_utils.py	/^    def __init__(self):$/;"	m	class:ISIC2018_data
 __init__	memory.py	/^    def __init__(self, hps, key_dim=192, memory_size=8192, choose_k=1, alpha=0.1, correct_in_top=1, age_noise=8.0, threshold=0.5):$/;"	m	class:Memory
 __init__	process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
-__init__	resNet.py	/^    def __init__(self, hps, images, labels, mode, learning_rate):$/;"	m	class:ResNet
+__init__	resNet.py	/^    def __init__(self, hps, images, labels, mode, learning_rate, trainable,$/;"	m	class:ResNet
 __init__	timer.py	/^    def __init__(self):$/;"	m	class:timer
 __init__	vgg19.py	/^    def __init__(self, hps, xs, ys, learning_rate, vgg19_npy_path=None, trainable=True, dropout=0.5):$/;"	m	class:Vgg19
 _amount_each_class_from_csv	data_utils.py	/^    def _amount_each_class_from_csv(self, filename):$/;"	m	class:ISIC2018_data
@@ -26,6 +26,7 @@ _build_model	resNet.py	/^    def _build_model(self):$/;"	m	class:ResNet
 _build_model	vgg19.py	/^    def _build_model(self, train_mode=None):$/;"	m	class:Vgg19
 _build_train_op	resNet.py	/^    def _build_train_op(self):$/;"	m	class:ResNet
 _build_train_op	vgg19.py	/^    def _build_train_op(self):$/;"	m	class:Vgg19
+_bytes_feature	data_utils.py	/^        def _bytes_feature(value):$/;"	f	function:ISIC2018_data._generate_record
 _compute_mean_std_for_val_index_others	data_utils.py	/^    def _compute_mean_std_for_val_index_others(self):$/;"	m	class:ISIC2018_data
 _conv	resNet.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:ResNet
 _decay	resNet.py	/^    def _decay(self):$/;"	m	class:ResNet
@@ -37,16 +38,26 @@ _fully_connected	vgg19.py	/^    def _fully_connected(self, x, out_dim, name):$/;
 _generate	data_utils.py	/^        def _generate(files, ofiles):$/;"	f	function:ISIC2018_data.generate_train_valid
 _generate_batch_by_batch	data_utils.py	/^    def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):$/;"	m	class:ISIC2018_data
 _generate_each_fold_img_name_as_csv	data_utils.py	/^    def _generate_each_fold_img_name_as_csv(self, data):$/;"	m	class:ISIC2018_data
+_generate_record	data_utils.py	/^    def _generate_record(self, prefix_directory, filenames, labels, index):$/;"	m	class:ISIC2018_data
+_get_conv_var	resNet.py	/^    def _get_conv_var(self, filter_size, in_filters, out_filters, name):$/;"	m	class:ResNet
+_get_var	resNet.py	/^    def _get_var(self, initial_value, name, var_name):$/;"	m	class:ResNet
 _global_avg_pool	resNet.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
 _inputs	data_utils.py	/^    def _inputs(self):$/;"	m	class:ISIC2018_data
+_int64_feature	data_utils.py	/^        def _int64_feature(value):$/;"	f	function:ISIC2018_data._generate_record
 _load_data_and_norm	data_utils.py	/^    def _load_data_and_norm(self, norm=True):$/;"	m	class:ISIC2018_data
 _load_imgs_by_batch	data_utils.py	/^    def _load_imgs_by_batch(self, prefix_directory, filenames):$/;"	m	class:ISIC2018_data
+_load_record	data_utils.py	/^        def _load_record(path, min_queue_examples, is_train=True, num_epochs=None):$/;"	f	function:ISIC2018_data._load_record
+_load_record	data_utils.py	/^    def _load_record(self):$/;"	m	class:ISIC2018_data
 _median_weight_class_loss	resNet.py	/^    def _median_weight_class_loss(self, labels, logits):$/;"	m	class:ResNet
-_pre_process_images	data_utils.py	/^    def _pre_process_images(self, x):$/;"	m	class:ISIC2018_data
+_parse_function	data_utils.py	/^        def _parse_function(example_proto):$/;"	f	function:ISIC2018_data._load_record
+_pre_process_images	data_utils.py	/^    def _pre_process_images(self, x, is_train=True):$/;"	m	class:ISIC2018_data
 _pre_process_images	resNet.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
 _pre_process_images	vgg19.py	/^    def _pre_process_images(self, x):$/;"	m	class:Vgg19
+_preprocess_train	data_utils.py	/^        def _preprocess_train(image, label):$/;"	f	function:ISIC2018_data._load_record
+_preprocess_valid	data_utils.py	/^        def _preprocess_valid(image, label):$/;"	f	function:ISIC2018_data._load_record
 _relu	resNet.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
 _residual	resNet.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
+_scale_amount_for_fewer	data_utils.py	/^    def _scale_amount_for_fewer(self):$/;"	m	class:ISIC2018_data
 _stride_arr	resNet.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
 avg_pool	vgg19.py	/^    def avg_pool(self, bottom, name):$/;"	m	class:Vgg19
 build_graph	resNet.py	/^    def build_graph(self):$/;"	m	class:ResNet
@@ -63,7 +74,10 @@ get_duration	timer.py	/^    def get_duration(self):$/;"	m	class:timer
 get_fc_var	vgg19.py	/^    def get_fc_var(self, in_size, out_size, name):$/;"	m	class:Vgg19
 get_groups	data_utils.py	/^    def get_groups(self, i):$/;"	m	class:ISIC2018_data
 get_hint_pool_idxs	memory.py	/^    def get_hint_pool_idxs(self, normalized_query):$/;"	m	class:Memory
+get_inputs	data_utils.py	/^    def get_inputs(self):$/;"	m	class:ISIC2018_data
 get_shape	data_utils.py	/^    def get_shape(self):$/;"	m	class:ISIC2018_data
+get_train	data_utils.py	/^    def get_train(self):$/;"	m	class:ISIC2018_data
+get_valid	data_utils.py	/^    def get_valid(self):$/;"	m	class:ISIC2018_data
 get_var	vgg19.py	/^    def get_var(self, initial_value, name, idx, var_name):$/;"	m	class:Vgg19
 get_var_count	vgg19.py	/^    def get_var_count(self):$/;"	m	class:Vgg19
 gray_world	color_constancy.py	/^def gray_world(img):$/;"	f

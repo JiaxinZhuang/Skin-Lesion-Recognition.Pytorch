@@ -35,18 +35,18 @@ tf.flags.DEFINE_string('data', 'ISIC2018',
                        """ISIC2018 or cifar10""")
 tf.flags.DEFINE_integer('feature_size', 64,
                         """feature size""")
-tf.flags.DEFINE_integer('start_k', -1,
+tf.flags.DEFINE_integer('start_k', 4,
                         """start k from""")
 tf.flags.DEFINE_integer('valid_frequency', 9,
                         """valid_frequency valid at % valid_frequency, at least from 1!!Less than epoch""")
 
 # where to put log and parameters
-tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_Fc/logs/',
+tf.flags.DEFINE_string('logdir', '../save_{}_{}_{}_DA_Fc/logs/',
                        """Directory where to write graph logs """)
-tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_Fc/parameters/',
+tf.flags.DEFINE_string('parameters', '../save_{}_{}_{}_DA_Fc/parameters/',
                        """Directory where to write event logs """
                        """and checkpoint.""")
-tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_Fc/parameters/model_train_ResNet_False_{}',
+tf.flags.DEFINE_string('checkpoint_dir', '../save_{}_{}_{}_DA_Fc/parameters/model_train_ResNet_False_{}',
                        """checkpoint_dir""")
 
 # constants
@@ -66,77 +66,80 @@ os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICE
 def train(hps, val_index):
     """Train model for a number of steps"""
 
-    # select dataset
-    with tf.device(FLAGS.device_cpu):
-        if FLAGS.data == 'ISIC2018':
-            data = data_utils.ISIC2018_data()
-        else:
-            tf.logging.info('Give dataset name')
-            sys.exit(-1)
-        # get data information, width, height from data_utils
-        width, height, channel = data.get_shape()
-        #data.set_valid_index(val_index, norm=True)
-        data.set_valid_index(val_index, norm=False)
-
-    parameters = FLAGS.parameters.format(FLAGS.batch_size, data.nHei, data.nWid)
-    logdir = FLAGS.logdir.format(FLAGS.batch_size, data.nHei, data.nWid)
-    #tf.logging.info('Epoch is %d' % FLAGS.epoch)
-    psuffix = 'model_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
-    lsuffix = 'log_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
-    train_model = os.path.join(parameters, psuffix)
-    train_graph = os.path.join(logdir, lsuffix)
-
-    tf.logging.info('train model %s' % train_model)
-    tf.logging.info('train graph %s' % train_graph)
-
-    tf.logging.info('Remove save parameters and logs before: %r' % FLAGS.remove)
-    if FLAGS.remove:
-        if tf.gfile.Exists(train_model):
-            tf.gfile.DeleteRecursively(train_model)
-            tf.gfile.MakeDirs(train_model)
-        if tf.gfile.Exists(train_graph):
-            tf.gfile.DeleteRecursively(train_graph)
-            tf.gfile.MakeDirs(train_graph)
-        sepoch = 0
-    else:
-        ckpt = tf.train.get_checkpoint_state(train_model)
-        if ckpt and ckpt.model_checkpoint_path:
-            sepoch = int(ckpt.model_checkpoint_path.split('/')[-1].split('-')[1]) + 1
-            model_path = ckpt.model_checkpoint_path
-            tf.logging.info(model_path)
-            tf.logging.info('sepoch is %d' % sepoch)
-        else:
-            sepoch = 0
-            tf.logging.info('Fail to restore, start from %d' % sepoch)
-
-    if FLAGS.with_memory:
-        ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir.format(FLAGS.batch_size, data.nHei, data.nWid, val_index))
-        if ckpt and ckpt.model_checkpoint_path:
-            all_model_checkpoint_paths = ckpt.all_model_checkpoint_paths
-            model_path_template = all_model_checkpoint_paths[0].split('-')[0]
-            model_path = model_path_template + '-99'
-            sepoch = 0
-            tf.logging.info(model_path)
-            tf.logging.info('sepoch is %d' % sepoch)
-        else:
-            tf.logging.info('Fail to restore for memory')
-            sys.exit(-1)
-
-
     gpu = FLAGS.device_gpu + str(0)
     with tf.device(gpu):
         with tf.Graph().as_default() as g:
+        # select dataset
+            with tf.device(FLAGS.device_cpu):
+                if FLAGS.data == 'ISIC2018':
+                    data = data_utils.ISIC2018_data()
+                else:
+                    tf.logging.info('Give dataset name')
+                    sys.exit(-1)
+                # get data information, width, height from data_utils
+                width, height, channel = data.get_shape()
+                #data.set_valid_index(val_index, norm=True)
+                data.set_valid_index(val_index, norm=False)
+
+            parameters = FLAGS.parameters.format(FLAGS.batch_size, data.nHei, data.nWid)
+            logdir = FLAGS.logdir.format(FLAGS.batch_size, data.nHei, data.nWid)
+            #tf.logging.info('Epoch is %d' % FLAGS.epoch)
+            psuffix = 'model_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
+            lsuffix = 'log_' + FLAGS.mode + '_' + FLAGS.model + '_' + str(FLAGS.with_memory) + '_' + str(val_index)
+            train_model = os.path.join(parameters, psuffix)
+            train_graph = os.path.join(logdir, lsuffix)
+
+            tf.logging.info('train model %s' % train_model)
+            tf.logging.info('train graph %s' % train_graph)
+
+            tf.logging.info('Remove save parameters and logs before: %r' % FLAGS.remove)
+            if FLAGS.remove:
+                if tf.gfile.Exists(train_model):
+                    tf.gfile.DeleteRecursively(train_model)
+                    tf.gfile.MakeDirs(train_model)
+                if tf.gfile.Exists(train_graph):
+                    tf.gfile.DeleteRecursively(train_graph)
+                    tf.gfile.MakeDirs(train_graph)
+                sepoch = 0
+            else:
+                ckpt = tf.train.get_checkpoint_state(train_model)
+                if ckpt and ckpt.model_checkpoint_path:
+                    sepoch = int(ckpt.model_checkpoint_path.split('/')[-1].split('-')[1]) + 1
+                    model_path = ckpt.model_checkpoint_path
+                    tf.logging.info(model_path)
+                    tf.logging.info('sepoch is %d' % sepoch)
+                else:
+                    sepoch = 0
+                    tf.logging.info('Fail to restore, start from %d' % sepoch)
+
+            if FLAGS.with_memory:
+                ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir.format(FLAGS.batch_size, data.nHei, data.nWid, val_index))
+                if ckpt and ckpt.model_checkpoint_path:
+                    all_model_checkpoint_paths = ckpt.all_model_checkpoint_paths
+                    model_path_template = all_model_checkpoint_paths[0].split('-')[0]
+                    model_path = model_path_template + '-99'
+                    sepoch = 0
+                    tf.logging.info(model_path)
+                    tf.logging.info('sepoch is %d' % sepoch)
+                else:
+                    tf.logging.info('Fail to restore for memory')
+                    sys.exit(-1)
+
+
             #global_step = tf.train.get_or_create_global_step()
 
             # define variables
             xs = tf.placeholder(tf.float32, [None, width, height, channel])
             ys = tf.placeholder(tf.float32, [None, hps.num_classes])
+            # TODO
             train_mode = tf.placeholder(tf.bool)
+            trainable = tf.placeholder(tf.bool)
             learning_rate = tf.placeholder(tf.float32, [], name='learning_rate')
             #val = tf.placeholder(tf.float32)
 
             if FLAGS.model == 'ResNet':
-                model = resNet.ResNet(hps, xs, ys, train_mode, learning_rate)
+                model = resNet.ResNet(hps, xs, ys, 'train', learning_rate, trainable, \
+                            resnet_npz_path='../data/ImageNet-ResNet34.npz')
                 model.build_graph()
             elif FLAGS.model == 'Vgg19':
                 model = vgg19.Vgg19(hps, xs, ys, learning_rate, vgg19_npy_path='../data/vgg19.npy')
@@ -160,7 +163,7 @@ def train(hps, val_index):
             #loss = model.loss(logits, ys, val)
             #train_op = model.train(loss, global_step)
 
-            init = tf.global_variables_initializer()
+            init = [tf.global_variables_initializer(), tf.local_variables_initializer()]
 
             config = tf.ConfigProto(log_device_placement=FLAGS.log_device_placement)
             config.gpu_options.allow_growth = True
@@ -170,7 +173,7 @@ def train(hps, val_index):
                                         scope='extract_feature_map')
                 saver = tf.train.Saver(get_restored_variables ,max_to_keep=FLAGS.epoch)
             else:
-                saver = tf.train.Saver(max_to_keep=50)
+                saver = tf.train.Saver(max_to_keep=26)
 
             summary_writer = tf.summary.FileWriter(train_graph, g)
 
@@ -184,37 +187,65 @@ def train(hps, val_index):
                     saver.restore(sess, model_path)
 
                 for i in range(sepoch, FLAGS.epoch):
+                    sess.run(data.extra_init)
                     tf.logging.info("%s: Epoch %d, val_index is %d" % (datetime.now(), i, val_index))
-                    #if i < 60:
-                    #    learning_rate_ = 0.1
-                    #elif i < 80:
-                    #    learning_rate_ = 0.01
-                    #elif i < 130:
-                    #    learning_rate_ = 0.001
-                    #else:
-                    #    learning_rate_ = 0.0001
-                    if i < 100:
+                    if i < 60:
                         learning_rate_ = 0.1
-                    elif i < 150:
+                    elif i < 80:
                         learning_rate_ = 0.01
-                    elif i < 200:
+                    elif i < 130:
                         learning_rate_ = 0.001
                     else:
                         learning_rate_ = 0.0001
+                    #if i < 100:
+                    #    learning_rate_ = 0.1
+                    #elif i < 150:
+                    #    learning_rate_ = 0.01
+                    #elif i < 200:
+                    #    learning_rate_ = 0.001
+                    #else:
+                    #    learning_rate_ = 0.0001
 
                     # train
-                    for j in range(data.k_fold):
-                        if j != val_index:
-                            for batch_x, batch_y in data.get_groups(j):
-                                _, summary_op_ = sess.run(
-                                        [train_op, summaries],
-                                        feed_dict={ xs:batch_x,
-                                                    ys:batch_y,
-                                                    learning_rate: learning_rate_,
-                                                    train_mode: True
-                                                    })
-                                summary_writer.add_summary(summary_op_, step)
-                                step += 1
+                    #for j in range(data.k_fold):
+                        #if j != val_index:
+                            # coord
+                        #batch_x_, batch_y_ = data.get_groups(j)
+                    batch_x_, batch_y_ = data.get_inputs()
+                    #coord = tf.train.Coordinator()
+                    #threads = tf.train.start_queue_runners(coord=coord, sess=sess)
+                    try:
+                        j = 0
+                        while True:
+                            batch_x, batch_y = sess.run([batch_x_, batch_y_])
+                            _, summary_op_ = sess.run(
+                                    [train_op, summaries],
+                                    feed_dict={ xs:batch_x,
+                                                ys:batch_y,
+                                                learning_rate: learning_rate_,
+                                                train_mode: True
+                                                })
+                            summary_writer.add_summary(summary_op_, step)
+                            step += 1
+                            j += 1
+                    except tf.errors.OutOfRangeError:
+                        tf.logging.info("%s: Epoch %d complete after iter %d" % (datetime.now(), i, j))
+                        #tf.logging.info("%s: Epoch %d, val_index is %d" % (datetime.now(), i, val_index))
+                        #print('Done one epoch training after iter %d' % j)
+                    #finally:
+                    #    # When done, ask the threads to stop.
+                    #    coord.request_stop()
+
+                    #    # Wait for threads to finish.
+                    #    coord.join(threads)
+                            #for batch_x, batch_y in data.get_groups(j):
+                            #    _, summary_op_ = sess.run(
+                            #            [train_op, summaries],
+                            #            feed_dict={ xs:batch_x,
+                            #                        ys:batch_y,
+                            #                        learning_rate: learning_rate_,
+                            #                        train_mode: True
+                            #                        })
 
                     if i % 10 == FLAGS.valid_frequency:
                         counter = [ 0 for _ in range(hps.num_classes)]
@@ -223,16 +254,30 @@ def train(hps, val_index):
                         dicts = []
                         all_imgs = 0.0
                         all_cor = 0.0
-                        for j in range(data.k_fold):
-                            if j == val_index:
-                                continue
-                            for batch_x, batch_y in data.get_groups(j):
+                        #for j in range(data.k_fold):
+                        #    if j == val_index:
+                        #        continue
+                        #    batch_x_, batch_y_ = data.get_groups(j)
+                        batch_x_iter, batch_y_iter = data.get_train()
+                        #coord = tf.train.Coordinator()
+                        #threads = tf.train.start_queue_runners(coord=coord, sess=sess)
+                        try:
+                            j = 0
+                            while True:
+                                batch_x, batch_y = sess.run([batch_x_iter, batch_y_iter])
                                 predictions_ = sess.run(
                                             predictions,
                                             feed_dict={
                                                 xs:batch_x,
                                                 ys:batch_y,
                                                 train_mode: False})
+                        #for batch_x, batch_y in data.get_groups(j):
+                        #    predictions_ = sess.run(
+                        #                predictions,
+                        #                feed_dict={
+                        #                    xs:batch_x,
+                        #                    ys:batch_y,
+                        #                    train_mode: False})
                                 assert predictions_.shape == np.array(batch_y).shape
                                 batch_y_ = np.argmax(batch_y, axis=1)
                                 predictions_ = np.argmax(predictions_, axis=1)
@@ -246,7 +291,18 @@ def train(hps, val_index):
                                     if y == ypred:
                                         counter[y] += 1
                                         all_cor += 1
-                        output_filename = '../save_{}_{}_{}_Fc/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                                j += 1
+                        except tf.errors.OutOfRangeError:
+                            tf.logging.info("%s: Epoch %d train evaluation complete after iter %d" % (datetime.now(), i, j))
+                            #print('Done training -- epoch limit reached')
+                        #finally:
+                        #    # When done, ask the threads to stop.
+                        #    coord.request_stop()
+
+                        #    # Wait for threads to finish.
+                        #    coord.join(threads)
+
+                        output_filename = '../save_{}_{}_{}_DA_Fc/tra/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -269,7 +325,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Training Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_Fc/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_DA_Fc/tra/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}
@@ -278,8 +334,6 @@ def train(hps, val_index):
                             df.to_csv(fo)
 
 
-                    assert FLAGS.valid_frequency >= 0
-                    if i % 10 == FLAGS.valid_frequency:
                         # val all Accuracy, precision ...
                         counter = [ 0 for _ in range(hps.num_classes)]
                         class_nums = [ 0 for _ in range(hps.num_classes)]
@@ -287,27 +341,46 @@ def train(hps, val_index):
                         dicts = []
                         all_imgs = 0.0
                         all_cor = 0.0
-                        for batch_x, batch_y in data.get_groups(val_index):
-                            predictions_ = sess.run(
+
+                        #batch_x_, batch_y_ = data.get_groups(val_index)
+                        batch_x_iter, batch_y_iter = data.get_valid()
+                        #coord = tf.train.Coordinator()
+                        #threads = tf.train.start_queue_runners(coord=coord)
+                        try:
+                            j = 0
+                            while True:
+                                batch_x, batch_y = sess.run([batch_x_iter, batch_y_iter])
+                                predictions_ = sess.run(
                                         predictions,
                                         feed_dict={
                                             xs:batch_x,
                                             ys:batch_y,
                                             train_mode:False})
-                            assert predictions_.shape == np.array(batch_y).shape
-                            batch_y_ = np.argmax(batch_y, axis=1)
-                            predictions_ = np.argmax(predictions_, axis=1)
-                            all_imgs += len(batch_y_)
-                            for y, ypred in zip(batch_y_, predictions_):
-                                # recall
-                                class_nums[y] += 1
-                                # precision
-                                pre_class_nums[ypred] += 1
-                                dicts.append((y, ypred))
-                                if y == ypred:
-                                    counter[y] += 1
-                                    all_cor += 1
-                        output_filename = '../save_{}_{}_{}_Fc/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                                assert predictions_.shape == np.array(batch_y).shape
+                                batch_y_ = np.argmax(batch_y, axis=1)
+                                predictions_ = np.argmax(predictions_, axis=1)
+                                all_imgs += len(batch_y_)
+                                for y, ypred in zip(batch_y_, predictions_):
+                                    # recall
+                                    class_nums[y] += 1
+                                    # precision
+                                    pre_class_nums[ypred] += 1
+                                    dicts.append((y, ypred))
+                                    if y == ypred:
+                                        counter[y] += 1
+                                        all_cor += 1
+                                j += 1
+                        except tf.errors.OutOfRangeError:
+                            tf.logging.info("%s: Epoch %d Valid evaluation complete after iter %d" % (datetime.now(), i, j))
+                            #tf.logging.info("%s: Epoch %d, val_index is %d" % (datetime.now(), i, val_index))
+                            #print('Done training -- epoch limit reached')
+                        #finally:
+                        #    # When done, ask the threads to stop.
+                        #    coord.request_stop()
+
+                            # Wait for threads to finish.
+                       #     coord.join(threads)
+                        output_filename = '../save_{}_{}_{}_DA_Fc/val/val_index_{}_y_ypre_{}'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         with open(output_filename, 'wb') as fo:
                             np.save(fo, dicts)
 
@@ -330,7 +403,7 @@ def train(hps, val_index):
                         accuracy = (all_cor*1.0)/all_imgs
                         tf.logging.info('%s: Validation Acc of all classes is %.4f' % (datetime.now(), accuracy))
 
-                        output_filename = '../save_{}_{}_{}_Fc/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
+                        output_filename = '../save_{}_{}_{}_DA_Fc/val/val_index_{}_recall_precision_{}.csv'.format(FLAGS.batch_size, data.nHei, data.nWid, val_index, i)
                         col_names = ['recall', 'precision', 'accuracy']
                         acc = [accuracy] * len(precisions)
                         output = {'recall': recalls, 'precision': precisions, 'accuracy': acc}
@@ -338,7 +411,7 @@ def train(hps, val_index):
                         with open(output_filename, 'w', newline="") as fo:
                             df.to_csv(fo)
 
-                    saver.save(sess, os.path.join(train_model, 'model'), global_step=i+1)
+                        saver.save(sess, os.path.join(train_model, 'model'), global_step=i+1)
 
 
 
@@ -383,7 +456,8 @@ def main(argv=None):
                          relu_leakiness=0.1,
                          optimizer='mom',
                          weight_sample=weight_sample_,
-                         use_weight_sample=True)
+                         use_weight_sample=True,
+                         using_pretrained=False)
 
     if FLAGS.mode == 'train':
         k_fold = FLAGS.k_fold

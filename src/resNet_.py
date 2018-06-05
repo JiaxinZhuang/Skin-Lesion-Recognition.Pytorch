@@ -11,6 +11,8 @@ import numpy as np
 
 from tensorflow.python.training import moving_averages
 
+import os
+
 
 HParams = namedtuple('HParams',
                      'feature_size, batch_size, num_classes, '
@@ -78,56 +80,53 @@ class ResNet():
 
     def _build_model(self):
         """Build the core model within the graph"""
-        with tf.variable_scope('extract_feature_map'):
+        strides = [2, 1, 2, 2, 2]
+        activate_before_residual = [True, False, False, False]
+        # TODO
+        if self.hps.use_bottleneck:
+            res_func = self._bottleneck_residual
+            filters = [16, 64, 128, 256]
+        else:
+            res_func = self._residual
+            filters = [64, 64, 128, 256, 512]
 
-            strides = [2, 1, 2, 2, 2]
-            activate_before_residual = [True, False, False, False]
-            # TODO
-            if self.hps.use_bottleneck:
-                res_func = self._bottleneck_residual
-                filters = [16, 64, 128, 256]
-            else:
-                res_func = self._residual
-                filters = [64, 64, 128, 256, 512]
+        x = self._images
+        x = self.conv_layer('conv0', x, 7, 3, filters[0], self._stride_arr(strides[0]))
 
-            with tf.variable_scope('unit_1'):
-                x = self._images
-                x = self._conv('unit_1', x, 7, 3, filters[0], self._stride_arr(strides[0]))
+        with tf.variable_scope('unit_2_0'):
+            x = tf.nn.max_pool(x, [1,3,3,1], [1,2,2,1], padding='SAME', name='max_pool')
+            x = res_func(x, filters[0], filters[1], self._stride_arr(strides[1]),
+                    activate_before_residual[0])
+        # num_residual_units is a list [0,2,3,5,2]
+        for i in range(1, self.hps.num_residual_units[1]):
+            with tf.variable_scope('unit_1_%d' % i):
+                x = res_func(x, filters[1], filters[1], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_2_0'):
-                x = tf.nn.max_pool(x, [1,3,3,1], [1,2,2,1], padding='SAME', name='max_pool')
-                x = res_func(x, filters[0], filters[1], self._stride_arr(strides[1]),
-                        activate_before_residual[0])
-            # num_residual_units is a list [0,2,3,5,2]
-            for i in range(1, self.hps.num_residual_units[1]):
-                with tf.variable_scope('unit_1_%d' % i):
-                    x = res_func(x, filters[1], filters[1], self._stride_arr(1), False)
+        with tf.variable_scope('unit_3_0'):
+            x = res_func(x, filters[1], filters[2], self._stride_arr(strides[2]),
+                    activate_before_residual[1])
+        for i in range(1, self.hps.num_residual_units[2]):
+            with tf.variable_scope('unit_3_%d' % i):
+                x = res_func(x, filters[2], filters[2], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_3_0'):
-                x = res_func(x, filters[1], filters[2], self._stride_arr(strides[2]),
-                        activate_before_residual[1])
-            for i in range(1, self.hps.num_residual_units[2]):
-                with tf.variable_scope('unit_3_%d' % i):
-                    x = res_func(x, filters[2], filters[2], self._stride_arr(1), False)
+        with tf.variable_scope('unit_4_0'):
+            x = res_func(x, filters[2], filters[3], self._stride_arr(strides[3]),
+                    activate_before_residual[2])
+        for i in range(1, self.hps.num_residual_units[3]):
+            with tf.variable_scope('unit_4_%d' %i):
+                x = res_func(x, filters[3], filters[3], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_4_0'):
-                x = res_func(x, filters[2], filters[3], self._stride_arr(strides[3]),
-                        activate_before_residual[2])
-            for i in range(1, self.hps.num_residual_units[3]):
-                with tf.variable_scope('unit_4_%d' %i):
-                    x = res_func(x, filters[3], filters[3], self._stride_arr(1), False)
+        with tf.variable_scope('unit_5_0'):
+            x = res_func(x, filters[3], filters[4], self._stride_arr(strides[4]),
+                    activate_before_residual[2])
+        for i in range(1, self.hps.num_residual_units[4]):
+            with tf.variable_scope('unit_5_%d' %i):
+                x = res_func(x, filters[4], filters[4], self._stride_arr(1), False)
 
-            with tf.variable_scope('unit_5_0'):
-                x = res_func(x, filters[3], filters[4], self._stride_arr(strides[4]),
-                        activate_before_residual[2])
-            for i in range(1, self.hps.num_residual_units[4]):
-                with tf.variable_scope('unit_5_%d' %i):
-                    x = res_func(x, filters[4], filters[4], self._stride_arr(1), False)
-
-            with tf.variable_scope('unit_last'):
-                x = self._batch_norm('final_bn', x)
-                x = self._relu(x, self.hps.relu_leakiness)
-                self.feature_map = self._global_avg_pool(x)
+        with tf.variable_scope('unit_last'):
+            x = self._batch_norm('final_bn', x)
+            x = self._relu(x, self.hps.relu_leakiness)
+            self.feature_map = self._global_avg_pool(x)
 
         with tf.variable_scope('logit'):
             logits = self._fully_connected(self.feature_map, self.hps.num_classes)
@@ -184,21 +183,21 @@ class ResNet():
                 x = self._relu(x, self.hps.leakiness)
 
         with tf.variable_scope('sub1'):
-            x = self._conv('conv1', x, 1, in_filter, out_filter/4, stride)
+            x = self.conv_layer('conv1', x, 1, in_filter, out_filter/4, stride)
 
         with tf.variable_scope('sub2'):
             x = self._batch_norm('bn2', x)
             x = self._relu(x, self.hps.relu_leakiness)
-            x = self._conv('conv2', x, 3, out_filter/4, out_filter/4. [1,1,1,1])
+            x = self.conv_layer('conv2', x, 3, out_filter/4, out_filter/4. [1,1,1,1])
 
         with tf.variable_scope('sub3'):
             x = self._batch_norm('bn3', x)
             x = self._relu(x, self.hps.relu_leakiness)
-            x = self._conv('conv3', x, 1, out_filter/4, out_filter, [1,1,1,1])
+            x = self.conv_layer('conv3', x, 1, out_filter/4, out_filter, [1,1,1,1])
 
         with tf.variable_scope('sub_add'):
             if in_filter != out_filter:
-                orig_x = self._conv('project', orig_x, 1, in_filter, out_filter, stride)
+                orig_x = self.conv_layer('project', orig_x, 1, in_filter, out_filter, stride)
             x += orig_x
 
         tf.logging.info('image after unit %s', (tf.shape(x),))
@@ -219,12 +218,12 @@ class ResNet():
                 x = self._relu(x, self.hps.relu_leakiness)
 
         with tf.variable_scope('sub1'):
-            x = self._conv('conv1', x, 3, in_filter, out_filter, stride)
+            x = self.conv_layer('conv1', x, 3, in_filter, out_filter, stride)
 
         with tf.variable_scope('sub2'):
             x = self._batch_norm('bn2', x)
             x = self._relu(x, self.hps.relu_leakiness)
-            x = self._conv('conv2', x, 3, out_filter, out_filter, [1,1,1,1])
+            x = self.conv_layer('conv2', x, 3, out_filter, out_filter, [1,1,1,1])
 
         with tf.variable_scope('sub_add'):
             if in_filter != out_filter:
@@ -262,28 +261,19 @@ class ResNet():
         """Map a stride scalar to the stride array for tf.nn.conv2d"""
         return [1, stride, stride, 1]
 
-    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):
+    def conv_layer(self, name, x, filter_size, in_filters, out_filters, strides):
         """Convolution"""
         with tf.variable_scope(name):
-            #kernel = self._get_conv_var(self, filter_size, in_filters, name)
-            n = filter_size * filter_size * out_filters
-            kernel = tf.get_variable(
-                    'DW', [filter_size, filter_size, in_filters, out_filters],
-                    tf.float32, initializer=tf.random_normal_initializer(
-                        stddev=np.sqrt(2.0/n)))
+            kernel = self._get_conv_var(filter_size, in_filters, out_filters, name)
 
         return tf.nn.conv2d(x, kernel, strides, padding='SAME')
 
     def _get_conv_var(self, filter_size, in_filters, out_filters, name):
         n = filter_size * filter_size * out_filters
-        initial_value = tf.get_variable(
-                'DW', [filter_size, filter_size, in_filters, out_filters],
-                tf.float32, initializer=tf.random_normal_initializer(
-                    stddev=np.sqrt(2.0/n)))
-        kernel = self._get_var(initial_value, name, "DW")
+        initial_value = tf.random_normal_initializer([filter_size, filter_size,
+            in_filters, out_filters], tf.float32, stddev=np.sqrt(2.0/n))
+        kernel = self._get_var(initial_value, name, 0, 'W')
         return kernel
-
-    #def _get_ba
 
     def _batch_norm(self, name, x):
         """Batch Normalization"""
@@ -361,9 +351,12 @@ class ResNet():
 
         return tf.multiply(self.hps.weight_decay_rate, tf.add_n(costs))
 
-    def _get_var(self, initial_value, name, var_name):
-        if self.data_dict is not None and name in self.data_dict:
-            value = self.data_dict[name]
+    def _get_var(self, initial_value, name, index, var_name):
+        ab_name = os.path.join(name, var_name)
+        ab_name = ab_name + ':' + str(index)
+
+        if self.data_dict is not None and ab_name in self.data_dict:
+            value = self.data_dict[ab_name]
         else:
             value = initial_value
 

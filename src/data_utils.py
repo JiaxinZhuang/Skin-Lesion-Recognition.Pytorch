@@ -32,6 +32,7 @@ tf.flags.DEFINE_string('ISIC2018', '../data/ISIC2018',
 
 class ISIC2018_data():
     def __init__(self):
+        self.epoch = 250
         self.task3_training_groundtruth = FLAGS.ISIC2018_Task3_Training_GroundTruth
         self.task3_training_input = FLAGS.ISIC2018_Task3_Training_Input
         self.ISIC2018 = FLAGS.ISIC2018
@@ -42,32 +43,26 @@ class ISIC2018_data():
         self.size = self.task3_training_groundtruth_.values.shape[0]
         self.batch_size = FLAGS.batch_size
         self.num_classes = 7
-        self.inputs_data = defaultdict(list)
-        self.labels_data = defaultdict(list)
+        #self.inputs = defaultdict(list)
+        self.inputs_data = []
+        self.labels_data = []
         self.labels_name_hard_encode = ['MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC']
-        self.mean_val_tra_path = 'mean_val_tra.csv'
+        #self.mean_val_tra_path = 'mean_val_tra.csv'
         # 10-fold
         # _mean_train, _variance_train means, when index used as validation set, all other train mean and variance
-        self._mean_train = []
-        self._variance_train = []
-        self._mean_valid = []
-        self._variance_valid = []
+        #self._mean_train = []
+        #self._variance_train = []
+        #self._mean_valid = []
+        #self._variance_valid = []
         # image size is for model
         self.image_size = 224
         self.rescale = True # 15
         self.nWid = 400
         self.nHei = 300
-        #self.nWid = 224
-        #self.nHei = 224
-        #self.nWid = 112
-        #self.nHei = 112
         #self.nWid = 40
         #self.nHei = 30
-        #self.nWid = 120
-        #self.nHei = 90
-        #self.nWid = 96
-        #self.nHei = 96
         self._inputs()
+        self.extra_init = []
 
     def generate_train_valid(self):
         train_path = '../data/ISIC2018/2018_5_28/train_label_list.csv'
@@ -111,14 +106,139 @@ class ISIC2018_data():
 
     def set_valid_index(self, i, norm=True):
         self.val_index= i
-        self._load_data_and_norm(norm)
+        self._load_record()
 
+        # load from pickle and norm
+        #self._load_data_and_norm(norm)
 
-    def _pre_process_images(self, x):
-        images = tf.image.resize_image_with_crop_or_pad(x, self.image_size+4, self.image_size+4)
-        images = tf.map_fn(lambda img: tf.random_crop(img, [self.image_size, self.image_size, 3]), images)
-        images = tf.map_fn(lambda img: tf.image.random_flip_left_right(img), images)
+    def _pre_process_images(self, x, is_train=True):
+        """
+        Inputs:
+            x: [300, 400, 3]
+        Returns:
+               [224, 224, 3]
+        """
+        # random crop
+        #images = tf.map_fn(lambda img: tf.random_crop(img, [self.image_size, self.image_size, 3]), images)
+        # flip
+        #images = tf.map_fn(lambda img: tf.image.random_flip_left_right(img), images)
+        #images = tf.map_fn(lambda img: tf.image.random_flip_up_down(img), images)
+        # standaedization
+        #images = tf.map_fn(lambda img: tf.image.per_image_standardization(img), images)
+
+        if is_train:
+            # resize
+            images = tf.image.resize_image_with_crop_or_pad(x, self.image_size+4, self.image_size+4)
+            # random crop
+            images = tf.random_crop(images, [self.image_size, self.image_size, 3])
+            # flip
+            images = tf.image.random_flip_left_right(images)
+            images = tf.image.random_flip_up_down(images)
+        else:
+            # resize
+            images = tf.image.resize_image_with_crop_or_pad(x, self.image_size, self.image_size)
+        # standardization
+        images = tf.image.per_image_standardization(images)
         return images
+
+
+    def _load_record(self):
+        # Train
+        def _parse_function(example_proto):
+            feature = {'train/image': tf.FixedLenFeature([], tf.string),
+                       'train/label': tf.FixedLenFeature([], tf.int64)}
+            parsed_features = tf.parse_single_example(example_proto, features=feature)
+            image = parsed_features['train/image']
+            label = parsed_features['train/label']
+
+            image = tf.decode_raw(image, tf.float32)
+            image = tf.reshape(image, [self.nHei, self.nWid, 3])
+
+            label = tf.one_hot(label, depth=self.num_classes)
+
+            return image, label
+
+        def _preprocess_train(image, label):
+            # Reshape image data into the original shape
+            image = self._pre_process_images(image, is_train=True)
+            return image, label
+
+        def _preprocess_valid(image, label):
+            # Reshape image data into the original shape
+            image = self._pre_process_images(image, is_train=False)
+            return image, label
+
+        def _load_record(path, min_queue_examples, is_train=True, num_epochs=None):
+            # epoch is defined in train
+            num_parallel_calls=8
+            #filename_queue = tf.train.string_input_producer(path, shuffle=False)
+            filename_queue = path
+            dataset = tf.data.TFRecordDataset(filename_queue)
+            dataset = dataset.map(_parse_function, num_parallel_calls=num_parallel_calls)
+
+            if is_train == True:
+                num_epochs = 1 if num_epochs == None else num_epochs
+                assert num_epochs != None
+                dataset = dataset.map(_preprocess_train, num_parallel_calls=num_parallel_calls)
+            else:
+                num_epochs = 1 if num_epochs == None else num_epochs
+                assert num_epochs != None
+                dataset = dataset.map(_preprocess_valid, num_parallel_calls=num_parallel_calls)
+
+            dataset = dataset.shuffle(buffer_size=min_queue_examples)
+            dataset = dataset.batch(self.batch_size)
+            dataset = dataset.prefetch(buffer_size=min_queue_examples)
+            dataset = dataset.repeat(num_epochs)
+            iterator = dataset.make_initializable_iterator()
+
+            self.extra_init.append(iterator.initializer)
+
+            # `features` is a dictionary in which each value is a batch of values for
+            # that feature; `labels` is a batch of labels.
+            features, labels = iterator.get_next()
+            return features, labels
+            #num_preprocess_threads = 8
+
+            #if is_train:
+            #    images, labels = tf.train.shuffle_batch([image, label],
+            #            batch_size=FLAGS.batch_size,
+            #            num_threads=num_preprocess_threads,
+            #            min_after_dequeue=min_queue_examples,
+            #            capacity=min_queue_examples+FLAGS.batch_size * 3,
+            #            allow_smaller_final_batch=True)
+            #else:
+            #    images, labels = tf.train.batch([image, label],
+            #            batch_size=FLAGS.batch_size,
+            #            num_threads=num_preprocess_threads,
+            #            capacity=min_queue_examples+FLAGS.batch_size * 3,
+            #            allow_smaller_final_batch=True)
+
+        min_queue_examples = int(8000 * 0.4)
+        train_dir = []
+        val_dir = []
+        for i, path in enumerate(self.datas_path):
+            if i == self.val_index:
+                val_dir.append(path)
+            else:
+                train_dir.append(path)
+        images, labels = _load_record(train_dir, min_queue_examples, is_train=True)
+        self.inputs_data = images
+        self.labels_data = labels
+        images, labels = _load_record([self.train_path], min_queue_examples, is_train=False)
+        self.train_images = images
+        self.train_labels = labels
+        images, labels = _load_record(val_dir, min_queue_examples, is_train=False)
+        self.valid_images = images
+        self.valid_labels = labels
+
+    def get_inputs(self):
+        return self.inputs_data, self.labels_data
+
+    def get_train(self):
+        return self.train_images, self.train_labels
+
+    def get_valid(self):
+        return self.valid_images, self.valid_labels
 
     def _load_data_and_norm(self, norm=True):
         output_filename = '2018_5_28'
@@ -189,9 +309,11 @@ class ISIC2018_data():
         inputs = self.inputs_data[i]
         labels = self.labels_data[i]
 
-        for x, y in zip(inputs, labels):
+        #inputs, labels = inputs_.make_one_shot_iterator()
+        return inputs, labels
+        #for x, y in zip(inputs, labels):
             #x = self._pre_process_images(x)
-            yield x, y
+            #yield x, y
 
     #def _pre_process_images(self, x):
     #    output = []
@@ -205,12 +327,15 @@ class ISIC2018_data():
 
     def _inputs(self):
         data_dir = self.ISIC2018
-        output_filename = '2018_5_28/task3_{}_{}_{}'.format(self.batch_size, self.nHei, self.nWid)
+        # Read filename
+        output_filename = '2018_6_4/task3_{}_{}_{}'.format(self.batch_size, self.nHei, self.nWid)
+        #output_filename = '2018_5_28/task3_{}_{}_{}'.format(self.batch_size, self.nHei, self.nWid)
         data_dir = os.path.join(data_dir, output_filename)
         tf.logging.info('data_dir %s' % data_dir)
         self.datas_path = []
         for i in range(self.k_fold):
             self.datas_path.append(os.path.join(data_dir, 'task3_norm_%d' %i))
+        self.train_path = os.path.join(data_dir, 'train')
         #if mode == train:
         #    pass
         #elif mode == 'validation':
@@ -219,7 +344,7 @@ class ISIC2018_data():
         #train_batches = np.load(
 
     def get_shape(self):
-        return (self.nHei,self.nWid,3)
+        return (self.image_size,self.image_size,3)
 
     def get_bsize(self):
         return int(math.ceil(self.size/self.k_fold))
@@ -230,9 +355,22 @@ class ISIC2018_data():
         for name in self.imagepath_each_class:
             logging.info('%s : %d' % (name, len(self.imagepath_each_class[name])))
 
+    def _scale_amount_for_fewer(self):
+        """scale images name for fewer
+        """
+        weight_sample = 6705/np.array([1113,6705,514,327,1099,115,142])
+        weight_sample = weight_sample.astype(int)
+        for index, name in enumerate(self.labels_name_hard_encode):
+            self.imagepath_each_class[name] = self.imagepath_each_class[name] * weight_sample[index]
+            print(len(self.imagepath_each_class[name]))
+
     def generate_inputs_by_batch(self):
+        #self.output_amount_class()
+        # scale only when training
         filenames = self.task3_training_groundtruth
         self._amount_each_class_from_csv(filenames)
+        self._scale_amount_for_fewer()
+        #sys.exit(-1)
         groups = self._divide_groups_xy()
 
         prefix_directory = self.task3_training_input
@@ -240,7 +378,8 @@ class ISIC2018_data():
         img_names = defaultdict(list)
         for filenames_np, labels in groups:
             img_names[str(index)] = filenames_np
-            self._generate_batch_by_batch(prefix_directory, filenames_np, labels, index)
+            self._generate_record(prefix_directory, filenames_np, labels, index)
+            #self._generate_batch_by_batch(prefix_directory, filenames_np, labels, index)
             index += 1
         self._generate_each_fold_img_name_as_csv(img_names)
 
@@ -256,7 +395,44 @@ class ISIC2018_data():
             df.to_csv(fo, index=False)
 
 
+
+    def _generate_record(self, prefix_directory, filenames, labels, index):
+        def _int64_feature(value):
+            return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
+        def _bytes_feature(value):
+            return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+        output_filename = 'task3_{}_{}_{}/task3_norm_{}'.format(FLAGS.batch_size, self.nHei, self.nWid,index)
+        data = self._load_imgs_by_batch(prefix_directory, filenames)
+        groups = int(math.ceil(len(labels)/FLAGS.batch_size))
+        labels_ = []
+        lens = len(labels)
+        for i in range(groups):
+            f_ = i*FLAGS.batch_size
+            e_ = min((i+1)*FLAGS.batch_size, lens)
+            sub_g = labels[f_:e_]
+            labels_.append(sub_g)
+
+
+        process_bar_ = process_bar.process_bar(lens)
+        #writer = tf.python_io.TFRecordWriter(output_filename)
+        with tf.python_io.TFRecordWriter(output_filename) as writer:
+            for index, batch_img in enumerate(data):
+                for img, label in zip(batch_img, labels_[index]):
+                    feature = {'train/label': _int64_feature(label),
+                               'train/image': _bytes_feature(tf.compat.as_bytes(img.tostring()))}
+
+                    example = tf.train.Example(features=tf.train.Features(feature=feature))
+
+                    # Serialize to string and write on the file
+                    writer.write(example.SerializeToString())
+
+                    process_bar_.show_process()
+
+
     def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):
+        """generate batch by batch to in pickle file
+        """
         np.random.seed(int(time.time()))
         combine = [(f, l) for f, l in zip(filenames, labels)]
         np.random.shuffle(combine)
@@ -300,9 +476,9 @@ class ISIC2018_data():
         #np.save('task3_labels', labels)
 
     def _divide_groups_xy(self):
-        label_corresponding = np.zeros((self.num_classes, self.num_classes))
-        dia = np.arange(self.num_classes)
-        label_corresponding[dia, dia] = 1.0
+        #label_corresponding = np.zeros((self.num_classes, self.num_classes))
+        #dia = np.arange(self.num_classes)
+        #label_corresponding[dia, dia] = 1.0
 
         xs_path = self.imagepath_each_class
         lens = np.array([len(xs_path[name]) for name in self.labels_name_hard_encode])
@@ -317,7 +493,8 @@ class ISIC2018_data():
                 else:
                     e_ = lens[j]
                 xs = xs_path[name][f_:e_]
-                ys = [label_corresponding[j]] * (e_-f_)
+                #ys = [label_corresponding[j]] * (e_-f_)
+                ys = [j] * (e_-f_)
                 assert len(xs) == len(ys)
                 xs_data.extend(xs)
                 ys_data.extend(ys)
@@ -340,6 +517,8 @@ class ISIC2018_data():
                 filename = os.path.join(prefix_directory, filename)
                 filename = filename + '.jpg'
                 image_np = cv.imread(filename)
+                image_np = cv.cvtColor(image_np, cv.COLOR_BGR2RGB)
+                image_np = image_np.astype(np.float32)
                 if self.rescale:
                     # wierd!! shape return (nHei, nWid)
                     # resize have the order, (nWid. nHei)
@@ -404,17 +583,16 @@ class ISIC2018_data():
             yield mean_for_val, mean_for_tra
 
 
-
 if __name__=='__main__':
     logging.basicConfig(level=logging.INFO)
     timer_ = timer.timer()
     ISIC2018_data_ =  ISIC2018_data()
-    ISIC2018_data_.set_valid_index(0)
-    for i in range(ISIC2018_data_.k_fold):
-        data = ISIC2018_data_.get_groups(i)
-        for x, y in data:
-            print(np.array(x).shape)
-            print(np.array(y).shape)
+    #ISIC2018_data_.set_valid_index(4)
+    #for i in range(ISIC2018_data_.k_fold):
+    #    data = ISIC2018_data_.get_groups(i)
+    #    for x, y in data:
+    #        print(np.array(x).shape)
+    #        print(np.array(y).shape)
     #get_mean_std = ISIC2018_data_._compute_mean_std_for_val_index_others()
     #data = defaultdict(list)
     #process_bar_ = process_bar.process_bar(ISIC2018_data_.k_fold)
@@ -432,7 +610,12 @@ if __name__=='__main__':
     ##df.columns = col_names
     #with open('mean_val_tra.csv', 'w', newline="") as fo:
     #    df.to_csv(fo, index=False)
-    #ISIC2018_data_.generate_inputs_by_batch()
+
+    ISIC2018_data_.generate_inputs_by_batch()
+
+    # output amount for each class
     #ISIC2018_data_.output_amount_class()
+
+    # generate train and set set according to csv files
     #ISIC2018_data_.generate_train_valid()
     timer_.get_duration()
