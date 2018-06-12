@@ -12,16 +12,15 @@ import numpy as np
 from tensorflow.python.training import moving_averages
 
 
-HParams = namedtuple('HParams',
-                     'feature_size, batch_size, num_classes, '
-                     'num_residual_units, use_bottleneck, '
-                     'weight_decay_rate, relu_leakiness, optimizer, '
-                     'weight_sample, use_weight_sample, using_pretrained')
+#HParams = namedtuple('HParams',
+#                     'feature_size, batch_size, num_classes, '
+#                     'num_residual_units, use_bottleneck, '
+#                     'weight_decay_rate, relu_leakiness, optimizer, '
+#                     'weight_sample, use_weight_sample, using_pretrained')
 
 
 class ResNet():
-    def __init__(self, hps, images, labels, mode, learning_rate, trainable,
-            resnet_npz_path):
+    def __init__(self, hps, images, labels, learning_rate, trainable):
         """ResNet constructor
 
         Args:
@@ -32,10 +31,9 @@ class ResNet():
         """
         self.hps = hps
         self.image_size=224
-        #self._images = self._pre_process_images(images)
-        self._images = images
+        self._images = self._pre_process_images(images)
         self.labels = labels
-        self.mode = mode
+        self.mode = 'train'
         self.lrn_rate = learning_rate
         self.trainable = trainable
         # TODO
@@ -43,31 +41,16 @@ class ResNet():
 
         self._extra_train_ops = []
 
-        if self.hps.using_pretrained:
-            self.data_dict = np.load(resnet_npz_path)
-        else:
-            self.data_dict = None
-        tf.set_random_seed(1234)
-
+        #if self.hps.using_pretrained:
+        #    self.data_dict = np.load(resnet_npz_path)
+        #else:
+        #    self.data_dict = None
 
     def _pre_process_images(self, x):
-        """
-        Inputs:
-            x: [batch_size, 300, 400, 3]
-        Returns:
-               [batch_size, 224, 224, 3]
-        """
-        # resize
         images = tf.image.resize_image_with_crop_or_pad(x, self.image_size+4, self.image_size+4)
-        # random crop
         images = tf.map_fn(lambda img: tf.random_crop(img, [self.image_size, self.image_size, 3]), images)
-        # flip
         images = tf.map_fn(lambda img: tf.image.random_flip_left_right(img), images)
-        images = tf.map_fn(lambda img: tf.image.random_flip_up_down(img), images)
-        # standaedization
-        images = tf.map_fn(lambda img: tf.image.per_image_standardization(img), images)
         return images
-
 
     def build_graph(self):
         self.global_step = tf.train.get_or_create_global_step()
@@ -265,13 +248,7 @@ class ResNet():
     def _conv(self, name, x, filter_size, in_filters, out_filters, strides):
         """Convolution"""
         with tf.variable_scope(name):
-            #kernel = self._get_conv_var(self, filter_size, in_filters, name)
-            n = filter_size * filter_size * out_filters
-            kernel = tf.get_variable(
-                    'DW', [filter_size, filter_size, in_filters, out_filters],
-                    tf.float32, initializer=tf.random_normal_initializer(
-                        stddev=np.sqrt(2.0/n)))
-
+            kernel = self._get_conv_var(filter_size, in_filters, out_filters, name)
         return tf.nn.conv2d(x, kernel, strides, padding='SAME')
 
     def _get_conv_var(self, filter_size, in_filters, out_filters, name):
@@ -280,10 +257,8 @@ class ResNet():
                 'DW', [filter_size, filter_size, in_filters, out_filters],
                 tf.float32, initializer=tf.random_normal_initializer(
                     stddev=np.sqrt(2.0/n)))
-        kernel = self._get_var(initial_value, name, "DW")
-        return kernel
-
-    #def _get_ba
+        #kernel = self._get_var(initial_value, name, "DW")
+        return initial_value
 
     def _batch_norm(self, name, x):
         """Batch Normalization"""

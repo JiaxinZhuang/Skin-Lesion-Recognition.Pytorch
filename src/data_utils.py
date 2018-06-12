@@ -1,5 +1,4 @@
 """Codes for data process"""
-
 import numpy as np
 import tensorflow as tf
 import pickle
@@ -19,7 +18,7 @@ FLAGS = tf.flags.FLAGS
 
 tf.flags.DEFINE_integer('batch_size', 32,
                         """batch size for train and test""")
-tf.flags.DEFINE_integer('k_fold', 5,
+tf.flags.DEFINE_integer('k_fold', 10,
                         """k_cross validation""")
 
 tf.flags.DEFINE_string('ISIC2018_Task3_Training_GroundTruth', '../data/ISIC2018/ISIC2018_Task3_Training_GroundTruth/ISIC2018_Task3_Training_GroundTruth.csv',
@@ -104,7 +103,7 @@ class ISIC2018_data():
         _generate(test_path, test_path_)
 
 
-    def set_valid_index(self, i, norm=True):
+    def set_valid_index(self, i):
         self.val_index= i
         self._load_record()
 
@@ -170,7 +169,7 @@ class ISIC2018_data():
 
         def _load_record(path, min_queue_examples, is_train=True, num_epochs=None):
             # epoch is defined in train
-            num_parallel_calls=8
+            num_parallel_calls=10
             #filename_queue = tf.train.string_input_producer(path, shuffle=False)
             filename_queue = path
             dataset = tf.data.TFRecordDataset(filename_queue)
@@ -186,9 +185,9 @@ class ISIC2018_data():
                 dataset = dataset.map(_preprocess_valid, num_parallel_calls=num_parallel_calls)
 
             dataset = dataset.shuffle(buffer_size=min_queue_examples)
-            dataset = dataset.batch(self.batch_size)
-            dataset = dataset.prefetch(buffer_size=min_queue_examples)
             dataset = dataset.repeat(num_epochs)
+            dataset = dataset.batch(self.batch_size)
+            dataset = dataset.prefetch(buffer_size=FLAGS.batch_size)
             iterator = dataset.make_initializable_iterator()
 
             self.extra_init.append(iterator.initializer)
@@ -342,6 +341,9 @@ class ISIC2018_data():
         #    pass
 
         #train_batches = np.load(
+
+    def get_origin_shape(self):
+        return (self.nHei, self.nWid, 3)
 
     def get_shape(self):
         return (self.image_size,self.image_size,3)

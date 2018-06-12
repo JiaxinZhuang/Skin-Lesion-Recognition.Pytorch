@@ -1,0 +1,162 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DATA_URL	auxiliary/data_utils.py	/^DATA_URL='..\/data'$/;"	v
+FLAGS	auxiliary/data_utils.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+FLAGS	src/data_utils.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+FLAGS	src/train.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+HParams	src/WideResnetModel.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	src/resNet.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	src/resNet_.py	/^HParams = namedtuple('HParams',$/;"	v
+ISIC2018_data	src/data_utils.py	/^class ISIC2018_data():$/;"	c
+ISIC2018_data_	src/data_utils.py	/^    ISIC2018_data_ =  ISIC2018_data()$/;"	v	class:ISIC2018_data
+Memory	src/memory.py	/^class Memory():$/;"	c
+ResNet	src/resNet.py	/^class ResNet():$/;"	c
+ResNet	src/resNet_.py	/^class ResNet():$/;"	c
+VGG_MEAN	src/vgg19.py	/^VGG_MEAN = [103.939, 116.779, 123.68]$/;"	v
+Vgg19	src/vgg19.py	/^class Vgg19:$/;"	c
+WideResNet	src/WideResnetModel.py	/^class WideResNet(object):$/;"	c
+__init__	auxiliary/data_utils.py	/^    def __init__(self):$/;"	m	class:input_data
+__init__	src/WideResnetModel.py	/^    def __init__(self, hps, images, labels, imgids, mode):$/;"	m	class:WideResNet
+__init__	src/data_utils.py	/^    def __init__(self):$/;"	m	class:ISIC2018_data
+__init__	src/memory.py	/^    def __init__(self, hps, key_dim=192, memory_size=8192, choose_k=1, alpha=0.1, correct_in_top=1, age_noise=8.0, threshold=0.5):$/;"	m	class:Memory
+__init__	src/process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
+__init__	src/resNet.py	/^    def __init__(self, hps, images, labels, mode, learning_rate, trainable,$/;"	m	class:ResNet
+__init__	src/resNet_.py	/^    def __init__(self, hps, images, labels, mode, learning_rate, trainable,$/;"	m	class:ResNet
+__init__	src/timer.py	/^    def __init__(self):$/;"	m	class:timer
+__init__	src/vgg19.py	/^    def __init__(self, hps, xs, ys, learning_rate, vgg19_npy_path=None, trainable=True, dropout=0.5):$/;"	m	class:Vgg19
+__visual_diease_area_one_image__	auxiliary/data_utils.py	/^    def __visual_diease_area_one_image__(self, image_np):$/;"	m	class:input_data	file:
+_amount_each_class_from_csv	src/data_utils.py	/^    def _amount_each_class_from_csv(self, filename):$/;"	m	class:ISIC2018_data
+_batch_norm	src/WideResnetModel.py	/^    def _batch_norm(self, name, x):$/;"	m	class:WideResNet
+_batch_norm	src/resNet.py	/^    def _batch_norm(self, name, x):$/;"	m	class:ResNet
+_batch_norm	src/resNet_.py	/^    def _batch_norm(self, name, x):$/;"	m	class:ResNet
+_bottleneck_residual	src/WideResnetModel.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride):$/;"	m	class:WideResNet
+_bottleneck_residual	src/resNet.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):$/;"	m	class:ResNet
+_bottleneck_residual	src/resNet_.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):$/;"	m	class:ResNet
+_build_model	src/WideResnetModel.py	/^    def _build_model(self):$/;"	m	class:WideResNet
+_build_model	src/resNet.py	/^    def _build_model(self):$/;"	m	class:ResNet
+_build_model	src/resNet_.py	/^    def _build_model(self):$/;"	m	class:ResNet
+_build_model	src/vgg19.py	/^    def _build_model(self, train_mode=None):$/;"	m	class:Vgg19
+_build_train_op	src/WideResnetModel.py	/^    def _build_train_op(self):$/;"	m	class:WideResNet
+_build_train_op	src/resNet.py	/^    def _build_train_op(self):$/;"	m	class:ResNet
+_build_train_op	src/resNet_.py	/^    def _build_train_op(self):$/;"	m	class:ResNet
+_build_train_op	src/vgg19.py	/^    def _build_train_op(self):$/;"	m	class:Vgg19
+_bytes_feature	src/data_utils.py	/^        def _bytes_feature(value):$/;"	f	function:ISIC2018_data._generate_record
+_compute_mean_std_for_val_index_others	src/data_utils.py	/^    def _compute_mean_std_for_val_index_others(self):$/;"	m	class:ISIC2018_data
+_conv	src/WideResnetModel.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:WideResNet
+_conv	src/resNet.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:ResNet
+_decay	src/WideResnetModel.py	/^    def _decay(self):$/;"	m	class:WideResNet
+_decay	src/resNet.py	/^    def _decay(self):$/;"	m	class:ResNet
+_decay	src/resNet_.py	/^    def _decay(self):$/;"	m	class:ResNet
+_decay	src/vgg19.py	/^    def _decay(self):$/;"	m	class:Vgg19
+_divide_groups_xy	src/data_utils.py	/^    def _divide_groups_xy(self):$/;"	m	class:ISIC2018_data
+_focal_loss	src/resNet.py	/^    def _focal_loss(self, labels, logits, gamma=2.0, alpha=4.0):$/;"	m	class:ResNet
+_focal_loss	src/resNet_.py	/^    def _focal_loss(self, labels, logits, gamma=2.0, alpha=4.0):$/;"	m	class:ResNet
+_fully_connected	src/WideResnetModel.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:WideResNet
+_fully_connected	src/resNet.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:ResNet
+_fully_connected	src/resNet_.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:ResNet
+_fully_connected	src/vgg19.py	/^    def _fully_connected(self, x, out_dim, name):$/;"	m	class:Vgg19
+_generate	src/data_utils.py	/^        def _generate(files, ofiles):$/;"	f	function:ISIC2018_data.generate_train_valid
+_generate_batch_by_batch	src/data_utils.py	/^    def _generate_batch_by_batch(self, prefix_directory, filenames, labels, index):$/;"	m	class:ISIC2018_data
+_generate_each_fold_img_name_as_csv	src/data_utils.py	/^    def _generate_each_fold_img_name_as_csv(self, data):$/;"	m	class:ISIC2018_data
+_generate_record	src/data_utils.py	/^    def _generate_record(self, prefix_directory, filenames, labels, index):$/;"	m	class:ISIC2018_data
+_get_conv_var	src/resNet.py	/^    def _get_conv_var(self, filter_size, in_filters, out_filters, name):$/;"	m	class:ResNet
+_get_conv_var	src/resNet_.py	/^    def _get_conv_var(self, filter_size, in_filters, out_filters, name):$/;"	m	class:ResNet
+_get_var	src/resNet.py	/^    def _get_var(self, initial_value, name, var_name):$/;"	m	class:ResNet
+_get_var	src/resNet_.py	/^    def _get_var(self, initial_value, name, index, var_name):$/;"	m	class:ResNet
+_global_avg_pool	src/WideResnetModel.py	/^    def _global_avg_pool(self, x):$/;"	m	class:WideResNet
+_global_avg_pool	src/resNet.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
+_global_avg_pool	src/resNet_.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
+_inputs	src/data_utils.py	/^    def _inputs(self):$/;"	m	class:ISIC2018_data
+_int64_feature	src/data_utils.py	/^        def _int64_feature(value):$/;"	f	function:ISIC2018_data._generate_record
+_load_data_and_norm	src/data_utils.py	/^    def _load_data_and_norm(self, norm=True):$/;"	m	class:ISIC2018_data
+_load_imgs_by_batch	src/data_utils.py	/^    def _load_imgs_by_batch(self, prefix_directory, filenames):$/;"	m	class:ISIC2018_data
+_load_record	src/data_utils.py	/^        def _load_record(path, min_queue_examples, is_train=True, num_epochs=None):$/;"	f	function:ISIC2018_data._load_record
+_load_record	src/data_utils.py	/^    def _load_record(self):$/;"	m	class:ISIC2018_data
+_median_weight_class_loss	src/resNet.py	/^    def _median_weight_class_loss(self, labels, logits):$/;"	m	class:ResNet
+_median_weight_class_loss	src/resNet_.py	/^    def _median_weight_class_loss(self, labels, logits):$/;"	m	class:ResNet
+_parse_function	src/data_utils.py	/^        def _parse_function(example_proto):$/;"	f	function:ISIC2018_data._load_record
+_pre_process_images	src/data_utils.py	/^    def _pre_process_images(self, x, is_train=True):$/;"	m	class:ISIC2018_data
+_pre_process_images	src/resNet.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
+_pre_process_images	src/resNet_.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
+_pre_process_images	src/vgg19.py	/^    def _pre_process_images(self, x):$/;"	m	class:Vgg19
+_preprocess_train	src/data_utils.py	/^        def _preprocess_train(image, label):$/;"	f	function:ISIC2018_data._load_record
+_preprocess_valid	src/data_utils.py	/^        def _preprocess_valid(image, label):$/;"	f	function:ISIC2018_data._load_record
+_relu	src/WideResnetModel.py	/^    def _relu(self, x):$/;"	m	class:WideResNet
+_relu	src/resNet.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
+_relu	src/resNet_.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
+_residual	src/resNet.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
+_residual	src/resNet_.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
+_scale_amount_for_fewer	src/data_utils.py	/^    def _scale_amount_for_fewer(self):$/;"	m	class:ISIC2018_data
+_stride_arr	src/WideResnetModel.py	/^    def _stride_arr(self, stride):$/;"	m	class:WideResNet
+_stride_arr	src/resNet.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
+_stride_arr	src/resNet_.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
+avg_pool	src/vgg19.py	/^    def avg_pool(self, bottom, name):$/;"	m	class:Vgg19
+batch_size	auxiliary/data_utils.py	/^    batch_size = 128$/;"	v	class:input_data
+build_graph	src/WideResnetModel.py	/^    def build_graph(self):$/;"	m	class:WideResNet
+build_graph	src/resNet.py	/^    def build_graph(self):$/;"	m	class:ResNet
+build_graph	src/resNet_.py	/^    def build_graph(self):$/;"	m	class:ResNet
+build_graph	src/vgg19.py	/^    def build_graph(self, train_mode=None):$/;"	m	class:Vgg19
+conv_layer	src/resNet_.py	/^    def conv_layer(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:ResNet
+conv_layer	src/vgg19.py	/^    def conv_layer(self, bottom, in_channels, out_channels, name):$/;"	m	class:Vgg19
+count	auxiliary/data_utils.py	/^    count = 0$/;"	v	class:input_data
+data	auxiliary/data_utils.py	/^    data = input_data()$/;"	v	class:input_data
+disease_areas	auxiliary/data_utils.py	/^    disease_areas = []$/;"	v	class:input_data
+evaluate	src/train.py	/^def evaluate(hps):$/;"	f
+fc_layer	src/vgg19.py	/^    def fc_layer(self, bottom, in_size, out_size, name):$/;"	m	class:Vgg19
+general_gray_world	src/color_constancy.py	/^def general_gray_world(img, power=2, sigma=3):$/;"	f
+generate_and_save_pickle	auxiliary/data_utils.py	/^    def generate_and_save_pickle(self, train_data_path):$/;"	m	class:input_data
+generate_inputs_by_batch	src/data_utils.py	/^    def generate_inputs_by_batch(self):$/;"	m	class:ISIC2018_data
+generate_train_valid	src/data_utils.py	/^    def generate_train_valid(self):$/;"	m	class:ISIC2018_data
+get_bsize	src/data_utils.py	/^    def get_bsize(self):$/;"	m	class:ISIC2018_data
+get_conv_var	src/vgg19.py	/^    def get_conv_var(self, filter_size, in_channels, out_channels, name):$/;"	m	class:Vgg19
+get_disease_area_information_from_rgb_by_batch	auxiliary/data_utils.py	/^    def get_disease_area_information_from_rgb_by_batch(self, images_nps, batch_size):$/;"	m	class:input_data
+get_duration	src/timer.py	/^    def get_duration(self):$/;"	m	class:timer
+get_fc_var	src/vgg19.py	/^    def get_fc_var(self, in_size, out_size, name):$/;"	m	class:Vgg19
+get_ground_truth	auxiliary/data_utils.py	/^    def get_ground_truth(self, filename):$/;"	m	class:input_data
+get_groups	src/data_utils.py	/^    def get_groups(self, i):$/;"	m	class:ISIC2018_data
+get_hint_pool_idxs	src/memory.py	/^    def get_hint_pool_idxs(self, normalized_query):$/;"	m	class:Memory
+get_images_path_from_directory	auxiliary/data_utils.py	/^    def get_images_path_from_directory(self, directory):$/;"	m	class:input_data
+get_inputs	src/data_utils.py	/^    def get_inputs(self):$/;"	m	class:ISIC2018_data
+get_np_from_csv	auxiliary/data_utils.py	/^    def get_np_from_csv(self, filename, header=0):$/;"	m	class:input_data
+get_shape	src/data_utils.py	/^    def get_shape(self):$/;"	m	class:ISIC2018_data
+get_train	src/data_utils.py	/^    def get_train(self):$/;"	m	class:ISIC2018_data
+get_valid	src/data_utils.py	/^    def get_valid(self):$/;"	m	class:ISIC2018_data
+get_var	src/vgg19.py	/^    def get_var(self, initial_value, name, idx, var_name):$/;"	m	class:Vgg19
+get_var_count	src/vgg19.py	/^    def get_var_count(self):$/;"	m	class:Vgg19
+gray_world	src/color_constancy.py	/^def gray_world(img):$/;"	f
+ground_truth	auxiliary/data_utils.py	/^    ground_truth = data.get_ground_truth(data.ISIC2018_Task3_Training_GroundTruth_path)$/;"	v	class:input_data
+images_area	auxiliary/data_utils.py	/^    images_area = []$/;"	v	class:input_data
+input_data	auxiliary/data_utils.py	/^class input_data:$/;"	c
+load	src/test_Record.py	/^def load(iter_x, iter_y, init):$/;"	f
+load_image_from_directory	auxiliary/data_utils.py	/^    def load_image_from_directory(self, directory, images_path, gray=True):$/;"	m	class:input_data
+load_image_from_pickle	auxiliary/data_utils.py	/^    def load_image_from_pickle(self, filename):$/;"	m	class:input_data
+main	src/train.py	/^def main(argv=None):$/;"	f
+make_update_op	src/memory.py	/^        def make_update_op():$/;"	f	function:Memory.query_and_make_update
+make_update_op	src/memory.py	/^    def make_update_op(self, upd_idxs, upd_keys, upd_vals, batch_size):$/;"	m	class:Memory
+max_pool	src/vgg19.py	/^    def max_pool(self, bottom, name):$/;"	m	class:Vgg19
+output	auxiliary/data_utils.py	/^    output = data.get_disease_area_information_from_rgb_by_batch(images_nps, batch_size)$/;"	v	class:input_data
+output_amount_class	src/data_utils.py	/^    def output_amount_class(self):$/;"	m	class:ISIC2018_data
+process_bar	src/process_bar.py	/^class process_bar():$/;"	c
+query	src/memory.py	/^    def query(self, query_vec):$/;"	m	class:Memory
+query_and_make_update	src/memory.py	/^    def query_and_make_update(self, query_vec, intended_output):$/;"	m	class:Memory
+reset	src/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
+save_disease_area_csv	auxiliary/data_utils.py	/^    def save_disease_area_csv(self, disease_areas, images_area, images_path,  ground_truth, filename):$/;"	m	class:input_data
+save_disease_area_information_as_images	auxiliary/data_utils.py	/^    def save_disease_area_information_as_images(self, pro_images_nps,images_nps, images_path, save_directory):$/;"	m	class:input_data
+save_npy	src/vgg19.py	/^    def save_npy(self, sess, npy_path=".\/vgg19-save.npy"):$/;"	m	class:Vgg19
+save_pickle	auxiliary/data_utils.py	/^    def save_pickle(self, filename, data):$/;"	m	class:input_data
+set_maxstep	src/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+set_valid_index	src/data_utils.py	/^    def set_valid_index(self, i, norm=True):$/;"	m	class:ISIC2018_data
+shade_of_gray	src/color_constancy.py	/^def shade_of_gray(img, power=6, gamma=None):$/;"	f
+show_process	src/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
+test_record	src/test_Record.py	/^def test_record():$/;"	f
+timer	src/timer.py	/^class timer():$/;"	c
+timer_	auxiliary/data_utils.py	/^    timer_ = timer.timer()$/;"	v	class:input_data
+timer_	src/data_utils.py	/^    timer_ = timer.timer()$/;"	v	class:ISIC2018_data
+train	src/train.py	/^def train(hps, val_index):$/;"	f
+unpickle	auxiliary/data_utils.py	/^    def unpickle(self, filename):$/;"	m	class:input_data
+white_patch_retinex	src/color_constancy.py	/^def white_patch_retinex(img, para):$/;"	f
+x	auxiliary/data_utils.py	/^    x = next(output)$/;"	v	class:input_data

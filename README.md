@@ -34,6 +34,20 @@ python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-S
 python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/sog6
 python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/wpr1
 ```
+output\_file will generate in src/task3\_32\_300\_400
+
+```
+mv task3\_32\_300\_400/\* /home/jiaxin/jihan/20180606/Reverse\_CISI\_Classification/data/ISIC2018/2018\_6\_4/task3\_32\_300\_400 
+```
+
+# Run
+```
+python train.py --remove=True --CUDA_VISIBLE_DEVICE=7
+```
+
+# logs models saved
+logs, models, tra and val wuold be saved in ../save\_32\_300\_400
+
 
 ## Ref
 1. [Tensorflow — Dealing with imbalanced data](https://blog.node.us.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701)
