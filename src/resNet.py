@@ -114,7 +114,7 @@ class ResNet():
 
         with tf.variable_scope('logit'):
             logits = self._fully_connected(self.feature_map, self.hps.num_classes)
-            self.predictions  = tf.nn.softmax(logits)
+            self.predictions  = tf.nn.softmax(logits, name='predictions')
 
         with tf.variable_scope('costs'):
             if self.hps.use_weight_sample:
@@ -238,7 +238,7 @@ class ResNet():
                 global_step=self.global_step, name='train_op')
 
         train_ops = [apply_op] + self._extra_train_ops
-        self.train_op = tf.group(*train_ops)
+        self.train_op = tf.group(*train_ops, name='train_op')
 
 
     def _stride_arr(self, stride):

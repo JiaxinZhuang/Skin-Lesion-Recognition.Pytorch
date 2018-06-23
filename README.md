@@ -27,6 +27,17 @@ data (You have to copy dataset into data directory)
 └── ISIC2018_Task3_Training_Input
 ```
 
+## Different file functionality
+```
+src/train train and evaluate
+src/model wrap different model to use
+src/data_utils generate train, valid data and load data
+src/resNet
+src/vgg19
+src/train_xgboost.py
+
+```
+
 ## Using Jihan's method to process data
 ```
 python data_utils.py --ISIC2018_Task3_Training_Input=/home/share2/MIA/ISIC2018-Sharing/jihan/ggw_p2s3
@@ -48,7 +59,17 @@ python train.py --remove=True --CUDA_VISIBLE_DEVICE=7
 # logs models saved
 logs, models, tra and val wuold be saved in ../save\_32\_300\_400
 
+# Some ways to solve imbalanced data
+1. median class weight
+```
+weight_sample_ = np.array([1113,6705,514,327,1099,115,142])/10015
+weight_sample_ = 0.05132302/weight_sample_
+```
+
+## Class weight
+
+
 
 ## Ref
 1. [Tensorflow — Dealing with imbalanced data](https://blog.node.us.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701)
-
+2. [xgboost](https://xgboost.readthedocs.io/en/latest/get_started/index.html)

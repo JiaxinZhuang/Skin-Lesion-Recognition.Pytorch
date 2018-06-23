@@ -20,7 +20,7 @@ def get_model(hps, xs, ys, learning_rate, trainable):
     """
 
     if hps.model == 'resNet':
-        resNet.ResNet(hps, xs, ys, learning_rate, trainable)
+        model = resNet.ResNet(hps, xs, ys, learning_rate, trainable)
     elif hps.model == 'vgg':
         #TODO
         pass
@@ -30,5 +30,6 @@ def get_model(hps, xs, ys, learning_rate, trainable):
     else:
         print('No matched model provided')
         sys.exit(-1)
+    return model
 
 
