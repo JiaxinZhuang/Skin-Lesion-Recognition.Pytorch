@@ -80,7 +80,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = FLAGS.CUDA_VISIBLE_DEVICE
 
 
 HParams = namedtuple('HParams',
-                     'model,'
+                    'model,'
                      'feature_size, batch_size, num_classes, '
                      'num_residual_units, use_bottleneck, '
                      'weight_decay_rate, relu_leakiness, optimizer, '
