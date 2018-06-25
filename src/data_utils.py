@@ -107,12 +107,15 @@ class ISIC2018_data():
         def _preprocess_train(image, label, name):
             # Reshape image data into the original shape
             image = self._pre_process_images(image, is_train=True)
-            return image, label, name
+            return {'input_1':image}, label
+            #return image, label, name
 
         def _preprocess_valid(image, label, name):
             # Reshape image data into the original shape
             image = self._pre_process_images(image, is_train=False)
-            return image, label, name
+            return {'input_1':image}, label
+            #return image, label, name
+            #return image, label, name
 
         def _read_record(path, min_queue_examples=2000, is_train=True, num_epochs=None):
             # parallel for map function
@@ -128,18 +131,24 @@ class ISIC2018_data():
                 dataset = dataset.map(_preprocess_valid, num_parallel_calls=num_parallel_calls)
                 num_epochs = 1
 
-            dataset = dataset.shuffle(buffer_size=min_queue_examples)
+            if is_train == True:
+                dataset = dataset.shuffle(buffer_size=min_queue_examples)
+                print('shuffle')
+
             dataset = dataset.repeat(num_epochs)
             dataset = dataset.batch(self.batch_size)
             dataset = dataset.prefetch(buffer_size=FLAGS.batch_size)
-            iterator = dataset.make_initializable_iterator()
+            iterator = dataset.make_one_shot_iterator()
+            #iterator = dataset.make_initializable_iterator()
 
-            self.extra_init.append(iterator.initializer)
+            #self.extra_init.append(iterator.initializer)
 
             # `features` is a dictionary in which each value is a batch of values for
             # that feature; `labels` is a batch of labels.
-            features, labels, names = iterator.get_next()
-            return features, labels, names
+            features, labels = iterator.get_next()
+            #features, labels, names = iterator.get_next()
+            return features, labels
+            #return features, labels, names
             #num_preprocess_threads = 8
 
             #if is_train:
@@ -158,14 +167,18 @@ class ISIC2018_data():
 
         if mode == 'train':
             print(self.train_records)
-            images, labels, names = _read_record(self.train_records, is_train=True)
+            images, labels = _read_record(self.train_records, is_train=True)
+            #images, labels, names = _read_record(self.train_records, is_train=True)
+            return images, labels
         elif mode == 'train_evaluation':
             print(self.train_records)
-            images, labels, names = _read_record(self.train_records, is_train=False)
+            images, labels = _read_record(self.train_records, is_train=False)
+            #images, labels, names = _read_record(self.train_records, is_train=False)
+            return images, labels
         elif mode == 'evaluate':
             print(self.valid_records)
             images, labels = _read_record(self.valid_records, is_train=False)
-        return images, labels, names
+            return images, labels
 
     def _write_record(self, labels, images_name, index):
         """write record
