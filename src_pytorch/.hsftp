@@ -1,0 +1,7 @@
+host   222.200.182.82
+user   jiaxin
+pass   jiaxin
+port   22
+remote /home/jiaxin/myGithub/Reverse_CISI_Classification/src_pytorch/
+confirm_download 0
+confirm_upload 0

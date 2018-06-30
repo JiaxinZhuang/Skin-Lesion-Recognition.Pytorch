@@ -2,7 +2,7 @@
 import numpy as np
 import tensorflow as tf
 #import pickle
-#import sys
+import sys
 import os
 import logging
 import pandas as pd
@@ -52,6 +52,7 @@ class ISIC2018_data():
         self.nWid = 400
         self.nHei = 300
         self.record_outputfilename = 'task3_{}_{}_{}'.format(self.nHei, self.nWid, self.batch_size)
+        self.train_dir = 'train_repeat'
         self.records_names = [self.record_outputfilename + '_{}'.format(i) for i in range(self.k_fold)]
         #self._inputs()
         self.extra_init = []
@@ -60,7 +61,11 @@ class ISIC2018_data():
 
     def _set_valid_index(self, i):
         self.val_index= i
+        # train repeat
         self.train_records = [os.path.join(self.record_outputfilename, name) for name in self.records_names if name.split('_')[-1] != str(i)]
+        self.train_records = [os.path.join(self.train_dir, i) for i in self.train_records]
+
+        self.train_and_evaluate_record = [os.path.join(self.record_outputfilename, name) for name in self.records_names if name.split('_')[-1] != str(i)]
         self.valid_records = [os.path.join(self.record_outputfilename, self.record_outputfilename+'_{}'.format(i))]
 
     def _pre_process_images(self, x, is_train=True):
@@ -171,8 +176,8 @@ class ISIC2018_data():
             #images, labels, names = _read_record(self.train_records, is_train=True)
             return images, labels
         elif mode == 'train_evaluation':
-            print(self.train_records)
-            images, labels = _read_record(self.train_records, is_train=False)
+            print(self.train_and_evaluate_record)
+            images, labels = _read_record(self.train_and_evaluate_record, is_train=False)
             #images, labels, names = _read_record(self.train_records, is_train=False)
             return images, labels
         elif mode == 'evaluate':
@@ -234,8 +239,16 @@ class ISIC2018_data():
             for c, c_ in zip(cc, cc_):
                 images_name = list(filter(lambda x: pd.isnull(x) == False, data[c].values))
                 labels = list(filter(lambda x: pd.isnull(x) == False, data[c_].values))
-                print(len(images_name), len(labels))
-                yield images_name, labels
+                # repeat
+                weight_sample = (10015/np.array([1113,6705,514,327,1099,115,142])).astype(np.int64)
+                new_images_name = []
+                new_labels = []
+                for x, y in zip(images_name, labels):
+                    new_images_name.extend([x] * weight_sample[int(y)])
+                    new_labels.extend([y] * weight_sample[int(y)])
+                print(len(new_images_name), len(new_labels))
+                yield new_images_name, new_labels
+                #yield images_name, labels
 
         sets = _read_csv(os.path.join(prefix_directory, filenames))
         process_bar_ = process_bar.process_bar(self.k_fold)
@@ -273,5 +286,6 @@ def generate_record():
 
 if __name__=='__main__':
     logging.basicConfig(level=logging.INFO)
-    #generate_record()
-    test_record()
+    os.environ["CUDA_VISIBLE_DEVICES"]=sys.argv[1]
+    generate_record()
+    #test_record()

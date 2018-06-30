@@ -1,19 +1,16 @@
-"""Using ResNet50 or ResNet152 from keras to implement"""
+"""Using ResNet152 from keras to implement"""
 
 import tensorflow as tf
 
 from tensorflow.python.keras.applications import resnet50
-#from keras.applications import densenet
-#from tensorflow.python.keras.applications import densenet
-from tensorflow.python.keras.applications import inception_v3
-#import resnet152
-import resnet
+import resnet152
 
 from tensorflow.python.keras import models
 from tensorflow.python.keras import layers
 from tensorflow.python.keras import losses
 from tensorflow.python.keras.optimizers import SGD
 from keras import metrics
+from keras.models import Model
 import numpy as np
 from collections import namedtuple
 
@@ -39,40 +36,23 @@ def main(mode='train', gpu='0'):
 
     # using resnet50
     base_model = resnet50.ResNet50(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
-
-    # using resnet152
-    #base_model = resnet152.ResNet152(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
-
-    # using resnet152
-    #base_model = resnet.ResNet152(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
-
-    # using densenet
-    #base_model = densenet.DenseNet201(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
-
-    # inception v3
-    #base_model = inception_v3.InceptionV3(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
-
-    model = models.Sequential()
-
-    model.add(base_model)
-    # remove fully connected according to paper
-    model.add(layers.Dense(1024, activation='relu'))
-    model.add(layers.Dense(7, activation='relu'))
-    #model.add(layers.Dense(1000, activation='relu'))
-    model.add(layers.Dense(num_classes, activation='softmax', name='fc7'))
     base_model.trainable = False
+
+    last_layer = base_model.output
+    fc_layer = layers.Dense(1024, activation='relu')(last_layer)
+    out = layers.Dense(num_classes, activation='softmax', name='fc7')(fc_layer)
+
+    model = Model(inputs=base_model.input, outputs=out)
+
     #model.compile(loss=median_weight_class_loss,
     #model.compile(loss='categorical_crossentropy',
     model.compile(loss=focal_loss,
                   optimizer=SGD(lr=0.001, momentum=0.9, decay=0.0),
                   metrics=[metrics.categorical_accuracy])
 
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/densenet201_keras_pre/model_fc'
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet152_keras_pre/model_fc'
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet152_keras_pre/model_fc'
+    model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet152_keras_pre/model_fc'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_cw'
-    model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_repeat'
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_3_m'
+    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_cw'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_cw_nor'
     os.makedirs(model_dir, exist_ok=True)
     print('model_dir', model_dir)
@@ -123,14 +103,12 @@ def main(mode='train', gpu='0'):
                 statistics_.add_labels_predictions(predictions_list, y_list)
                 statistics_.get_acc_normal()
                 result = statistics_.get_acc_imbalanced()
-                np.save('predictions_label_fc_repeat', [predictions_list, y_list])
-                #np.save('predictions_label_fc_3_m', [predictions_list, y_list])
+                np.save('predictions_label_fc', [predictions_list, y_list])
                 #np.save('predictions_label_fc_without_fulcon', [predictions_list, y_list])
                 pp.append(result)
 
                 print('---')
-                np.save('result_fc_repeat', pp)
-                #np.save('result_fc_3_m', pp)
+                np.save('result_fc', pp)
                 #np.save('result_fc_without_fulcon', pp)
                 time.sleep(120)
 

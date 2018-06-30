@@ -14,8 +14,8 @@ class statistics():
 
         self.hps = hps
         self.mode = mode
-        self.counter = [ 0 for _ in range(hps.num_classes)]
-        self.per_class_nums = [ 0 for _ in range(hps.num_classes)]
+        self.counter = [ 0 for _ in range(7)]
+        self.per_class_nums = [ 0 for _ in range(7)]
         self.triples = []
         #self.class_nums = [ 0 for _ in range(hps.num_classes)]
         self.all_imgs = 0.0

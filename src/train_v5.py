@@ -38,7 +38,7 @@ def main(mode='train', gpu='0'):
     num_classes = 7
 
     # using resnet50
-    base_model = resnet50.ResNet50(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
+    #base_model = resnet50.ResNet50(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
 
     # using resnet152
     #base_model = resnet152.ResNet152(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
@@ -50,15 +50,15 @@ def main(mode='train', gpu='0'):
     #base_model = densenet.DenseNet201(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
 
     # inception v3
-    #base_model = inception_v3.InceptionV3(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
+    base_model = inception_v3.InceptionV3(weights='imagenet', include_top=False, pooling='avg', input_shape=(224,224,3))
 
     model = models.Sequential()
 
     model.add(base_model)
     # remove fully connected according to paper
-    model.add(layers.Dense(1024, activation='relu'))
-    model.add(layers.Dense(7, activation='relu'))
-    #model.add(layers.Dense(1000, activation='relu'))
+    model.add(layers.Dense(2048, activation='relu'))
+    model.add(layers.Dense(1000, activation='relu'))
+    model.add(layers.Dense(1000, activation='relu'))
     model.add(layers.Dense(num_classes, activation='softmax', name='fc7'))
     base_model.trainable = False
     #model.compile(loss=median_weight_class_loss,
@@ -67,12 +67,11 @@ def main(mode='train', gpu='0'):
                   optimizer=SGD(lr=0.001, momentum=0.9, decay=0.0),
                   metrics=[metrics.categorical_accuracy])
 
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/densenet201_keras_pre/model_fc'
+    model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/inception_v3_keras_pre/model_fc_3'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet152_keras_pre/model_fc'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet152_keras_pre/model_fc'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_cw'
-    model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_repeat'
-    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_3_m'
+    #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_cw'
     #model_dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/src/resnet50_keras_pre/model_fc_cw_nor'
     os.makedirs(model_dir, exist_ok=True)
     print('model_dir', model_dir)
@@ -123,14 +122,12 @@ def main(mode='train', gpu='0'):
                 statistics_.add_labels_predictions(predictions_list, y_list)
                 statistics_.get_acc_normal()
                 result = statistics_.get_acc_imbalanced()
-                np.save('predictions_label_fc_repeat', [predictions_list, y_list])
-                #np.save('predictions_label_fc_3_m', [predictions_list, y_list])
+                np.save('predictions_label_fc_3', [predictions_list, y_list])
                 #np.save('predictions_label_fc_without_fulcon', [predictions_list, y_list])
                 pp.append(result)
 
                 print('---')
-                np.save('result_fc_repeat', pp)
-                #np.save('result_fc_3_m', pp)
+                np.save('result_fc_3', pp)
                 #np.save('result_fc_without_fulcon', pp)
                 time.sleep(120)
 

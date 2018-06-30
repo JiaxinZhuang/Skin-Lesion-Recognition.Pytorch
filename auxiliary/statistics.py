@@ -5,7 +5,7 @@ import tensorflow as tf
 import pandas as pd
 
 class statistics():
-    def __init__(self, hps, epoch, mode='train'):
+    def __init__(self, hps, mode='train'):
         """
         Args
             mode: train or test
@@ -19,7 +19,7 @@ class statistics():
         #self.class_nums = [ 0 for _ in range(hps.num_classes)]
         self.all_imgs = 0.0
         self.all_cor = 0.0
-        self.epoch = epoch
+        #self.epoch = epoch
 
     def add_labels_predictions(self, labels, predictions, path):
         """add batch by batch including labels, predictions, path
@@ -76,7 +76,6 @@ class statistics():
         """wrap save triples
         Args:
         """
-        # triple order is : path, predictions, groundtruth
         self._save_triples(filename, self.triples, self.epoch)
 
     def _save_triples(self, filename, data, epoch)
