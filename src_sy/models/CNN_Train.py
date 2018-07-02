@@ -13,6 +13,9 @@ import torchvision.datasets as dsets
 import numpy as np
 from DatasetFolder import DatasetFolder
 
+import FocalLoss
+import focalloss2d
+
 
 class CNN_Train(nn.Module):
     def __init__(self, net, args):
@@ -33,6 +36,14 @@ class CNN_Train(nn.Module):
         self.class_weights = torch.FloatTensor(weights).cuda()
         #if not isinstance(self.args.GPU_ids, list) == 1:
         self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda(self.args.GPU_ids)
+
+        # triplet loss
+        #self.criterion = nn.TripletMarginLoss(margin=1.0, p=2).cuda(self.args.GPU_ids)
+
+        # Focal Loss
+        #self.criterion = FocalLoss.FocalLoss().cuda(self.args.GPU_ids)
+        #self.criterion = focalloss2d.FocalLoss2d(gamma=2.0).cuda(self.args.GPU_ids)
+
         #else:
         #	self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda()
 
@@ -148,6 +159,7 @@ class CNN_Train(nn.Module):
 
         transform_train = transforms.Compose([
             transforms.Resize(350),
+            #transforms.Resize((300,400)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
             transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
@@ -161,15 +173,16 @@ class CNN_Train(nn.Module):
 
         transform_test = transforms.Compose([
             transforms.Resize(350),
+            transforms.Resize((300,400)),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             normalize])
 
         # Dataset
         print('==> Preparing data..')
-        trainset = DatasetFolder(train=True, transform=transform_train)
+        trainset = DatasetFolder(train=True, transform=transform_train, data_dir=self.args.data_dir)
 
-        testset = DatasetFolder(train=False, transform=transform_test)
+        testset = DatasetFolder(train=False, transform=transform_test, data_dir=self.args.data_dir)
 
 
         # Data Loader (Input Pipeline)

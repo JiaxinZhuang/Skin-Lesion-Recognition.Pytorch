@@ -15,19 +15,19 @@ def getIdx(lblarr, consider_lbl, ptrain):
     return index, train_idx, test_idx
 
 
-def make_dataset(ptrain):
+def make_dataset(ptrain, data_dir):
     images = []
     fnarr = []
     lblarr = []
     #dir = '/home/siyam/DATA/ISIC2018_Task3_Training_Input/'
-    dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/data/ISIC2018/ISIC2018_Task3_Training_Input/'
+    #dir = '/home/jiaxin/myGithub/Reverse_CISI_Classification/data/ISIC2018/ISIC2018_Task3_Training_Input/'
     dir_gt = '/home/jiaxin/myGithub/Reverse_CISI_Classification/data/ISIC2018/ISIC2018_Task3_Training_GroundTruth/'
     with open(os.path.join(dir_gt, 'ISIC2018_Task3_Training_GroundTruth.csv'), 'rt') as csvfile:
         reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for line_no, row in enumerate(reader):
             if line_no==0: continue
             row = row[0].split(',')
-            name = os.path.join(dir, row[0]+'.jpg')
+            name = os.path.join(data_dir, row[0]+'.jpg')
             row = row[1:]
             for i,val in enumerate(row):
                 if int(float(val))==1:
@@ -76,11 +76,13 @@ def make_dataset(ptrain):
 
 
 class DatasetFolder(data.Dataset):
-    def __init__(self, train=True, transform=None, target_transform=None):
-        self.train_data, self.test_data = make_dataset(0.7)
+    def __init__(self, train=True, transform=None, target_transform=None, data_dir=None):
+        self.train_data, self.test_data = make_dataset(0.7, data_dir)
         self.transform = transform
         self.target_transform = target_transform
         self.train = train # training set or test set
+
+        # input data_dir
 
     def __getitem__(self, index):
         """
