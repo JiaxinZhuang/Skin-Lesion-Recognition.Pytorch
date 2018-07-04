@@ -13,21 +13,22 @@ import torchvision.datasets as dsets
 import numpy as np
 from DatasetFolder import DatasetFolder
 
-import FocalLoss
-import focalloss2d
+#import FocalLoss
+#import focalloss2d
 
 
 class CNN_Train(nn.Module):
     def __init__(self, net, args):
-        super(CNN_Train, self).__init__()
+        super().__init__()
         self.args = args
         if torch.cuda.is_available():
-            #if not isinstance(self.args.GPU_ids, list) == 1:
             self.net = net.cuda(self.args.GPU_ids)
-            #else: net = torch.nn.DataParallel(net, device_ids = self.args.GPU_ids)
+            cudnn.benchmark = True
+            #self.net = torch.nn.DataParallel(net, device_ids = self.args.GPU_ids)
+        else:
+            print('No availble GPU')
+            sys.exit(-1)
 
-        self.net = net.cuda()
-        cudnn.benchmark = True
         self.trainloader, self.testloader, self.ntrain, self.ntest = self.get_loaders()
 
 
@@ -90,8 +91,8 @@ class CNN_Train(nn.Module):
                 print ('Epoch [%d/%d], Iter [%d/%d] Loss: %.4f'
                     %(epoch+1, self.args.n_epochs, batch_idx+1, self.ntrain//self.args.batch_size, loss.item()))
 
-        acc, mca = self.getMCA(correct, predicted)
-        return train_loss, acc, mca
+        acc, mca, class_precision = self.getMCA(correct, predicted)
+        return train_loss, acc, mca, class_precision
 
 
     def test(self, epoch):
@@ -120,8 +121,8 @@ class CNN_Train(nn.Module):
             if (batch_idx+1) % 100 == 0:
                 print('Completed: [%d/%d]' %(batch_idx+1, self.ntest//self.args.batch_size))
 
-        acc, mca = self.getMCA(correct, predicted)
-        return test_loss, acc, mca
+        acc, mca, class_precision = self.getMCA(correct, predicted)
+        return test_loss, acc, mca, class_precision, correct, predicted
 
 
     def print_net(self):
@@ -145,27 +146,21 @@ class CNN_Train(nn.Module):
 
     def get_loaders(self):
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-#        transform_train = transforms.Compose([
-#            transforms.Resize(350),
-#            transforms.RandomHorizontalFlip(),
-#            transforms.RandomVerticalFlip(),
-#            transforms.ColorJitter(0.3, 0.3, 0.3, 0.1),
-#            transforms.RandomRotation([-180, 180]),
-#            transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.6, 1.4]),
-#            transforms.RandomCrop(224),
-#            transforms.ToTensor(),
-#            normalize
-#        ])
+
+        if self.args.model == 'inception_v3' or self.args.model == 'inceptionresnetv2':
+            img_size = 299
+        else:
+            img_size = 224
 
         transform_train = transforms.Compose([
             transforms.Resize(350),
             #transforms.Resize((300,400)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
-            transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
-            transforms.RandomRotation([-180, 180]),
-            transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
-            transforms.RandomCrop(224),
+            #transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
+            #transforms.RandomRotation([-180, 180]),
+            #transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
+            transforms.RandomCrop(img_size),
 #            transforms.CenterCrop(224),
             transforms.ToTensor(),
             normalize
@@ -173,8 +168,8 @@ class CNN_Train(nn.Module):
 
         transform_test = transforms.Compose([
             transforms.Resize(350),
-            transforms.Resize((300,400)),
-            transforms.CenterCrop(224),
+            #transforms.Resize((300,400)),
+            transforms.CenterCrop(img_size),
             transforms.ToTensor(),
             normalize])
 
@@ -199,25 +194,35 @@ class CNN_Train(nn.Module):
 
     def iterate_CNN(self):
         tr_loss_arr = []
+        train_mca = []
+        test_mca = []
+
         for epoch in range(self.args.n_epochs):
             self.scheduler.step()
-            train_loss, accTr, mcaTr = self.train(epoch)
+            train_loss, accTr, mcaTr, class_precision_train = self.train(epoch)
             if epoch%10==0:
-                test_loss, accTe, mcaTe = self.test(epoch)
+                test_loss, accTe, mcaTe, class_precision_test, correct, predicted = self.test(epoch)
             else: test_loss, accTe, mcaTe = 0,0,0
             tr_loss_arr.append([train_loss, accTr, mcaTr, test_loss, accTe, mcaTe])
-            print (self.args.desc);
 
-            print('----------------------', torch.__version__)
-            print ('Epoch	TrLoss	TrAcc	TrMCA  TeLoss	TeMCA');
-            for i in range(len(tr_loss_arr)):
-                print ('%d %.4f  %.3f%%  %.3f%% %.4f  %.3f%%  %.3f%%'
-                    %(i, tr_loss_arr[i][0], tr_loss_arr[i][1], tr_loss_arr[i][2],
-                      tr_loss_arr[i][3], tr_loss_arr[i][4], tr_loss_arr[i][5]))
+            train_mca.append((mcaTr, class_precision_train))
+            test_mca.append((mcaTe, class_precision_test))
+            print('Epoch %d %.4f %.4f' % (epoch, mcaTr, mcaTe))
+
+            #print (self.args.desc);
+
+            #print('----------------------', torch.__version__)
+            #print ('Epoch	TrLoss	TrAcc	TrMCA  TeLoss	TeMCA');
+            #for i in range(len(tr_loss_arr)):
+            #    print ('%d %.4f  %.3f%%  %.3f%% %.4f  %.3f%%  %.3f%%'
+            #        %(i, tr_loss_arr[i][0], tr_loss_arr[i][1], tr_loss_arr[i][2],
+            #          tr_loss_arr[i][3], tr_loss_arr[i][4], tr_loss_arr[i][5]))
+        np.save(self.args.logfile, [train_mca, test_mca, class_precision_train, class_precision_test, correct, predicted])
 
 
     def getMCA(self,correct, predicted):
         mca = 0
+        class_precision = []
         for lbl,w in enumerate(self.class_weights):
             count = 0.0
             tot = 0.0
@@ -229,6 +234,7 @@ class CNN_Train(nn.Module):
 
             acc_t = count/tot*100.0
             mca = mca + acc_t
+            class_precision.append(acc_t)
         mca = mca/len(self.class_weights)
 
         acc = 0
@@ -237,4 +243,4 @@ class CNN_Train(nn.Module):
                 acc = acc + 1
 
         acc = acc/len(predicted)*100
-        return acc, mca
+        return acc, mca, class_precision

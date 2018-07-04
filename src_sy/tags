@@ -4,3 +4,103 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+CNN_Train	models/CNN_Train.py	/^class CNN_Train(nn.Module):$/;"	c
+DatasetFolder	models/CNN_Train.py	/^from DatasetFolder import DatasetFolder$/;"	i
+DatasetFolder	models/DatasetFolder.py	/^class DatasetFolder(data.Dataset):$/;"	c
+F	models/CNN_Train.py	/^import torch.nn.functional as F$/;"	i
+F	models/FocalLoss.py	/^import torch.nn.functional as F$/;"	i
+F	models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+FineTuneModel	models/FineTune.py	/^class FineTuneModel(nn.Module):$/;"	c
+FocalLoss	models/CNN_Train.py	/^import FocalLoss$/;"	i
+FocalLoss	models/FocalLoss.py	/^class FocalLoss(nn.Module):$/;"	c
+FocalLoss2d	models/focalloss2d.py	/^class FocalLoss2d(nn.Module):$/;"	c
+GPU_ids	main.py	/^GPU_ids = 0$/;"	v
+Image	models/DatasetFolder.py	/^from PIL import Image$/;"	i
+Variable	models/CNN_Train.py	/^from torch.autograd import Variable$/;"	i
+Variable	models/FocalLoss.py	/^from torch.autograd import Variable$/;"	i
+Variable	models/focalloss2d.py	/^from torch.autograd import Variable$/;"	i
+__getitem__	models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__init__	models/CNN_Train.py	/^    def __init__(self, net, args):$/;"	m	class:CNN_Train
+__init__	models/DatasetFolder.py	/^    def __init__(self, train=True, transform=None, target_transform=None, data_dir=None):$/;"	m	class:DatasetFolder
+__init__	models/FineTune.py	/^    def __init__(self, original_model, arch):$/;"	m	class:FineTuneModel
+__init__	models/FocalLoss.py	/^    def __init__(self, gamma=2, alpha=0.25, size_average=True):$/;"	m	class:FocalLoss
+__init__	models/focalloss2d.py	/^    def __init__(self, gamma=0, weight=None, size_average=True):$/;"	m	class:FocalLoss2d
+__len__	models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+accimage	models/DatasetFolder.py	/^    import accimage$/;"	i
+accimage_loader	models/DatasetFolder.py	/^def accimage_loader(path):$/;"	f
+argparse	main.py	/^import argparse$/;"	i
+argparse	models/CNN_Train.py	/^import argparse$/;"	i
+args	main.py	/^args = parser.parse_args()$/;"	v
+backends	models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+batch_size	main.py	/^batch_size = 30$/;"	v
+csv	models/DatasetFolder.py	/^import csv$/;"	i
+cudnn	models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+data	models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
+default_loader	models/DatasetFolder.py	/^def default_loader(path):$/;"	f
+dsets	models/CNN_Train.py	/^import torchvision.datasets as dsets$/;"	i
+focalloss2d	models/CNN_Train.py	/^import focalloss2d$/;"	i
+forward	models/FineTune.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
+forward	models/FocalLoss.py	/^    def forward(self, input, target):$/;"	m	class:FocalLoss
+forward	models/focalloss2d.py	/^    def forward(self, input, target):$/;"	m	class:FocalLoss2d
+getIdx	models/DatasetFolder.py	/^def getIdx(lblarr, consider_lbl, ptrain):$/;"	f
+getMCA	models/CNN_Train.py	/^    def getMCA(self,correct, predicted):$/;"	m	class:CNN_Train
+get_image_backend	models/DatasetFolder.py	/^    from torchvision import get_image_backend$/;"	i
+get_loaders	models/CNN_Train.py	/^    def get_loaders(self):$/;"	m	class:CNN_Train
+inputs	models/FocalLoss.py	/^    inputs = Variable(torch.randn((10, 2)))$/;"	v	class:FocalLoss
+iterate_CNN	models/CNN_Train.py	/^    def iterate_CNN(self):$/;"	m	class:CNN_Train
+loss	models/FocalLoss.py	/^    loss = FocalLoss()(inputs, targets)$/;"	v	class:FocalLoss
+lr	main.py	/^lr = 0.01\/100$/;"	v
+make_dataset	models/DatasetFolder.py	/^def make_dataset(ptrain, data_dir):$/;"	f
+model	main.py	/^model = args.model$/;"	v
+n_epochs	main.py	/^n_epochs = 500$/;"	v
+nclass	main.py	/^nclass = 7$/;"	v
+net	main.py	/^net = FineTuneModel(original_model, model)$/;"	v
+nn	main.py	/^import torch.nn as nn$/;"	i
+nn	models/CNN_Train.py	/^import torch.nn as nn$/;"	i
+nn	models/CNN_Train.py	/^import torch.nn.functional as F$/;"	i
+nn	models/FineTune.py	/^import torch.nn as nn$/;"	i
+nn	models/FocalLoss.py	/^import torch.nn as nn$/;"	i
+nn	models/FocalLoss.py	/^import torch.nn.functional as F$/;"	i
+nn	models/focalloss2d.py	/^import torch.nn as nn$/;"	i
+nn	models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+np	models/CNN_Train.py	/^import numpy as np$/;"	i
+np	models/DatasetFolder.py	/^import numpy as np$/;"	i
+optim	models/CNN_Train.py	/^import torch.optim as optim$/;"	i
+original_model	main.py	/^    original_model = torchvision.models.densenet161(pretrained=True)$/;"	v
+original_model	main.py	/^    original_model = torchvision.models.inception_v3(pretrained=True)$/;"	v
+original_model	main.py	/^    original_model = torchvision.models.resnet152(pretrained=True)$/;"	v
+original_model	main.py	/^    original_model = torchvision.models.resnet50(pretrained=True)$/;"	v
+original_model	main.py	/^    original_model = torchvision.models.squeezenet1_0(pretrained=True)$/;"	v
+original_model	main.py	/^    original_model = torchvision.models.vgg16(pretrained=True)$/;"	v
+os	main.py	/^import os$/;"	i
+os	models/DatasetFolder.py	/^import os$/;"	i
+parser	main.py	/^parser = argparse.ArgumentParser(description='Densenet')$/;"	v
+pil_loader	models/DatasetFolder.py	/^def pil_loader(path):$/;"	f
+print_function	models/CNN_Train.py	/^from __future__ import print_function$/;"	i
+print_net	models/CNN_Train.py	/^    def print_net(self):$/;"	m	class:CNN_Train
+random	models/DatasetFolder.py	/^import random$/;"	i
+sys	main.py	/^import sys$/;"	i
+targets	models/FocalLoss.py	/^    targets = Variable(torch.LongTensor(10).random_(2))$/;"	v	class:FocalLoss
+test	models/CNN_Train.py	/^    def test(self, epoch):$/;"	m	class:CNN_Train
+torch	main.py	/^import torch.nn as nn$/;"	i
+torch	models/CNN_Train.py	/^import torch$/;"	i
+torch	models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	models/CNN_Train.py	/^import torch.nn as nn$/;"	i
+torch	models/CNN_Train.py	/^import torch.nn.functional as F$/;"	i
+torch	models/CNN_Train.py	/^import torch.optim as optim$/;"	i
+torch	models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
+torch	models/FineTune.py	/^import torch$/;"	i
+torch	models/FineTune.py	/^import torch.nn as nn$/;"	i
+torch	models/FocalLoss.py	/^import torch$/;"	i
+torch	models/FocalLoss.py	/^import torch.nn as nn$/;"	i
+torch	models/FocalLoss.py	/^import torch.nn.functional as F$/;"	i
+torch	models/focalloss2d.py	/^import torch$/;"	i
+torch	models/focalloss2d.py	/^import torch.nn as nn$/;"	i
+torch	models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+torchvision	main.py	/^import torchvision$/;"	i
+torchvision	models/CNN_Train.py	/^import torchvision$/;"	i
+torchvision	models/CNN_Train.py	/^import torchvision.datasets as dsets$/;"	i
+torchvision	models/CNN_Train.py	/^import torchvision.transforms as transforms$/;"	i
+train	models/CNN_Train.py	/^    def train(self, epoch):$/;"	m	class:CNN_Train
+transforms	models/CNN_Train.py	/^import torchvision.transforms as transforms$/;"	i
+utils	models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
