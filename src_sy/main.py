@@ -11,7 +11,7 @@ import sys
 # parameters
 lr = 0.01/100
 batch_size = 30
-n_epochs = 500
+n_epochs = 501
 GPU_ids = 0
 nclass = 7
 
