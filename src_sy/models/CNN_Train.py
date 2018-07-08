@@ -11,10 +11,13 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as dsets
 import numpy as np
-from DatasetFolder import DatasetFolder
 
-#import FocalLoss
-#import focalloss2d
+#from DatasetFolder import DatasetFolder
+
+from ReadCSV import DatasetFolder
+
+import FocalLoss
+import focalloss2d
 
 
 class CNN_Train(nn.Module):
@@ -30,7 +33,6 @@ class CNN_Train(nn.Module):
             sys.exit(-1)
 
         self.trainloader, self.testloader, self.ntrain, self.ntest = self.get_loaders()
-
 
         # Loss and Optimizer
         weights = [0.036,0.002,0.084,0.134,0.037,0.391,0.316]
@@ -153,7 +155,7 @@ class CNN_Train(nn.Module):
             img_size = 224
 
         transform_train = transforms.Compose([
-            transforms.Resize(350),
+            transforms.Resize(400),
             #transforms.Resize((300,400)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
@@ -167,7 +169,7 @@ class CNN_Train(nn.Module):
         ])
 
         transform_test = transforms.Compose([
-            transforms.Resize(350),
+            transforms.Resize(400),
             #transforms.Resize((300,400)),
             transforms.CenterCrop(img_size),
             transforms.ToTensor(),
@@ -175,15 +177,15 @@ class CNN_Train(nn.Module):
 
         # Dataset
         print('==> Preparing data..')
-        trainset = DatasetFolder(train=True, transform=transform_train, data_dir=self.args.data_dir)
+        trainset = DatasetFolder(train=True, transform=transform_train, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
 
-        testset = DatasetFolder(train=False, transform=transform_test, data_dir=self.args.data_dir)
+        testset = DatasetFolder(train=False, transform=transform_test, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
 
 
         # Data Loader (Input Pipeline)
         trainloader = torch.utils.data.DataLoader(trainset,
                                                   batch_size=self.args.batch_size,
-                                                  num_workers=20,
+                                                  num_workers=30,
                                                   shuffle=True)
         testloader = torch.utils.data.DataLoader(testset,
                                                  batch_size=self.args.batch_size,

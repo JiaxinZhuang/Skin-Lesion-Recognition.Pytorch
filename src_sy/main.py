@@ -28,15 +28,18 @@ parser.add_argument('--model', default='resnet152')
 # color constancy
 parser.add_argument('--data_dir', default='/home/jiaxin/myGithub/Reverse_CISI_Classification/data/ISIC2018/ISIC2018_Task3_Training_Input/')
 # cuda
-parser.add_argument('--cuda_visible', default='0')
+parser.add_argument('--c', default='0')
+#parser.add_argument('--cuda_visible', default='0')
 # logfile name
 parser.add_argument('--logfile', default='result')
+# iterno
+parser.add_argument('--iterNo', default='1')
 
 args = parser.parse_args()
 
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]=args.cuda_visible
+os.environ["CUDA_VISIBLE_DEVICES"]=args.c
 
 model = args.model
 if model == 'resnet152' or model == 'resnet152_3c':

@@ -76,13 +76,12 @@ def make_dataset(ptrain, data_dir):
 
 
 class DatasetFolder(data.Dataset):
-    def __init__(self, train=True, transform=None, target_transform=None, data_dir=None):
-        self.train_data, self.test_data = make_dataset(0.7, data_dir)
+    def __init__(self, train=True, transform=None, target_transform=None, iterNo=1, data_dir=None):
+        self.train_data, self.test_data = make_dataset(iterNo, data_dir)
         self.transform = transform
         self.target_transform = target_transform
         self.train = train # training set or test set
 
-        # input data_dir
 
     def __getitem__(self, index):
         """
