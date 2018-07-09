@@ -157,6 +157,7 @@ class CNN_Train(nn.Module):
         transform_train = transforms.Compose([
             transforms.Resize(400),
             #transforms.Resize((300,400)),
+            #transforms.Resize((450,600)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
             transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
@@ -170,6 +171,7 @@ class CNN_Train(nn.Module):
 
         transform_test = transforms.Compose([
             transforms.Resize(400),
+            #transforms.Resize((450,600)),
             #transforms.Resize((300,400)),
             transforms.CenterCrop(img_size),
             transforms.ToTensor(),
