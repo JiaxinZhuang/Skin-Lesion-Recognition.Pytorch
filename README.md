@@ -69,6 +69,27 @@ weight_sample_ = 0.05132302/weight_sample_
 ## Class weight
 
 
+## Until 7-9
+### Code directory 
+
+```
+src_sy
+├── main.py
+├── models
+│   ├── CNN_Train.py
+│   ├── DatasetFolder.py
+│   ├── FineTune.py
+│   ├── FocalLoss.py
+│   ├── ReadCSV.py
+│   ├── __init__.py
+│   └── focalloss2d.py
+└── tags
+```
+
+### Train & Evaluate
+```
+python main.py --c CUDA_VISIBLE_DEVICE --logfile=FILENAME
+```
 
 ## Ref
 1. [Tensorflow — Dealing with imbalanced data](https://blog.node.us.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701)
