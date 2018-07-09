@@ -2,3 +2,5 @@ data/*
 src/.hsftp
 src/__pycache__/*
 *.ipynb
+src_sy/.hsftp
+src_pytorch/.hsftp
