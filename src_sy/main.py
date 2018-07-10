@@ -72,10 +72,11 @@ net = FineTuneModel(original_model, model)
 #for name, param in net.named_children():
 #   print(name)
 
-if args.lm == True and os.path.exists(args.train_dir) == True:
-    the_model = net(*args, **kwargs)
+if args.lm == 'True' and os.path.isfile(args.train_dir) == True:
+    the_model = torch.load(args.train_dir)
+    #the_model = net(*args, **kwargs)
     print('Restore train model from {}'.format(args.train_dir))
-    the_model.load_state_dict(torch.load(args.train_dir))
+    #the_model.load_state_dict(torch.load(args.train_dir))
     net = the_model
 
 CNN_Train(net, args)

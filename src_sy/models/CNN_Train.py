@@ -11,16 +11,20 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as dsets
 import numpy as np
-import os
+import os, sys
 
 from tensorboardX import SummaryWriter
 
 #from DatasetFolder import DatasetFolder
 
 from ReadCSV import DatasetFolder
+from ReadCSV import testsetFolder
 
 import FocalLoss
 import focalloss2d
+
+import pandas as pd
+from collections import defaultdict
 
 
 class CNN_Train(nn.Module):
@@ -38,7 +42,7 @@ class CNN_Train(nn.Module):
         if self.args.train == True:
             self.trainloader, self.testloader, self.ntrain, self.ntest = self.get_loaders()
         else:
-            self.data = self.get_data()
+            self.data, self.ndata = self.get_data()
 
         # Loss and Optimizer
         weights = [0.036,0.002,0.084,0.134,0.037,0.391,0.316]
@@ -72,13 +76,33 @@ class CNN_Train(nn.Module):
                                     betas=(0.9, 0.99),
                                     eps=1e-8,
                                     amsgrad=True)
-        self.print_net()
+        #self.print_net()
+
+        def sigmod(x):
+            return (1 / (1 + np.exp(-x)))
 
         if self.args.train ==  True:
             self.iterate_CNN()
         else:
-            predicted = self.predict()
-            np.save(self.args.prediction, predicted)
+            predicted, filenames= self.predict()
+            #print(list(filter(lambda x: x[0], predicted)))
+            d = defaultdict(list)
+            for x in predicted:
+                for i, v in enumerate(x):
+                    d[i].append(sigmod(v))
+
+            raw_data = {
+                    'image': filenames,
+                    'MEL': d[0],
+                    'NV':  d[1],
+                    'BCC': d[2],
+                    'AKIEC': d[3],
+                    'BKL': d[4],
+                    'DF': d[5],
+                    'VASC': d[6]
+                    }
+            df = pd.DataFrame(raw_data, columns = ['image', 'MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC'])
+            df.to_csv(self.args.prediction, index=False)
 
     def get_data(self):
         if self.args.model == 'inception_v3' or self.args.model == 'inceptionresnetv2':
@@ -88,17 +112,17 @@ class CNN_Train(nn.Module):
 
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         data_transform = transforms.Compose([
-                            transforms.Resize(400),
-                            transforms.ToTensor(),
+                            transforms.Resize(300),
                             transforms.CenterCrop(img_size),
+                            transforms.ToTensor(),
                             normalize])
 
-        test_data_dir = '../data/ISIC2018/test/'
-        dataset = datasets.ImageFolder(root=test_data_dir, transform=data_transform)
+        test_data_dir = '../data/ISIC2018/ISIC2018_Task3_Validation_Input/'
+        dataset = testsetFolder(transform=data_transform, data_dir=test_data_dir)
         dataset_loader = torch.utils.data.DataLoader(dataset,
-                                                     batch_size=30,
+                                                     batch_size=1,
                                                      shuffle=False,
-                                                     num_workers=6)
+                                                     num_workers=1)
         return dataset_loader, len(dataset_loader)
 
     def getMCA(self,correct, predicted):
@@ -162,19 +186,22 @@ class CNN_Train(nn.Module):
         self.net.eval()
         print('Predict==>')
         predicted = []
-        for index, inputs in enumerate(self.data):
+        filenames = []
+        for index, (filename, inputs) in enumerate(self.data):
             inputs = inputs.cuda(self.args.GPU_ids)
 
             with torch.no_grad():
                 inputs = Variable(inputs)
                 outputs = self.net(inputs)
 
-            pred = torch.max(outputs.data, 1)
-            predicted.extend(pred.cpu().numpy())
+            #pred = torch.max(outputs.data, 1)
+            predicted.extend(outputs.cpu().numpy())
+            filenames.extend(filename)
 
             del inputs
+            del filename
 
-        return predicted
+        return predicted, filenames
 
     def test(self, epoch):
         global best_acc

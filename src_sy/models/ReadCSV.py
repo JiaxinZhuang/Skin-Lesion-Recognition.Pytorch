@@ -70,6 +70,31 @@ def get_five_fold(datadir):
 #b = a
 
 
+class testsetFolder(data.Dataset):
+    def __init__(self, transform=None, data_dir='../data/ISIC2018/ISIC2018_Task3_Validation_Input'):
+        self.transform = transform
+        filenames = os.listdir(data_dir)
+        filenames = list(filter(lambda x: x.split('.') [-1] == 'jpg', filenames))
+        self.data = [os.path.join(data_dir, x) for x in filenames]
+
+    def __getitem__(self, index):
+        """
+        Args:
+            index (int): Index
+        Returns:
+            tuple: (sample, target) where target is class_index of the target class.
+        """
+        path = self.data[index]
+        sample = default_loader(path)
+        if self.transform is not None:
+            sample = self.transform(sample)
+        filename = os.path.split(path)[-1]
+        filename = filename.split('.')[0]
+        return filename, sample
+
+    def __len__(self):
+        return len(self.data)
+
 class DatasetFolder(data.Dataset):
     def __init__(self, train=True, transform=None, iterNo=1, data_dir='./data/ISIC2-18/ISIC2018_Task3_Training_Input/'):
         """
