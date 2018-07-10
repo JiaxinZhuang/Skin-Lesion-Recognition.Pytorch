@@ -11,6 +11,9 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as dsets
 import numpy as np
+import os
+
+from tensorboardX import SummaryWriter
 
 #from DatasetFolder import DatasetFolder
 
@@ -32,37 +35,96 @@ class CNN_Train(nn.Module):
             print('No availble GPU')
             sys.exit(-1)
 
-        self.trainloader, self.testloader, self.ntrain, self.ntest = self.get_loaders()
+        if self.args.train == True:
+            self.trainloader, self.testloader, self.ntrain, self.ntest = self.get_loaders()
+        else:
+            self.data = self.get_data()
 
         # Loss and Optimizer
         weights = [0.036,0.002,0.084,0.134,0.037,0.391,0.316]
         self.class_weights = torch.FloatTensor(weights).cuda()
         #if not isinstance(self.args.GPU_ids, list) == 1:
-        self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda(self.args.GPU_ids)
+        #self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda(self.args.GPU_ids)
 
         # triplet loss
         #self.criterion = nn.TripletMarginLoss(margin=1.0, p=2).cuda(self.args.GPU_ids)
 
         # Focal Loss
+        self.criterion = focalloss2d.FocalLoss2d(gamma=2.0).cuda(self.args.GPU_ids)
         #self.criterion = FocalLoss.FocalLoss().cuda(self.args.GPU_ids)
-        #self.criterion = focalloss2d.FocalLoss2d(gamma=2.0).cuda(self.args.GPU_ids)
 
         #else:
         #	self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda()
 
         # cudnn.benchmark = True
-#        self.optimizer = optim.SGD(filter(lambda p: p.requires_grad,net.parameters()),
-        self.optimizer = optim.SGD([{'params': net.features.parameters(), 'lr': args.lr},
-                                   {'params': net.classifier.parameters(), 'lr': args.lr*100}],
-                                   lr=args.lr,
-                                    momentum=0.9,
-                                    nesterov=True,
-                                    weight_decay=0.0005)
-        self.scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer,
-                                                                milestones=[150, 250, 350, 450],
-                                                                gamma=0.1)
+        #self.optimizer = optim.SGD([{'params': net.features.parameters(), 'lr': args.lr},
+        #                           {'params': net.classifier.parameters(), 'lr': args.lr*100}],
+        #                           lr=args.lr,
+        #                            momentum=0.9,
+        #                            nesterov=True,
+        #                            weight_decay=0.0005)
+        #self.scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer,
+        #                                                        milestones=[150, 250, 350, 450],
+        #                                                        gamma=0.1)
+
+        self.optimizer = optim.Adam(net.features.parameters(),
+                                    lr=args.lr,
+                                    betas=(0.9, 0.99),
+                                    eps=1e-8,
+                                    amsgrad=True)
         self.print_net()
-        self.iterate_CNN()
+
+        if self.args.train ==  True:
+            self.iterate_CNN()
+        else:
+            predicted = self.predict()
+            np.save(self.args.prediction, predicted)
+
+    def get_data(self):
+        if self.args.model == 'inception_v3' or self.args.model == 'inceptionresnetv2':
+            img_size = 299
+        else:
+            img_size = 224
+
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        data_transform = transforms.Compose([
+                            transforms.Resize(400),
+                            transforms.ToTensor(),
+                            transforms.CenterCrop(img_size),
+                            normalize])
+
+        test_data_dir = '../data/ISIC2018/test/'
+        dataset = datasets.ImageFolder(root=test_data_dir, transform=data_transform)
+        dataset_loader = torch.utils.data.DataLoader(dataset,
+                                                     batch_size=30,
+                                                     shuffle=False,
+                                                     num_workers=6)
+        return dataset_loader, len(dataset_loader)
+
+    def getMCA(self,correct, predicted):
+        mca = 0
+        class_precision = []
+        for lbl,w in enumerate(self.class_weights):
+            count = 0.0
+            tot = 0.0
+            for i,x in enumerate(correct):
+                if x==lbl:
+                    tot = tot + 1
+                    if x==predicted[i]:
+                        count = count+1
+
+            acc_t = count/tot*100.0
+            mca = mca + acc_t
+            class_precision.append(acc_t)
+        mca = mca/len(self.class_weights)
+
+        acc = 0
+        for i,x in enumerate(correct):
+            if x==predicted[i]:
+                acc = acc + 1
+
+        acc = acc/len(predicted)*100
+        return acc, mca, class_precision
 
     # Training
     def train(self, epoch):
@@ -96,6 +158,23 @@ class CNN_Train(nn.Module):
         acc, mca, class_precision = self.getMCA(correct, predicted)
         return train_loss, acc, mca, class_precision
 
+    def predict(self):
+        self.net.eval()
+        print('Predict==>')
+        predicted = []
+        for index, inputs in enumerate(self.data):
+            inputs = inputs.cuda(self.args.GPU_ids)
+
+            with torch.no_grad():
+                inputs = Variable(inputs)
+                outputs = self.net(inputs)
+
+            pred = torch.max(outputs.data, 1)
+            predicted.extend(pred.cpu().numpy())
+
+            del inputs
+
+        return predicted
 
     def test(self, epoch):
         global best_acc
@@ -155,14 +234,15 @@ class CNN_Train(nn.Module):
             img_size = 224
 
         transform_train = transforms.Compose([
-            transforms.Resize(400),
-            #transforms.Resize((300,400)),
+            #transforms.Resize((255,300)),
+            #transforms.Resize(300),
+            transforms.Resize((300,400)),
             #transforms.Resize((450,600)),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
-            transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
+            #transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
             transforms.RandomRotation([-180, 180]),
-            transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
+            #transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
             transforms.RandomCrop(img_size),
 #            transforms.CenterCrop(224),
             transforms.ToTensor(),
@@ -170,9 +250,10 @@ class CNN_Train(nn.Module):
         ])
 
         transform_test = transforms.Compose([
-            transforms.Resize(400),
+            #transforms.Resize((255,300)),
+            #transforms.Resize(300),
             #transforms.Resize((450,600)),
-            #transforms.Resize((300,400)),
+            transforms.Resize((300,400)),
             transforms.CenterCrop(img_size),
             transforms.ToTensor(),
             normalize])
@@ -201,17 +282,37 @@ class CNN_Train(nn.Module):
         train_mca = []
         test_mca = []
 
+        writer = SummaryWriter()
+
         for epoch in range(self.args.n_epochs):
-            self.scheduler.step()
+
+            for index, params in enumerate(self.optimizer.state_dict()['param_groups']):
+                writer.add_scalar('train/lr_' + str(index+1), params['lr'], epoch)
+
+            #self.scheduler.step()
             train_loss, accTr, mcaTr, class_precision_train = self.train(epoch)
-            if epoch%10==0:
+            if epoch %10 ==0:
+                if os.path.exists(self.args.train_dir) == False:
+                    os.mkdir(self.args.train_dir)
                 test_loss, accTe, mcaTe, class_precision_test, correct, predicted = self.test(epoch)
-            else: test_loss, accTe, mcaTe = 0,0,0
+                path = os.path.join(self.args.train_dir, str(epoch))
+                torch.save(self.net, path)
+                writer.add_scalar('test/mca', accTe, epoch)
+            else:
+                test_loss, accTe, mcaTe = 0,0,0
+
             tr_loss_arr.append([train_loss, accTr, mcaTr, test_loss, accTe, mcaTe])
 
             train_mca.append((mcaTr, class_precision_train))
             test_mca.append((mcaTe, class_precision_test))
             print('Epoch %d %.4f %.4f' % (epoch, mcaTr, mcaTe))
+
+            writer.add_scalar('train/loss', train_loss, epoch)
+            writer.add_scalar('train/mca', accTr, epoch)
+
+            #for index, lr in enumerate(self.scheduler.get_lr()):
+            #    writer.add_scalar('train/lr_' + str(index+1), lr, epoch)
+                #writer.add_scalar('train/lr', param_group['lr'], epoch)
 
             #print (self.args.desc);
 

@@ -24,16 +24,24 @@ parser.add_argument('--GPU_ids', default=GPU_ids)
 parser.add_argument('--nclass', default=nclass)
 parser.add_argument('--desc', default='Densenet')
 # arguement model
-parser.add_argument('--model', default='resnet152')
+parser.add_argument('--model',default='resnet152')
 # color constancy
 parser.add_argument('--data_dir', default='/home/jiaxin/myGithub/Reverse_CISI_Classification/data/ISIC2018/ISIC2018_Task3_Training_Input/')
 # cuda
-parser.add_argument('--c', default='0')
+parser.add_argument('-c', default='0')
 #parser.add_argument('--cuda_visible', default='0')
 # logfile name
 parser.add_argument('--logfile', default='result')
 # iterno
 parser.add_argument('--iterNo', default='1')
+# load from trained_model
+parser.add_argument('--lm', default=False)
+# load from trained_model directory
+parser.add_argument('--train_dir', default='../train_dir/')
+# test
+parser.add_argument('--train', default=True)
+# prediction
+parser.add_argument('--prediction', default='../predictions/prediction')
 
 args = parser.parse_args()
 
@@ -44,7 +52,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]=args.c
 model = args.model
 if model == 'resnet152' or model == 'resnet152_3c':
     original_model = torchvision.models.resnet152(pretrained=True)
-elif model == 'resnet50':
+elif model == 'resnet50' or model == 'resnet50_3c':
     original_model = torchvision.models.resnet50(pretrained=True)
 elif model == 'inceptionresnetv2':
     original_model = pretrainedmodels.inceptionresnetv2(pretrained='imagenet')
@@ -64,6 +72,11 @@ net = FineTuneModel(original_model, model)
 #for name, param in net.named_children():
 #   print(name)
 
+if args.lm == True and os.path.exists(args.train_dir) == True:
+    the_model = net(*args, **kwargs)
+    print('Restore train model from {}'.format(args.train_dir))
+    the_model.load_state_dict(torch.load(args.train_dir))
+    net = the_model
 
 CNN_Train(net, args)
 

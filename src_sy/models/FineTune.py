@@ -5,7 +5,7 @@ class FineTuneModel(nn.Module):
     def __init__(self, original_model, arch):
         super().__init__()
 
-        if arch == 'resnet152_3c':
+        if arch == 'resnet152_3c' or arch =='resnet50_3c':
             # 3 conv layer
             original_model.avgpool = nn.Sequential(
                 nn.Conv2d(2048, 2048, kernel_size=3, stride=1, padding=0,
@@ -26,7 +26,7 @@ class FineTuneModel(nn.Module):
                 nn.Linear(1000, 7)
             )
             self.modelName = 'resnet152_3c'
-        if arch.startswith('resnet'):
+        elif arch.startswith('resnet'):
             # Everything except the last linear layer
             self.features = original_model
             self.classifier = nn.Sequential(
