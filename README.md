@@ -114,7 +114,7 @@ resullt # log
 when running model, an event file for tensorboard would generated in current directory, named **run** 
 
 ```
-python main.py -c=GPU_DEVICE_INDEX --train_file=SAVE_MODEL_PATH --logfile=LOG_PATH --model=MODEL_TO_USE
+python main.py --c=GPU_DEVICE_INDEX --train_file=SAVE_MODEL_PATH --logfile=LOG_PATH --model=MODEL_TO_USE
 
 eg.
 
