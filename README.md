@@ -91,6 +91,43 @@ src_sy
 python main.py --c CUDA_VISIBLE_DEVICE --logfile=FILENAME
 ```
 
+## Until 7-13
+## Pre
+need **pytorch** and install software below
+
+```
+pip install tensorflow-gpu tensorboardX pandas pretrainedmodels  
+```
+
+### Necessary directory
+create **train\_dir**, **result** 
+
+```
+.
+src_sy # code
+data/ISIC2018/ # store data and split_data
+train_dir # model
+resullt # log
+```
+
+### Train & Evaluate
+when running model, an event file for tensorboard would generated in current directory, named **run** 
+
+```
+python main.py -c=GPU_DEVICE_INDEX --train_file=SAVE_MODEL_PATH --logfile=LOG_PATH --model=MODEL_TO_USE
+
+eg.
+
+python main.py --c=0 --train_dir=../result/result100 --logfile=result --model=resnet50 --iterNo=0
+```
+
+### tensorboard
+mca, lr 
+
+```
+tensorboard --logdir run
+```
+
 ## Ref
 1. [Tensorflow — Dealing with imbalanced data](https://blog.node.us.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701)
 2. [xgboost](https://xgboost.readthedocs.io/en/latest/get_started/index.html)

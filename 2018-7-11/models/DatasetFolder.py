@@ -7,16 +7,15 @@ from PIL import Image
 import random
 import scipy.io
 
-def make_dataset(itrno, data_dir):
+def make_dataset(itrno):
     images = []
     lblarr_train = []
     lblarr_test = []
     train_data = []
     test_data = []
 
-    train_csv = 'split_data/itr_' + str(itrno) + '_train.csv'
-    fn = os.path.join(data_dir, train_csv)
-    print('Loading train from {}'.format(fn))
+    #fn = '/home/siyam/CODES/CNN_CODES/SKIN_CNN_Finetune/models/Folds/itr_' + str(itrno) + '_train.csv'
+    fn = '/home/jiaxin/myGithub/Reverse_CISI_Classification/2018-7-11/itr_' + str(itrno) + '_train.csv'
     file = open(fn, 'r')
     for line in file:
         line = line.split(',')
@@ -25,9 +24,8 @@ def make_dataset(itrno, data_dir):
         train_data.append(item)
     file.close()
 
-    test_csv = 'split_data/itr_' + str(itrno) + '_test.csv'
-    fn = os.path.join(data_dir, test_csv)
-    print('Loading test from {}'.format(fn))
+    #fn = '/home/siyam/CODES/CNN_CODES/SKIN_CNN_Finetune/models/Folds/itr_' + str(itrno) + '_test.csv'
+    fn = '/home/jiaxin/myGithub/Reverse_CISI_Classification/2018-7-11/itr_' + str(itrno) + '_test.csv'
     file = open(fn, 'r')
     for line in file:
         line = line.split(',')
@@ -37,40 +35,37 @@ def make_dataset(itrno, data_dir):
     file.close()
 
     unique_labels = np.unique(lblarr_train).tolist()
-    #count = []
-    #for lbl in unique_labels:
-    #    ntrain = sum(1 for x in lblarr_train if x==lbl)
-    #    ntest = sum(1 for x in lblarr_test if x == lbl)
-    #    tot = ntrain + ntest
-    #    count.append(tot)
-    #    print(f"Number of images in class  {lbl} is  {tot} : {ntrain}, {ntest}")
-    #print(f'Total train: {len(lblarr_train)}, test: {len(lblarr_test)}')
+    count = []
+    for lbl in unique_labels:
+        ntrain = sum(1 for x in lblarr_train if x==lbl)
+        ntest = sum(1 for x in lblarr_test if x == lbl)
+        tot = ntrain + ntest
+        count.append(tot)
+        print(f"Number of images in class  {lbl} is  {tot} : {ntrain}, {ntest}")
+    print(f'Total train: {len(lblarr_train)}, test: {len(lblarr_test)}')
 
-    #sv = sum(count)
-    #weights = []
-    #tot = 0
-    #for i, val in enumerate(count):
-    #    weights.append((sv-val)/val)
-    #    tot = tot + weights[i]
-    #for val in weights:
-    #   print(np.round(val/tot,3), end=',')
-    #print()
+    sv = sum(count)
+    weights = []
+    tot = 0
+    for i, val in enumerate(count):
+        weights.append((sv-val)/val)
+        tot = tot + weights[i]
+    for val in weights:
+       print(np.round(val/tot,3), end=',')
+    print()
 
-    #for val in count:
-    #   print(val, end=',')
-    #print()
+    for val in count:
+       print(val, end=',')
+    print()
 
     return train_data, test_data, unique_labels
 
 
 class DatasetFolder(data.Dataset):
-    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='../data/ISIC2018/'):
-        self.train_data, self.test_data, self.classes = make_dataset(iterNo, data_dir=data_dir)
+    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1):
+        self.train_data, self.test_data, self.classes = make_dataset(iterNo)
         self.transform = transform
         self.train = train # training set or test set
-
-        train_data = 'ISIC2018_Task3_Training_Input'
-        self.train_data_dir = os.path.join(data_dir, train_data)
 
     def __getitem__(self, index):
         """
@@ -84,14 +79,12 @@ class DatasetFolder(data.Dataset):
         else:
             path, target = self.test_data[index]
 
-        path = os.path.join(self.train_data_dir, path)
-        path += '.jpg'
         imagedata = default_loader(path)
         if self.transform is not None:
             imagedata = self.transform(imagedata)
 
-        #[tmp,path] = os.path.split(path)
-        #path = path.split('.')[0]
+        [tmp,path] = os.path.split(path)
+        path = path.split('.')[0]
 
         return imagedata, target
 
@@ -139,30 +132,4 @@ def default_loader(path):
         return pil_loader(path)
 
 #make_dataset(0.5)
-
-
-class testsetFolder(data.Dataset):
-    def __init__(self, transform=None, data_dir='../data/ISIC2018/ISIC2018_Task3_Validation_Input'):
-        self.transform = transform
-        filenames = os.listdir(data_dir)
-        filenames = list(filter(lambda x: x.split('.') [-1] == 'jpg', filenames))
-        self.data = [os.path.join(data_dir, x) for x in filenames]
-
-    def __getitem__(self, index):
-        """
-        Args:
-            index (int): Index
-        Returns:
-            tuple: (sample, target) where target is class_index of the target class.
-        """
-        path = self.data[index]
-        sample = default_loader(path)
-        if self.transform is not None:
-            sample = self.transform(sample)
-        filename = os.path.split(path)[-1]
-        filename = filename.split('.')[0]
-        return filename, sample
-
-    def __len__(self):
-        return len(self.data)
 

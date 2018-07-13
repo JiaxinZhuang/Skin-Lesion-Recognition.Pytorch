@@ -1,5 +1,3 @@
-print(__doc__)
-
 import argparse
 import itertools
 import numpy as np
@@ -8,20 +6,6 @@ import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-
-# import some data to play with
-iris = datasets.load_iris()
-X = iris.data
-y = iris.target
-class_names = iris.target_names
-
-# Split the data into a training set and a test set
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
-
-# Run classifier, using a model that is too regularized (C too low) to see
-# the impact on the results
-classifier = svm.SVC(kernel='linear', C=0.01)
-y_pred = classifier.fit(X_train, y_train).predict(X_test)
 
 
 def plot_confusion_matrix(cm, classes,
@@ -58,7 +42,7 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.savefig(args.o)
-    print('Save image as {}'.format(args.o)
+    print('Save image as {}'.format(args.o))
 
 parser = argparse.ArgumentParser(description='Confusion Matrix')
 parser.add_argument('--path', default='../result/')
@@ -67,14 +51,16 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     data = np.load(args.path)
-    y_test = data[1]
-    y_pred = data[0]
+    y_test = data[4]
+    y_pred = data[5]
+    print(y_test)
+    print(y_pred)
     # Compute confusion matrix
     cnf_matrix = confusion_matrix(y_test, y_pred)
     np.set_printoptions(precision=2)
 
     # Plot non-normalized confusion matrix
-    plt.figure()
+    #plt.figure()
     plot_confusion_matrix(cnf_matrix, classes=[0,1,2,3,4,5,6],
                           title='Confusion matrix, without normalization')
 

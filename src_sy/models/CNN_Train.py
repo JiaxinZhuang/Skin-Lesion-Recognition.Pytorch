@@ -15,13 +15,12 @@ import os, sys
 
 from tensorboardX import SummaryWriter
 
-#from DatasetFolder import DatasetFolder
+from DatasetFolder import DatasetFolder
 
-from ReadCSV import DatasetFolder
-from ReadCSV import testsetFolder
+#from ReadCSV import DatasetFolder
 
-import FocalLoss
-import focalloss2d
+#import FocalLoss
+#import focalloss2d
 
 import pandas as pd
 from collections import defaultdict
@@ -29,12 +28,11 @@ from collections import defaultdict
 
 class CNN_Train(nn.Module):
     def __init__(self, net, args):
-        super().__init__()
+        super(CNN_Train, self).__init__()
         self.args = args
         if torch.cuda.is_available():
             self.net = net.cuda(self.args.GPU_ids)
             cudnn.benchmark = True
-            #self.net = torch.nn.DataParallel(net, device_ids = self.args.GPU_ids)
         else:
             print('No availble GPU')
             sys.exit(-1)
@@ -47,7 +45,6 @@ class CNN_Train(nn.Module):
         # Loss and Optimizer
         weights = [0.036,0.002,0.084,0.134,0.037,0.391,0.316]
         self.class_weights = torch.FloatTensor(weights).cuda()
-        #if not isinstance(self.args.GPU_ids, list) == 1:
         self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda(self.args.GPU_ids)
 
         # triplet loss
@@ -57,39 +54,41 @@ class CNN_Train(nn.Module):
         #self.criterion = focalloss2d.FocalLoss2d(gamma=2.0).cuda(self.args.GPU_ids)
         #self.criterion = FocalLoss.FocalLoss().cuda(self.args.GPU_ids)
 
-        #else:
-        #	self.criterion = nn.CrossEntropyLoss(weight=self.class_weights).cuda()
-
-        # cudnn.benchmark = True
-        self.optimizer = optim.SGD([{'params': net.features.parameters(), 'lr': args.lr},
-                                   {'params': net.classifier.parameters(), 'lr': args.lr*100}],
-                                   lr=args.lr,
+        lr = float(self.args.lr)
+        self.optimizer = optim.SGD([{'params': net.features.parameters(), 'lr': lr},
+                                   {'params': net.classifier.parameters(), 'lr': lr*100}],
+                                   lr=lr,
                                     momentum=0.9,
                                     nesterov=True,
                                     weight_decay=0.0005)
         self.scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer,
                                                                 milestones=[150, 250, 350, 450],
                                                                 gamma=0.1)
+        print('using optim {} with init_lr: {}'.format('SGD', lr))
 
-        #self.optimizer = optim.Adam(net.features.parameters(),
-        #                            lr=args.lr,
+        #lr = float(args.lr)
+        #self.optimizer = optim.Adam([{'params': net.features.parameters(), 'lr': lr},
+        #                             {'params': net.classifier.parameters(), 'lr': lr*100}],
+        #                            lr=lr,
         #                            betas=(0.9, 0.99),
         #                            eps=1e-8,
         #                            amsgrad=True)
+        #print('using optim {} with init_lr: {}'.format('Adam', lr))
         #self.print_net()
 
 
         if self.args.train ==  True:
             self.iterate_CNN()
         else:
-            def sigmod(x):
-                return (1 / (1 + np.exp(-x)))
+            #def sigmod(x):
+            #    return (1 / (1 + np.exp(-x)))
             predicted, filenames= self.predict()
             #print(list(filter(lambda x: x[0], predicted)))
             d = defaultdict(list)
             for x in predicted:
                 for i, v in enumerate(x):
-                    d[i].append(sigmod(v))
+                    d[i].append(v)
+                    #d[i].append(sigmod(v))
 
             raw_data = {
                     'image': filenames,
@@ -117,9 +116,9 @@ class CNN_Train(nn.Module):
                             transforms.ToTensor(),
                             normalize])
 
-        test_data_dir = '../data/ISIC2018/ISIC2018_Task3_Validation_Input/'
-        #test_data_dir = '../data/ISIC2018/valid_wpr1/'
-        #test_data_dir = '../data/ISIC2018/ISIC2018_Task1-2_Validation_Input/'
+        test_data = 'ISIC2018_Task3_Validation_Input/'
+        #test_data_dir = 'valid_wpr1/'
+        test_data_dir = os.path.join(self.args.data_dir, test_data)
         dataset = testsetFolder(transform=data_transform, data_dir=test_data_dir)
         dataset_loader = torch.utils.data.DataLoader(dataset,
                                                      batch_size=1,
@@ -195,9 +194,12 @@ class CNN_Train(nn.Module):
             with torch.no_grad():
                 inputs = Variable(inputs)
                 outputs = self.net(inputs)
+                softmax_function = torch.nn.Softmax(dim=1)
+                soft_outputs = softmax_function(outputs)
 
             #pred = torch.max(outputs.data, 1)
-            predicted.extend(outputs.cpu().numpy())
+            #predicted.extend(outputs.cpu().numpy())
+            predicted.extend(soft_outputs.cpu().numpy())
             filenames.extend(filename)
 
             del inputs
@@ -263,41 +265,45 @@ class CNN_Train(nn.Module):
             img_size = 224
 
         transform_train = transforms.Compose([
-            transforms.Resize((225,300)),
-            #transforms.Resize(300),
-            #transforms.Resize((300,400)),
+            #transforms.Resize((225,300)),
             #transforms.Resize((450,600)),
+            #transforms.Resize((300,400)),
+
+            transforms.Resize(300),
             transforms.RandomHorizontalFlip(),
             transforms.RandomVerticalFlip(),
-            #transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
+            transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
             transforms.RandomRotation([-180, 180]),
-            #transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
+            transforms.RandomAffine([-180, 180], translate=[0.1, 0.1], scale=[0.7, 1.3]),
             transforms.RandomCrop(img_size),
-#            transforms.CenterCrop(224),
+
+            #transforms.CenterCrop(224),
             transforms.ToTensor(),
             normalize
         ])
 
         transform_test = transforms.Compose([
-            transforms.Resize((225,300)),
-            #transforms.Resize(300),
+            #transforms.Resize((225,300)),
             #transforms.Resize((450,600)),
             #transforms.Resize((300,400)),
+            transforms.Resize(300),
             transforms.CenterCrop(img_size),
             transforms.ToTensor(),
             normalize])
 
         # Dataset
         print('==> Preparing data..')
+        #trainset = DatasetFolder(train=True, transform=transform_train, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
         trainset = DatasetFolder(train=True, transform=transform_train, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
 
+        #testset = DatasetFolder(train=False, transform=transform_test, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
         testset = DatasetFolder(train=False, transform=transform_test, iterNo=int(self.args.iterNo), data_dir=self.args.data_dir)
 
 
         # Data Loader (Input Pipeline)
         trainloader = torch.utils.data.DataLoader(trainset,
                                                   batch_size=self.args.batch_size,
-                                                  num_workers=30,
+                                                  num_workers=50,
                                                   shuffle=True)
         testloader = torch.utils.data.DataLoader(testset,
                                                  batch_size=self.args.batch_size,
@@ -311,10 +317,10 @@ class CNN_Train(nn.Module):
         train_mca = []
         test_mca = []
 
-        writer = SummaryWriter()
+        output_writer_path = os.path.join('./run', self.args.logfile)
+        writer = SummaryWriter(output_writer_path)
 
         for epoch in range(self.args.n_epochs):
-
             #for index, params in enumerate(self.optimizer.state_dict()['param_groups']):
             #    writer.add_scalar('train/lr_' + str(index+1), params['lr'], epoch)
 
@@ -326,7 +332,8 @@ class CNN_Train(nn.Module):
                 test_loss, accTe, mcaTe, class_precision_test, correct, predicted = self.test(epoch)
                 path = os.path.join(self.args.train_dir, str(epoch))
                 torch.save(self.net, path)
-                writer.add_scalar('test/mca', accTe, epoch)
+                writer.add_scalar('test/acc', accTe, epoch)
+                writer.add_scalar('test/mca', mcaTe, epoch)
             else:
                 test_loss, accTe, mcaTe = 0,0,0
 
@@ -337,7 +344,8 @@ class CNN_Train(nn.Module):
             print('Epoch %d %.4f %.4f' % (epoch, mcaTr, mcaTe))
 
             writer.add_scalar('train/loss', train_loss, epoch)
-            writer.add_scalar('train/mca', accTr, epoch)
+            writer.add_scalar('train/mca', mcaTr, epoch)
+            writer.add_scalar('train/acc', accTr, epoch)
 
             for index, lr in enumerate(self.scheduler.get_lr()):
                 writer.add_scalar('train/lr_' + str(index+1), lr, epoch)
