@@ -70,6 +70,7 @@ class DatasetFolder(data.Dataset):
         self.train = train # training set or test set
 
         train_data = 'ISIC2018_Task3_Training_Input'
+        #train_data = 'wpr1'
         self.train_data_dir = os.path.join(data_dir, train_data)
 
     def __getitem__(self, index):
