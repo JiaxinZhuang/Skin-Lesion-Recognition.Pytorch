@@ -5,6 +5,7 @@ import torch.utils.data as data
 import random
 import torch
 from PIL import Image
+dir = './wpr1/'
 
 def get_five_fold(datadir):
     first_tuple = []
@@ -12,39 +13,39 @@ def get_five_fold(datadir):
     third_tuple = []
     four_tuple = []
     five_tuple = []
-    with open(os.path.join('../data/ISIC2018/', 'split_data.csv'), 'rt') as csvfile:
+    with open(os.path.join(dir, 'split_data.csv'), 'rt') as csvfile:
         reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
         for line_no, row in enumerate(reader):
             if line_no == 0: continue
             row = row[0].split(',')
+            first_fold_name = os.path.join(dir, row[0]+'.jpg')
+            first_fold_label = row[1]
+            first_item = (first_fold_name, first_fold_label)
             if row[0] != '':
-                first_fold_name = os.path.join(datadir, row[0]+'.jpg')
-                first_fold_label = int(float(row[1]))
-                first_item = (first_fold_name, first_fold_label)
                 first_tuple.append(first_item)
 
+            second_fold_name = os.path.join(dir, row[2] + '.jpg')
+            second_fold_label = row[3]
+            second_item = (second_fold_name, second_fold_label)
             if row[2] != '':
-                second_fold_name = os.path.join(datadir, row[2] + '.jpg')
-                second_fold_label = int(float(row[3]))
-                second_item = (second_fold_name, second_fold_label)
                 second_tuple.append(second_item)
 
+            third_fold_name = os.path.join(dir, row[4] + '.jpg')
+            third_fold_label = row[5]
+            third_item = (third_fold_name, third_fold_label)
             if row[4] != '':
-                third_fold_name = os.path.join(datadir, row[4] + '.jpg')
-                third_fold_label = int(float(row[5]))
-                third_item = (third_fold_name, third_fold_label)
                 third_tuple.append(third_item)
 
+            four_fold_name = os.path.join(dir, row[6] + '.jpg')
+            four_fold_label = row[7]
+            four_item = (four_fold_name, four_fold_label)
             if row[6] != '':
-                four_fold_name = os.path.join(datadir, row[6] + '.jpg')
-                four_fold_label = int(float(row[7]))
-                four_item = (four_fold_name, four_fold_label)
                 four_tuple.append(four_item)
 
+            five_fold_name = os.path.join(dir, row[8] + '.jpg')
+            five_fold_label = row[9]
+            five_item = (five_fold_name, five_fold_label)
             if row[8] != '':
-                five_fold_name = os.path.join(datadir, row[8] + '.jpg')
-                five_fold_label = int(float(row[9]))
-                five_item = (five_fold_name, five_fold_label)
                 five_tuple.append(five_item)
     first_train_data = first_tuple+second_tuple+third_tuple+four_tuple
     first_test_data = five_tuple
@@ -60,7 +61,7 @@ def get_five_fold(datadir):
     return first_train_data, first_test_data, second_train_data, second_test_data, third_train_data, third_test_data, four_train_data, four_test_data, five_train_data, five_test_data
 
 
-#first_train_data, first_test_data, second_train_data, second_test_data, third_train_data, third_test_data, four_train_data, four_test_data, five_train_data, five_test_data = get_five_fold(datadir)
+
 #a = set(first_train_data).intersection(second_train_data)
 #a = set(first_train_data).intersection(third_train_data)
 #a = set(first_train_data).intersection(four_train_data)
@@ -70,50 +71,22 @@ def get_five_fold(datadir):
 #b = a
 
 
-class testsetFolder(data.Dataset):
-    def __init__(self, transform=None, data_dir='../data/ISIC2018/ISIC2018_Task3_Validation_Input'):
-        self.transform = transform
-        filenames = os.listdir(data_dir)
-        filenames = list(filter(lambda x: x.split('.') [-1] == 'jpg', filenames))
-        self.data = [os.path.join(data_dir, x) for x in filenames]
-
-    def __getitem__(self, index):
-        """
-        Args:
-            index (int): Index
-        Returns:
-            tuple: (sample, target) where target is class_index of the target class.
-        """
-        path = self.data[index]
-        sample = default_loader(path)
-        if self.transform is not None:
-            sample = self.transform(sample)
-        filename = os.path.split(path)[-1]
-        filename = filename.split('.')[0]
-        return filename, sample
-
-    def __len__(self):
-        return len(self.data)
-
 class DatasetFolder(data.Dataset):
-    def __init__(self, train=True, transform=None, iterNo=1, data_dir='./data/ISIC2-18/ISIC2018_Task3_Training_Input/'):
-        """
-            fold_index: 1-5
-        """
+    def __init__(self, train=True, transform=None, fold_index=3):
         first_train_data, first_test_data, second_train_data, second_test_data, third_train_data, third_test_data, four_train_data, four_test_data, five_train_data, five_test_data = get_five_fold(
-            data_dir)
+            dir)
         self.transform = transform
-        self.fold_index = iterNo
-        if self.fold_index == 1:
+        self.fold_index = fold_index
+        if fold_index == 1:
             self.train_data = first_train_data
             self.test_data = first_test_data
-        elif self.fold_index == 2:
+        elif fold_index == 2:
             self.train_data = second_train_data
             self.test_data = second_test_data
-        elif self.fold_index == 3:
+        elif fold_index == 3:
             self.train_data = third_train_data
             self.test_data = third_test_data
-        elif self.fold_index == 4:
+        elif fold_index == 4:
             self.train_data = four_train_data
             self.test_data = four_test_data
         else:
@@ -129,11 +102,13 @@ class DatasetFolder(data.Dataset):
             tuple: (sample, target) where target is class_index of the target class.
         """
         if self.train:
+
             path, target = self.train_data[index]
         else:
             path, target = self.test_data[index]
 
         sample = default_loader(path)
+        target = int(float(target))
         if self.transform is not None:
             sample = self.transform(sample)
         return sample, target
@@ -166,3 +141,5 @@ def default_loader(path):
         return accimage_loader(path)
     else:
         return pil_loader(path)
+
+DatasetFolder()

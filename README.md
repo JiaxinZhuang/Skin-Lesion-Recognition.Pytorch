@@ -1,7 +1,7 @@
 # README
 ## About Data
 All data has been downloaded including from task 1 to task 3 , and all of them 
-are put in Lab-DataServer 
+are put in Lab Server 
 
 **/home/share2/MIA/Dataset/ISIC-2018/**. 
 
@@ -14,28 +14,41 @@ main directory
 .
 ├── Data_Directory.png
 ├── README.md
-├── data
-└── src
-    ├── data_utils.py
-    └── requirement.txt
-
-data (You have to copy dataset into data directory)
-├── ISIC2018_Task1-2_Training_Input
-├── ISIC2018_Task1_Training_GroundTruth
-├── ISIC2018_Task2_Training_GroundTruth_v3
-├── ISIC2018_Task3_Training_GroundTruth
-└── ISIC2018_Task3_Training_Input
+├── auxiliary
+│   ├── __pycache__
+│   ├── inter_and_intraclass_distance.py
+│   ├── process_bar.py
+│   ├── statistics.py
+│   └── timer.py
+├── predictions
+├── previous_code
+│   └── tf_version
+├── result
+├── src_PnasNet
+│   ├── confusion_matrix.py
+│   ├── main.py
+│   ├── models
+│   └── tags
+├── src_SeNet
+│   ├── DataLoader.py
+│   ├── FineTuneModel.py
+│   ├── GetConfuse.py
+│   ├── ISIC2018_Task3_Validation_Input
+│   ├── ReadCSV.py
+│   ├── TestDataLoader.py
+│   ├── TestMCA.py
+│   ├── TestResult.py
+│   ├── __pycache__
+│   ├── main.py
+│   ├── predictions
+│   ├── run.py
+│   └── valid_wpr1
+└── train_dir
 ```
 
 ## Different file functionality
 ```
-src/train train and evaluate
-src/model wrap different model to use
-src/data_utils generate train, valid data and load data
-src/resNet
-src/vgg19
-src/train_xgboost.py
-
+src_PnasNet // main folder contaning code to train and generate result
 ```
 
 ## Using Jihan's method to process data
@@ -51,14 +64,6 @@ output\_file will generate in src/task3\_32\_300\_400
 mv task3\_32\_300\_400/\* /home/jiaxin/jihan/20180606/Reverse\_CISI\_Classification/data/ISIC2018/2018\_6\_4/task3\_32\_300\_400 
 ```
 
-# Run
-```
-python train.py --remove=True --CUDA_VISIBLE_DEVICE=7
-```
-
-# logs models saved
-logs, models, tra and val wuold be saved in ../save\_32\_300\_400
-
 # Some ways to solve imbalanced data
 1. median class weight
 ```
@@ -66,49 +71,8 @@ weight_sample_ = np.array([1113,6705,514,327,1099,115,142])/10015
 weight_sample_ = 0.05132302/weight_sample_
 ```
 
-## Class weight
+2. Class weight
 
-
-## Until 7-9
-### Code directory 
-
-```
-src_sy
-├── main.py
-├── models
-│   ├── CNN_Train.py
-│   ├── DatasetFolder.py
-│   ├── FineTune.py
-│   ├── FocalLoss.py
-│   ├── ReadCSV.py
-│   ├── __init__.py
-│   └── focalloss2d.py
-└── tags
-```
-
-### Train & Evaluate
-```
-python main.py --c CUDA_VISIBLE_DEVICE --logfile=FILENAME
-```
-
-## Until 7-13
-## Pre
-need **pytorch** and install software below
-
-```
-pip install tensorflow-gpu tensorboardX pandas pretrainedmodels  
-```
-
-### Necessary directory
-create **train\_dir**, **result** 
-
-```
-.
-src_sy # code
-data/ISIC2018/ # store data and split_data
-train_dir # model
-resullt # log
-```
 
 ### Train & Evaluate
 when running model, an event file for tensorboard would generated in current directory, named **run** 
@@ -118,7 +82,7 @@ python main.py --c=GPU_DEVICE_INDEX --train_file=SAVE_MODEL_PATH --logfile=LOG_P
 
 eg.
 
-python main.py --c=0 --train_dir=../result/result100 --logfile=result --model=resnet50 --iterNo=0
+python main.py --model=pnasnet5large --train_dir=../train_dir/result173 --logfile=result173 --use_all_data=True --c=0,1,2,3 --batch_size=20 --n_epoch=150
 ```
 
 ### tensorboard

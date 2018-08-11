@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 class FineTuneModel(nn.Module):
     def __init__(self, original_model, arch):
@@ -9,11 +8,9 @@ class FineTuneModel(nn.Module):
         if arch.startswith('resnet') :
             # Everything except the last linear layer
             self.features = original_model
-            #self.classifier = nn.Sequential(
-            #    nn.Linear(1000, 7)
-            #)
-            self.bn_c = nn.BatchNorm1d(1000)
-            self.classifier = nn.Linear(1000, 7)
+            self.classifier = nn.Sequential(
+                nn.Linear(1000, 7)
+            )
             self.modelName = 'resnet'
         else :
             raise("Finetuning not supported on this architecture yet")
@@ -25,6 +22,5 @@ class FineTuneModel(nn.Module):
     def forward(self, x):
         f = self.features(x)
         f = f.view(f.size(0), -1)
-        #y = self.classifier(f)
-        y = self.classifier(F.relu(self.bn_c(f)))
+        y = self.classifier(f)
         return y

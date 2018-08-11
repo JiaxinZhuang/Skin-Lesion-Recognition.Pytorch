@@ -1,14 +1,10 @@
-import csv
 import os
 import numpy as np
-import torch
 import torch.utils.data as data
 from PIL import Image
-import random
-import scipy.io
 
-def make_dataset(itrno, data_dir):
-    images = []
+def make_dataset(itrno, data_dir, use_all_data=False, for_vote=False):
+    # TODO, use all data to train
     lblarr_train = []
     lblarr_test = []
     train_data = []
@@ -33,8 +29,19 @@ def make_dataset(itrno, data_dir):
         line = line.split(',')
         item = (line[0], int(line[1]))
         lblarr_test.append(int(line[1]))
-        test_data.append(item)
+        if for_vote == True:
+            # to get 30 imaegs for a batch
+            test_data.extend([item]*30)
+        else:
+            test_data.extend([item])
     file.close()
+
+    if use_all_data == True:
+        print('=> Using all data to train')
+        train_data.extend(test_data)
+        test_data = []
+    else:
+        print('=> train 5-fold, using iterNo {}'.format(itrno))
 
     unique_labels = np.unique(lblarr_train).tolist()
     #count = []
@@ -64,8 +71,8 @@ def make_dataset(itrno, data_dir):
 
 
 class DatasetFolder(data.Dataset):
-    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='../data/ISIC2018/'):
-        self.train_data, self.test_data, self.classes = make_dataset(iterNo, data_dir=data_dir)
+    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='../data/ISIC2018/', use_all_data=False, for_vote=False):
+        self.train_data, self.test_data, self.classes = make_dataset(iterNo, data_dir=data_dir, use_all_data=use_all_data, for_vote=for_vote)
         self.transform = transform
         self.train = train # training set or test set
 
@@ -147,6 +154,7 @@ class testsetFolder(data.Dataset):
         self.transform = transform
         filenames = os.listdir(data_dir)
         filenames = list(filter(lambda x: x.split('.') [-1] == 'jpg', filenames))
+        filenames.sort()
         self.data = [os.path.join(data_dir, x) for x in filenames]
 
     def __getitem__(self, index):

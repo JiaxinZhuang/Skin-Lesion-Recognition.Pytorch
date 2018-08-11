@@ -1,11 +1,18 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from itertools import chain
 
 class FineTuneModel(nn.Module):
-    def __init__(self, original_model, arch):
+    """ Wrap ptrtrain model to do finetuning.
+
+    Attributes:
+            forward:
+    """
+
+    def __init__(self, original_model, arch, args):
+        """init entire train model"""
+
         super(FineTuneModel, self).__init__()
+        self.args = args
 
         if arch == 'resnet152_3c' or arch =='resnet50_3c':
             # 3 conv layer
@@ -27,50 +34,32 @@ class FineTuneModel(nn.Module):
             self.classifier = nn.Sequential(
                 nn.Linear(1000, 7)
             )
-            self.modelName = 'resnet152_3c'
+
         elif arch == 'resnet50' or arch == 'resnet152':
             # Everything except the last linear layer
             self.features = original_model
             self.bn_c = nn.BatchNorm1d(1000)
             self.classifier = nn.Linear(1000, 7)
-            self.modelName = 'resnet'
-        elif arch == 'inceptionresnetv2':
-            # Everything except the last linear layer
-            self.features = original_model
-            self.classifier = nn.Sequential(
-                nn.Linear(1000, 7)
-            )
-            self.modelName = 'inceptionresnetv2'
+
         elif arch == 'densenet161':
             # Everything except the last linear layer
             self.features = original_model
 
-            # test
             self.bn_c = nn.BatchNorm1d(1000)
-
             self.classifier = nn.Sequential(
                 nn.Linear(1000, 7)
             )
-            self.modelName = 'densenet161'
-        elif arch == 'densenet161_m':
-            # remove linear layer
-            #self.features = original_model.features
-            self.classifier = nn.Linear(2208, 7)
 
-            #
-            self.modelName = 'densenet161_m'
         elif arch == 'pnasnet5large' or arch == 'nasnetalarge':
             # Everything except the last linear layer
             self.features = original_model
 
-            # test
             self.bn_c = nn.BatchNorm1d(1000)
-
             self.classifier = nn.Linear(1000, 7)
-            self.modelName = arch
         else :
             raise("Finetuning not supported on this architecture yet")
 
+        self.modelName = arch
         print('FineTuneModel is {}'.format(self.modelName))
 
         # Freeze those weights after train some times
@@ -87,9 +76,12 @@ class FineTuneModel(nn.Module):
         #        p.require_grad = False
 
     def forward(self, x):
-        f = self.features(x)
-        f = f.view(f.size(0), -1)
-        y = self.classifier(F.relu(self.bn_c(f)))
+        if self.args.extract_feature == True:
+            y = self.features(x)
+        else:
+            f = self.features(x)
+            f = f.view(f.size(0), -1)
+            y = self.classifier(F.relu(self.bn_c(f)))
 
         # remove linear layer
         #features = self.features(x)

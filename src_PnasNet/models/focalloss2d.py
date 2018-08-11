@@ -36,6 +36,7 @@ class FocalLoss2d(nn.Module):
         target = torch.squeeze(target)
 
         weight = Variable(self.weight)
+        #print(input, target)
         logpt = -F.cross_entropy(input, target)
         pt = torch.exp(logpt)
 
