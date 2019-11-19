@@ -1,6 +1,9 @@
 # README
+
+New!!: Code and README would be updated very soon [2019/11/19]
+
 ## About Data
-All data has been downloaded including from task 1 to task 3 , and all of them 
+``All data has been downloaded including from task 1 to task 3 , and all of them 
 are put in Lab Server 
 
 **/home/share2/MIA/Dataset/ISIC-2018/**. 

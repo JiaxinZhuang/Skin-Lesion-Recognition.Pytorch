@@ -1,0 +1,384 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CNN_Train	src_PnasNet/models/CNN_Train.py	/^class CNN_Train(nn.Module):$/;"	c
+CUDA_VISIBLE_DEVICES	src_SeNet/GetConfuse.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+CUDA_VISIBLE_DEVICES	src_SeNet/TestResult.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+CUDA_VISIBLE_DEVICES	src_SeNet/main.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+DatasetFolder	src_PnasNet/models/DatasetFolder.py	/^class DatasetFolder(data.Dataset):$/;"	c
+DatasetFolder	src_SeNet/DataLoader.py	/^class DatasetFolder(data.Dataset):$/;"	c
+DatasetFolder	src_SeNet/ReadCSV.py	/^class DatasetFolder(data.Dataset):$/;"	c
+FLAGS	previous_code/tf_version/data_utils.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+FLAGS	previous_code/tf_version/train.py	/^FLAGS = tf.flags.FLAGS$/;"	v
+FineTuneModel	src_PnasNet/models/FineTune.py	/^class FineTuneModel(nn.Module):$/;"	c
+FineTuneModel	src_SeNet/FineTuneModel.py	/^class FineTuneModel(nn.Module):$/;"	c
+FocalLoss2d	src_PnasNet/models/focalloss2d.py	/^class FocalLoss2d(nn.Module):$/;"	c
+GPU_ids	src_SeNet/GetConfuse.py	/^GPU_ids = 0$/;"	v
+GPU_ids	src_SeNet/TestResult.py	/^GPU_ids = 0$/;"	v
+GPU_ids	src_SeNet/main.py	/^GPU_ids = 0$/;"	v
+GPU_ids	src_SeNet/run.py	/^GPU_ids = 0$/;"	v
+HParams	previous_code/tf_version/WideResnetModel.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	previous_code/tf_version/train.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	previous_code/tf_version/train_v2.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	previous_code/tf_version/train_v4.py	/^HParams = namedtuple('HParams',$/;"	v
+HParams	previous_code/tf_version/train_v5.py	/^HParams = namedtuple('HParams',$/;"	v
+ISIC2018_data	previous_code/tf_version/data_utils.py	/^class ISIC2018_data():$/;"	c
+Memory	previous_code/tf_version/memory.py	/^class Memory():$/;"	c
+ResNet	previous_code/tf_version/resNet.py	/^class ResNet():$/;"	c
+ResNet152	previous_code/tf_version/resnet152.py	/^def ResNet152(include_top=True, weights=None,$/;"	f
+Scale	previous_code/tf_version/resnet152.py	/^class Scale(Layer):$/;"	c
+VGG_MEAN	previous_code/tf_version/vgg19.py	/^VGG_MEAN = [103.939, 116.779, 123.68]$/;"	v
+Vgg19	previous_code/tf_version/vgg19.py	/^class Vgg19:$/;"	c
+WEIGHTS_PATH	previous_code/tf_version/resnet152.py	/^WEIGHTS_PATH = 'https:\/\/github.com\/adamcasson\/resnet152\/releases\/download\/v0.1\/resnet152_weights_tf.h5'$/;"	v
+WEIGHTS_PATH_NO_TOP	previous_code/tf_version/resnet152.py	/^WEIGHTS_PATH_NO_TOP = 'https:\/\/github.com\/adamcasson\/resnet152\/releases\/download\/v0.1\/resnet152_weights_tf_notop.h5'$/;"	v
+WideResNet	previous_code/tf_version/WideResnetModel.py	/^class WideResNet(object):$/;"	c
+__getitem__	src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
+__getitem__	src_SeNet/DataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	src_SeNet/ReadCSV.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	src_SeNet/TestDataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
+__init__	auxiliary/process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
+__init__	auxiliary/statistics.py	/^    def __init__(self, hps, mode='train'):$/;"	m	class:statistics
+__init__	auxiliary/timer.py	/^    def __init__(self):$/;"	m	class:timer
+__init__	previous_code/tf_version/WideResnetModel.py	/^    def __init__(self, hps, images, labels, imgids, mode):$/;"	m	class:WideResNet
+__init__	previous_code/tf_version/data_utils.py	/^    def __init__(self, index, num_epoch=None):$/;"	m	class:ISIC2018_data
+__init__	previous_code/tf_version/memory.py	/^    def __init__(self, hps, key_dim=192, memory_size=8192, choose_k=1, alpha=0.1, correct_in_top=1, age_noise=8.0, threshold=0.5):$/;"	m	class:Memory
+__init__	previous_code/tf_version/process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
+__init__	previous_code/tf_version/resNet.py	/^    def __init__(self, hps, images, labels, learning_rate, trainable):$/;"	m	class:ResNet
+__init__	previous_code/tf_version/resnet152.py	/^    def __init__(self, weights=None, axis=-1, momentum = 0.9, beta_init='zero', gamma_init='one', **kwargs):$/;"	m	class:Scale
+__init__	previous_code/tf_version/statistics.py	/^    def __init__(self, hps, mode='train'):$/;"	m	class:statistics
+__init__	previous_code/tf_version/vgg19.py	/^    def __init__(self, hps, xs, ys, learning_rate, vgg19_npy_path=None, trainable=True, dropout=0.5):$/;"	m	class:Vgg19
+__init__	src_PnasNet/models/CNN_Train.py	/^    def __init__(self, net, args, checkpoint=None):$/;"	m	class:CNN_Train
+__init__	src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='..\/data\/ISIC2018\/', use_all_data=False, for_vote=False):$/;"	m	class:DatasetFolder
+__init__	src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, transform=None, data_dir='..\/data\/ISIC2018\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
+__init__	src_PnasNet/models/FineTune.py	/^    def __init__(self, original_model, arch, args):$/;"	m	class:FineTuneModel
+__init__	src_PnasNet/models/focalloss2d.py	/^    def __init__(self, gamma=0, weight=None, size_average=True):$/;"	m	class:FocalLoss2d
+__init__	src_SeNet/DataLoader.py	/^    def __init__(self, train=True, transform=None, target_transform=None):$/;"	m	class:DatasetFolder
+__init__	src_SeNet/FineTuneModel.py	/^    def __init__(self, original_model, arch):$/;"	m	class:FineTuneModel
+__init__	src_SeNet/ReadCSV.py	/^    def __init__(self, train=True, transform=None, fold_index=3):$/;"	m	class:DatasetFolder
+__init__	src_SeNet/TestDataLoader.py	/^    def __init__(self, transform=None, data_dir='.\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
+__len__	src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
+__len__	src_SeNet/DataLoader.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	src_SeNet/ReadCSV.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	src_SeNet/TestDataLoader.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
+_batch_norm	previous_code/tf_version/WideResnetModel.py	/^    def _batch_norm(self, name, x):$/;"	m	class:WideResNet
+_batch_norm	previous_code/tf_version/resNet.py	/^    def _batch_norm(self, name, x):$/;"	m	class:ResNet
+_bottleneck_residual	previous_code/tf_version/WideResnetModel.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride):$/;"	m	class:WideResNet
+_bottleneck_residual	previous_code/tf_version/resNet.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):$/;"	m	class:ResNet
+_build_model	previous_code/tf_version/WideResnetModel.py	/^    def _build_model(self):$/;"	m	class:WideResNet
+_build_model	previous_code/tf_version/resNet.py	/^    def _build_model(self):$/;"	m	class:ResNet
+_build_model	previous_code/tf_version/vgg19.py	/^    def _build_model(self, train_mode=None):$/;"	m	class:Vgg19
+_build_train_op	previous_code/tf_version/WideResnetModel.py	/^    def _build_train_op(self):$/;"	m	class:WideResNet
+_build_train_op	previous_code/tf_version/resNet.py	/^    def _build_train_op(self):$/;"	m	class:ResNet
+_build_train_op	previous_code/tf_version/vgg19.py	/^    def _build_train_op(self):$/;"	m	class:Vgg19
+_bytes_feature	previous_code/tf_version/data_utils.py	/^        def _bytes_feature(value):$/;"	f	function:ISIC2018_data._write_record
+_conv	previous_code/tf_version/WideResnetModel.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:WideResNet
+_conv	previous_code/tf_version/resNet.py	/^    def _conv(self, name, x, filter_size, in_filters, out_filters, strides):$/;"	m	class:ResNet
+_decay	previous_code/tf_version/WideResnetModel.py	/^    def _decay(self):$/;"	m	class:WideResNet
+_decay	previous_code/tf_version/resNet.py	/^    def _decay(self):$/;"	m	class:ResNet
+_decay	previous_code/tf_version/vgg19.py	/^    def _decay(self):$/;"	m	class:Vgg19
+_focal_loss	previous_code/tf_version/resNet.py	/^    def _focal_loss(self, labels, logits, gamma=2.0, alpha=4.0):$/;"	m	class:ResNet
+_fully_connected	previous_code/tf_version/WideResnetModel.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:WideResNet
+_fully_connected	previous_code/tf_version/resNet.py	/^    def _fully_connected(self, x, out_dim):$/;"	m	class:ResNet
+_fully_connected	previous_code/tf_version/vgg19.py	/^    def _fully_connected(self, x, out_dim, name):$/;"	m	class:Vgg19
+_get_conv_var	previous_code/tf_version/resNet.py	/^    def _get_conv_var(self, filter_size, in_filters, out_filters, name):$/;"	m	class:ResNet
+_get_var	previous_code/tf_version/resNet.py	/^    def _get_var(self, initial_value, name, var_name):$/;"	m	class:ResNet
+_global_avg_pool	previous_code/tf_version/WideResnetModel.py	/^    def _global_avg_pool(self, x):$/;"	m	class:WideResNet
+_global_avg_pool	previous_code/tf_version/resNet.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
+_int64_feature	previous_code/tf_version/data_utils.py	/^        def _int64_feature(value):$/;"	f	function:ISIC2018_data._write_record
+_load_img	previous_code/tf_version/data_utils.py	/^        def _load_img(img_path):$/;"	f	function:ISIC2018_data._write_record
+_median_weight_class_loss	previous_code/tf_version/resNet.py	/^    def _median_weight_class_loss(self, labels, logits):$/;"	m	class:ResNet
+_parse_function	previous_code/tf_version/data_utils.py	/^        def _parse_function(example_proto):$/;"	f	function:ISIC2018_data.read_record
+_pre_process_images	previous_code/tf_version/data_utils.py	/^    def _pre_process_images(self, x, is_train=True):$/;"	m	class:ISIC2018_data
+_pre_process_images	previous_code/tf_version/resNet.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
+_pre_process_images	previous_code/tf_version/vgg19.py	/^    def _pre_process_images(self, x):$/;"	m	class:Vgg19
+_preprocess_train	previous_code/tf_version/data_utils.py	/^        def _preprocess_train(image, label, name):$/;"	f	function:ISIC2018_data.read_record
+_preprocess_valid	previous_code/tf_version/data_utils.py	/^        def _preprocess_valid(image, label, name):$/;"	f	function:ISIC2018_data.read_record
+_read_csv	previous_code/tf_version/data_utils.py	/^        def _read_csv(filename):$/;"	f	function:ISIC2018_data.write_record
+_read_record	previous_code/tf_version/data_utils.py	/^        def _read_record(path, min_queue_examples=2000, is_train=True, num_epochs=None):$/;"	f	function:ISIC2018_data.read_record
+_relu	previous_code/tf_version/WideResnetModel.py	/^    def _relu(self, x):$/;"	m	class:WideResNet
+_relu	previous_code/tf_version/resNet.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
+_residual	previous_code/tf_version/resNet.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
+_save_triples	auxiliary/statistics.py	/^    def _save_triples(self, filename, data, epoch)$/;"	m	class:statistics
+_save_triples	previous_code/tf_version/statistics.py	/^    def _save_triples(self, filename, data, epoch):$/;"	m	class:statistics
+_set_valid_index	previous_code/tf_version/data_utils.py	/^    def _set_valid_index(self, i):$/;"	m	class:ISIC2018_data
+_stride_arr	previous_code/tf_version/WideResnetModel.py	/^    def _stride_arr(self, stride):$/;"	m	class:WideResNet
+_stride_arr	previous_code/tf_version/resNet.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
+_write_record	previous_code/tf_version/data_utils.py	/^    def _write_record(self, labels, images_name, index):$/;"	m	class:ISIC2018_data
+accimage_loader	src_PnasNet/models/DatasetFolder.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	src_SeNet/DataLoader.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	src_SeNet/ReadCSV.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	src_SeNet/TestDataLoader.py	/^def accimage_loader(path):$/;"	f
+accuracy_test	previous_code/tf_version/xg.py	/^    accuracy_test = accuracy_score(label_test, predictions_test)$/;"	v
+accuracy_train	previous_code/tf_version/xg.py	/^    accuracy_train = accuracy_score(label_train, predictions_train)$/;"	v
+add_labels_predictions	auxiliary/statistics.py	/^    def add_labels_predictions(self, labels, predictions, path):$/;"	m	class:statistics
+add_labels_predictions	previous_code/tf_version/statistics.py	/^    def add_labels_predictions(self, labels, predictions, path=None, one_hot=False):$/;"	m	class:statistics
+amsgrad	src_SeNet/GetConfuse.py	/^                           amsgrad=True)$/;"	v
+amsgrad	src_SeNet/TestResult.py	/^                           amsgrad=True)$/;"	v
+amsgrad	src_SeNet/run.py	/^                           amsgrad=True)$/;"	v
+args	previous_code/tf_version/train_v3.py	/^    args = sys.argv[1]$/;"	v
+args	src_PnasNet/confusion_matrix.py	/^args = parser.parse_args()$/;"	v
+args	src_PnasNet/main.py	/^args = parser.parse_args()$/;"	v
+args	src_SeNet/GetConfuse.py	/^args = parser.parse_args()$/;"	v
+args	src_SeNet/TestResult.py	/^args = parser.parse_args()$/;"	v
+args	src_SeNet/main.py	/^args = parser.parse_args()$/;"	v
+args	src_SeNet/run.py	/^args = parser.parse_args()$/;"	v
+avg_pool	previous_code/tf_version/vgg19.py	/^    def avg_pool(self, bottom, name):$/;"	m	class:Vgg19
+batch_flatten	previous_code/tf_version/xg.py	/^def batch_flatten(batch_arr):$/;"	f
+batch_size	src_SeNet/GetConfuse.py	/^batch_size = 32$/;"	v
+batch_size	src_SeNet/TestResult.py	/^batch_size = 32$/;"	v
+batch_size	src_SeNet/main.py	/^batch_size = 30$/;"	v
+batch_size	src_SeNet/run.py	/^batch_size = 32$/;"	v
+betas	src_SeNet/GetConfuse.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+betas	src_SeNet/TestResult.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+betas	src_SeNet/run.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+build	previous_code/tf_version/resnet152.py	/^    def build(self, input_shape):$/;"	m	class:Scale
+build_graph	previous_code/tf_version/WideResnetModel.py	/^    def build_graph(self):$/;"	m	class:WideResNet
+build_graph	previous_code/tf_version/resNet.py	/^    def build_graph(self):$/;"	m	class:ResNet
+build_graph	previous_code/tf_version/vgg19.py	/^    def build_graph(self, train_mode=None):$/;"	m	class:Vgg19
+call	previous_code/tf_version/resnet152.py	/^    def call(self, x, mask=None):$/;"	m	class:Scale
+class_weights	src_SeNet/GetConfuse.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	src_SeNet/TestMCA.py	/^class_weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+class_weights	src_SeNet/TestResult.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	src_SeNet/main.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	src_SeNet/run.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+cnf_matrix	src_PnasNet/confusion_matrix.py	/^    cnf_matrix = confusion_matrix(y_test, y_pred)$/;"	v
+conv_block	previous_code/tf_version/resnet152.py	/^def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2)):$/;"	f
+conv_layer	previous_code/tf_version/vgg19.py	/^    def conv_layer(self, bottom, in_channels, out_channels, name):$/;"	m	class:Vgg19
+correct	src_SeNet/TestMCA.py	/^correct = [0, 1, 1, 2, 3, 4, 5, 6]$/;"	v
+criterion	src_SeNet/GetConfuse.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	src_SeNet/TestResult.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	src_SeNet/main.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	src_SeNet/run.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+d	src_SeNet/TestResult.py	/^d = defaultdict(list)$/;"	v
+data	src_PnasNet/confusion_matrix.py	/^    data = np.load(args.path)$/;"	v
+data_dir	previous_code/tf_version/data.py	/^data_dir = '..\/data\/ISIC2018\/ISIC2018_Task3_Validation_Input\/'$/;"	v
+data_test	previous_code/tf_version/xg.py	/^    data_test = np.load(features_path + "images_feature_with_labels_from_vgg16_evaluate.npy")$/;"	v
+data_train	previous_code/tf_version/xg.py	/^    data_train = np.load(features_path + "images_feature_with_labels_from_vgg16_train.npy")$/;"	v
+default_loader	src_PnasNet/models/DatasetFolder.py	/^def default_loader(path):$/;"	f
+default_loader	src_SeNet/DataLoader.py	/^def default_loader(path):$/;"	f
+default_loader	src_SeNet/ReadCSV.py	/^def default_loader(path):$/;"	f
+default_loader	src_SeNet/TestDataLoader.py	/^def default_loader(path):$/;"	f
+df	src_SeNet/TestResult.py	/^df = pd.DataFrame(raw_data, columns=['image', 'MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC'])$/;"	v
+dir	src_SeNet/ReadCSV.py	/^dir = '.\/wpr1\/'$/;"	v
+evaluate	previous_code/tf_version/train.py	/^def evaluate(hps):$/;"	f
+extract_feature	src_PnasNet/models/CNN_Train.py	/^    def extract_feature(self):$/;"	m	class:CNN_Train
+fc_layer	previous_code/tf_version/vgg19.py	/^    def fc_layer(self, bottom, in_size, out_size, name):$/;"	m	class:Vgg19
+features	auxiliary/inter_and_intraclass_distance.py	/^features = [[1,2],[3,4],[4,5],[6,7],[1,4],[0,2],[4,4],[2,5]]$/;"	v
+features_path	previous_code/tf_version/xg.py	/^    features_path = "\/home\/jiaxin\/myGithub\/Reverse_CISI_Classification\/src\/"$/;"	v
+features_test	previous_code/tf_version/xg.py	/^    features_test = batch_flatten(data_test[0])$/;"	v
+features_test	previous_code/tf_version/xg.py	/^    features_test = scaler.transform(features_test)$/;"	v
+features_train	previous_code/tf_version/xg.py	/^    features_train = batch_flatten(data_train[0])$/;"	v
+features_train	previous_code/tf_version/xg.py	/^    features_train = scaler.transform(features_train)$/;"	v
+focal_loss	previous_code/tf_version/train_v2.py	/^def focal_loss(labels, logits):$/;"	f
+focal_loss	previous_code/tf_version/train_v4.py	/^def focal_loss(labels, logits):$/;"	f
+focal_loss	previous_code/tf_version/train_v5.py	/^def focal_loss(labels, logits):$/;"	f
+forward	src_PnasNet/models/FineTune.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
+forward	src_PnasNet/models/focalloss2d.py	/^    def forward(self, input, target):$/;"	m	class:FocalLoss2d
+forward	src_SeNet/FineTuneModel.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
+gamma	src_SeNet/main.py	/^                                                      gamma=0.1)$/;"	v
+general_gray_world	previous_code/tf_version/color_constancy.py	/^def general_gray_world(img, power=2, sigma=3):$/;"	f
+generate_record	previous_code/tf_version/data_utils.py	/^def generate_record():$/;"	f
+getIdx	src_SeNet/DataLoader.py	/^def getIdx(lblarr, consider_lbl, ptrain):$/;"	f
+getMCA	src_PnasNet/models/CNN_Train.py	/^    def getMCA(self,correct, predicted):$/;"	m	class:CNN_Train
+getMCA	src_SeNet/GetConfuse.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	src_SeNet/TestMCA.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	src_SeNet/TestResult.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	src_SeNet/main.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	src_SeNet/run.py	/^def getMCA(correct, predicted):$/;"	f
+get_acc_imbalanced	auxiliary/statistics.py	/^    def get_acc_imbalanced(self):$/;"	m	class:statistics
+get_acc_imbalanced	previous_code/tf_version/statistics.py	/^    def get_acc_imbalanced(self):$/;"	m	class:statistics
+get_acc_normal	auxiliary/statistics.py	/^    def get_acc_normal(self):$/;"	m	class:statistics
+get_acc_normal	previous_code/tf_version/statistics.py	/^    def get_acc_normal(self):$/;"	m	class:statistics
+get_config	previous_code/tf_version/resnet152.py	/^    def get_config(self):$/;"	m	class:Scale
+get_conv_var	previous_code/tf_version/vgg19.py	/^    def get_conv_var(self, filter_size, in_channels, out_channels, name):$/;"	m	class:Vgg19
+get_data	src_PnasNet/models/CNN_Train.py	/^    def get_data(self):$/;"	m	class:CNN_Train
+get_duration	auxiliary/timer.py	/^    def get_duration(self):$/;"	m	class:timer
+get_fc_var	previous_code/tf_version/vgg19.py	/^    def get_fc_var(self, in_size, out_size, name):$/;"	m	class:Vgg19
+get_five_fold	src_SeNet/ReadCSV.py	/^def get_five_fold(datadir):$/;"	f
+get_hint_pool_idxs	previous_code/tf_version/memory.py	/^    def get_hint_pool_idxs(self, normalized_query):$/;"	m	class:Memory
+get_loaders	src_PnasNet/models/CNN_Train.py	/^    def get_loaders(self):$/;"	m	class:CNN_Train
+get_loaders	src_SeNet/GetConfuse.py	/^def get_loaders():$/;"	f
+get_loaders	src_SeNet/TestResult.py	/^def get_loaders():$/;"	f
+get_loaders	src_SeNet/main.py	/^def get_loaders():$/;"	f
+get_loaders	src_SeNet/run.py	/^def get_loaders():$/;"	f
+get_model	previous_code/tf_version/model.py	/^def get_model(hps, xs, ys, learning_rate, trainable):$/;"	f
+get_print_precision	auxiliary/statistics.py	/^    def get_print_precision(self):$/;"	m	class:statistics
+get_print_precision	previous_code/tf_version/statistics.py	/^    def get_print_precision(self):$/;"	m	class:statistics
+get_var	previous_code/tf_version/vgg19.py	/^    def get_var(self, initial_value, name, idx, var_name):$/;"	m	class:Vgg19
+get_var_count	previous_code/tf_version/vgg19.py	/^    def get_var_count(self):$/;"	m	class:Vgg19
+get_weights_for_balanced_classes	src_PnasNet/models/DatasetFolder.py	/^    def get_weights_for_balanced_classes(self):$/;"	m	class:DatasetFolder
+gpu	previous_code/tf_version/train_v3.py	/^    gpu = sys.argv[2]$/;"	v
+gray_world	previous_code/tf_version/color_constancy.py	/^def gray_world(img):$/;"	f
+help	src_PnasNet/main.py	/^                     help='split data into 5-fold and select the iterNo fold to evaluate')$/;"	v
+help	src_PnasNet/main.py	/^                    help='cuda device')$/;"	v
+help	src_PnasNet/main.py	/^                    help='load from trained_model')$/;"	v
+help	src_PnasNet/main.py	/^                    help='save log dir')$/;"	v
+help	src_PnasNet/main.py	/^                    help='save model dir')$/;"	v
+help	src_PnasNet/main.py	/^                    help='use all train data so no validation')$/;"	v
+hps	previous_code/tf_version/train_v2.py	/^hps = HParams($/;"	v
+hps	previous_code/tf_version/train_v4.py	/^hps = HParams($/;"	v
+hps	previous_code/tf_version/train_v5.py	/^hps = HParams($/;"	v
+identity_block	previous_code/tf_version/resnet152.py	/^def identity_block(input_tensor, kernel_size, filters, stage, block):$/;"	f
+image_np	previous_code/tf_version/data.py	/^    image_np = cv.imread(image_path)$/;"	v
+image_path	previous_code/tf_version/data.py	/^    image_path = os.path.join(data_dir, img)$/;"	v
+img	previous_code/tf_version/resnet152.py	/^    img = image.load_img(img_path, target_size=(224,224))$/;"	v
+img_path	previous_code/tf_version/resnet152.py	/^    img_path = 'elephant.jpg'$/;"	v
+ind	auxiliary/inter_and_intraclass_distance.py	/^ind = 2$/;"	v
+iterate_CNN	src_PnasNet/models/CNN_Train.py	/^    def iterate_CNN(self):$/;"	m	class:CNN_Train
+iterate_CNN	src_SeNet/main.py	/^def iterate_CNN():$/;"	f
+iterate_CNN	src_SeNet/run.py	/^def iterate_CNN():$/;"	f
+label_test	previous_code/tf_version/xg.py	/^    label_test = batch_flatten(data_test[1])$/;"	v
+label_train	previous_code/tf_version/xg.py	/^    label_train = batch_flatten(data_train[1])$/;"	v
+labels	auxiliary/inter_and_intraclass_distance.py	/^labels = [1,2,2,1,2,2,1,2]$/;"	v
+load	previous_code/tf_version/test_Record.py	/^def load(iter_x, iter_y, init):$/;"	f
+lr	src_SeNet/GetConfuse.py	/^                           lr=args.lr,$/;"	v
+lr	src_SeNet/GetConfuse.py	/^lr = 0.01\/100$/;"	v
+lr	src_SeNet/TestResult.py	/^                           lr=args.lr,$/;"	v
+lr	src_SeNet/TestResult.py	/^lr = 0.01\/100$/;"	v
+lr	src_SeNet/main.py	/^                           lr=args.lr,$/;"	v
+lr	src_SeNet/main.py	/^lr = 0.01\/100$/;"	v
+lr	src_SeNet/run.py	/^                           lr=args.lr,$/;"	v
+lr	src_SeNet/run.py	/^lr = 0.1\/100$/;"	v
+main	previous_code/tf_version/train.py	/^def main(argv=None):$/;"	f
+main	previous_code/tf_version/train_v2.py	/^def main(mode='train', gpu='0'):$/;"	f
+main	previous_code/tf_version/train_v3.py	/^def main(mode='train', gpu='0'):$/;"	f
+main	previous_code/tf_version/train_v4.py	/^def main(mode='train', gpu='0'):$/;"	f
+main	previous_code/tf_version/train_v5.py	/^def main(mode='train', gpu='0'):$/;"	f
+main	src_PnasNet/main.py	/^def main():$/;"	f
+make_dataset	src_PnasNet/models/DatasetFolder.py	/^def make_dataset(itrno, data_dir, use_all_data=False, for_vote=False):$/;"	f
+make_dataset	src_SeNet/DataLoader.py	/^def make_dataset(ptrain):$/;"	f
+make_update_op	previous_code/tf_version/memory.py	/^        def make_update_op():$/;"	f	function:Memory.query_and_make_update
+make_update_op	previous_code/tf_version/memory.py	/^    def make_update_op(self, upd_idxs, upd_keys, upd_vals, batch_size):$/;"	m	class:Memory
+max_intraclass_and_min_interclass_samples	auxiliary/inter_and_intraclass_distance.py	/^def max_intraclass_and_min_interclass_samples(features, labels, ind):$/;"	f
+max_pool	previous_code/tf_version/vgg19.py	/^    def max_pool(self, bottom, name):$/;"	m	class:Vgg19
+median_weight_class_loss	previous_code/tf_version/train_v2.py	/^def median_weight_class_loss(labels, logits):$/;"	f
+median_weight_class_loss	previous_code/tf_version/train_v4.py	/^def median_weight_class_loss(labels, logits):$/;"	f
+median_weight_class_loss	previous_code/tf_version/train_v5.py	/^def median_weight_class_loss(labels, logits):$/;"	f
+milestones	src_SeNet/main.py	/^                                                      milestones=[150, 250, 350, 450],$/;"	v
+model	previous_code/tf_version/resnet152.py	/^    model = ResNet152(include_top=True, weights='imagenet')$/;"	v
+model	src_SeNet/main.py	/^model = 'senet154'$/;"	v
+model	src_SeNet/run.py	/^model = 'senet154'$/;"	v
+momentum	src_SeNet/main.py	/^                           momentum=0.9,$/;"	v
+n_epochs	src_SeNet/GetConfuse.py	/^n_epochs = 250$/;"	v
+n_epochs	src_SeNet/TestResult.py	/^n_epochs = 250$/;"	v
+n_epochs	src_SeNet/main.py	/^n_epochs = 500$/;"	v
+n_epochs	src_SeNet/run.py	/^n_epochs = 500$/;"	v
+nclass	src_SeNet/GetConfuse.py	/^nclass = 7$/;"	v
+nclass	src_SeNet/TestResult.py	/^nclass = 7$/;"	v
+nclass	src_SeNet/main.py	/^nclass = 7$/;"	v
+nclass	src_SeNet/run.py	/^nclass = 7$/;"	v
+nesterov	src_SeNet/main.py	/^                           nesterov=True,$/;"	v
+new_image_np	previous_code/tf_version/data.py	/^    new_image_np = cc.white_patch_retinex(image_np, 1)$/;"	v
+num_classes	previous_code/tf_version/train_v2.py	/^     num_classes=7)$/;"	v
+num_classes	previous_code/tf_version/train_v4.py	/^     num_classes=7)$/;"	v
+num_classes	previous_code/tf_version/train_v5.py	/^     num_classes=7)$/;"	v
+optimizer	src_SeNet/GetConfuse.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+optimizer	src_SeNet/TestResult.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+optimizer	src_SeNet/main.py	/^optimizer = optim.SGD([{'params': resnet_model.parameters(), 'lr': args.lr}],$/;"	v
+optimizer	src_SeNet/run.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+original_model	src_SeNet/run.py	/^    original_model = pretrainedmodels.__dict__['senet154'](num_classes=1000, pretrained='imagenet')$/;"	v
+output_dir	previous_code/tf_version/data.py	/^output_dir = '.\/valid_wpr1'$/;"	v
+output_path	previous_code/tf_version/data.py	/^    output_path = os.path.join(output_dir, img)$/;"	v
+parent_path	previous_code/tf_version/train.py	/^parent_path = os.path.abspath('..\/')$/;"	v
+parent_path	previous_code/tf_version/train_v2.py	/^parent_path = os.path.abspath('..\/')$/;"	v
+parent_path	previous_code/tf_version/train_v3.py	/^parent_path = os.path.abspath('..\/')$/;"	v
+parent_path	previous_code/tf_version/train_v4.py	/^parent_path = os.path.abspath('..\/')$/;"	v
+parent_path	previous_code/tf_version/train_v5.py	/^parent_path = os.path.abspath('..\/')$/;"	v
+parser	src_PnasNet/confusion_matrix.py	/^parser = argparse.ArgumentParser(description='Confusion Matrix')$/;"	v
+parser	src_PnasNet/main.py	/^parser = argparse.ArgumentParser(description='Net')$/;"	v
+parser	src_SeNet/GetConfuse.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	src_SeNet/TestResult.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	src_SeNet/main.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	src_SeNet/run.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+pil_loader	src_PnasNet/models/DatasetFolder.py	/^def pil_loader(path):$/;"	f
+pil_loader	src_SeNet/DataLoader.py	/^def pil_loader(path):$/;"	f
+pil_loader	src_SeNet/ReadCSV.py	/^def pil_loader(path):$/;"	f
+pil_loader	src_SeNet/TestDataLoader.py	/^def pil_loader(path):$/;"	f
+plot_confusion_matrix	src_PnasNet/confusion_matrix.py	/^def plot_confusion_matrix(cm, classes,$/;"	f
+pre	src_SeNet/GetConfuse.py	/^pre = predict()$/;"	v
+pred_test	previous_code/tf_version/xg.py	/^    pred_test = xgc.predict(features_test)$/;"	v
+pred_train	previous_code/tf_version/xg.py	/^    pred_train = xgc.predict(features_train)$/;"	v
+predict	src_PnasNet/models/CNN_Train.py	/^    def predict(self):$/;"	m	class:CNN_Train
+predict	src_SeNet/GetConfuse.py	/^def predict():$/;"	f
+predict	src_SeNet/TestMCA.py	/^predict = [0, 2, 1, 2, 3, 4, 5, 6]$/;"	v
+predict	src_SeNet/TestResult.py	/^def predict():$/;"	f
+predict_test	src_PnasNet/models/CNN_Train.py	/^    def predict_test(self):$/;"	m	class:CNN_Train
+predict_valid	src_PnasNet/models/CNN_Train.py	/^    def predict_valid(self):$/;"	m	class:CNN_Train
+predictions_test	previous_code/tf_version/xg.py	/^    predictions_test = [round(value) for value in pred_test]$/;"	v
+predictions_train	previous_code/tf_version/xg.py	/^    predictions_train = [round(value) for value in pred_train]$/;"	v
+preds	previous_code/tf_version/resnet152.py	/^    preds = model.predict(x)$/;"	v
+print_net	src_PnasNet/models/CNN_Train.py	/^    def print_net(self):$/;"	m	class:CNN_Train
+process_bar	auxiliary/process_bar.py	/^class process_bar():$/;"	c
+process_bar	previous_code/tf_version/process_bar.py	/^class process_bar():$/;"	c
+process_bar_	previous_code/tf_version/data.py	/^process_bar_ = process_bar.process_bar(195)$/;"	v
+query	previous_code/tf_version/memory.py	/^    def query(self, query_vec):$/;"	m	class:Memory
+query_and_make_update	previous_code/tf_version/memory.py	/^    def query_and_make_update(self, query_vec, intended_output):$/;"	m	class:Memory
+raw_data	src_SeNet/TestResult.py	/^raw_data = {$/;"	v
+read_record	previous_code/tf_version/data_utils.py	/^    def read_record(self, mode='train'):$/;"	m	class:ISIC2018_data
+reset	auxiliary/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
+reset	previous_code/tf_version/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
+resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = resnet_model.cuda()$/;"	v
+resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = torch.load('.\/model\/senet154150.pkl')$/;"	v
+resnet_model	src_SeNet/TestResult.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	src_SeNet/TestResult.py	/^resnet_model = resnet_model.cuda()$/;"	v
+resnet_model	src_SeNet/TestResult.py	/^resnet_model = torch.load('.\/model\/senet15410.pkl')$/;"	v
+resnet_model	src_SeNet/main.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	src_SeNet/main.py	/^resnet_model = torchvision.models.resnet50()$/;"	v
+resnet_model	src_SeNet/run.py	/^resnet_model = FineTuneModel.FineTuneModel(original_model, 'resnet50')$/;"	v
+resnet_model	src_SeNet/run.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	src_SeNet/run.py	/^resnet_model = resnet_model.cuda()$/;"	v
+save_checkpoint	src_PnasNet/models/CNN_Train.py	/^    def save_checkpoint(self, state, is_best, filename):$/;"	m	class:CNN_Train
+save_npy	previous_code/tf_version/vgg19.py	/^    def save_npy(self, sess, npy_path=".\/vgg19-save.npy"):$/;"	m	class:Vgg19
+save_triples	auxiliary/statistics.py	/^    def save_triples(self, filename):$/;"	m	class:statistics
+save_triples	previous_code/tf_version/statistics.py	/^    def save_triples(self, filename):$/;"	m	class:statistics
+scaler	previous_code/tf_version/xg.py	/^    scaler = StandardScaler()$/;"	v
+scheduler	src_SeNet/main.py	/^scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,$/;"	v
+set_maxstep	auxiliary/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+set_maxstep	previous_code/tf_version/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+shade_of_gray	previous_code/tf_version/color_constancy.py	/^def shade_of_gray(img, power=6, gamma=None):$/;"	f
+show_img_triplets	auxiliary/inter_and_intraclass_distance.py	/^def show_img_triplets(img_root_dir, img_file_names, triplets_of_img_ind, labels):$/;"	f
+show_process	auxiliary/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
+show_process	previous_code/tf_version/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
+sigmod	src_SeNet/TestResult.py	/^def sigmod(x):$/;"	f
+statistics	auxiliary/statistics.py	/^class statistics():$/;"	c
+statistics	previous_code/tf_version/statistics.py	/^class statistics():$/;"	c
+str2bool	src_PnasNet/main.py	/^def str2bool(v):$/;"	f
+test	src_PnasNet/models/CNN_Train.py	/^    def test(self, epoch):$/;"	m	class:CNN_Train
+test	src_SeNet/GetConfuse.py	/^def test(epoch):$/;"	f
+test	src_SeNet/TestResult.py	/^def test(epoch):$/;"	f
+test	src_SeNet/main.py	/^def test(epoch):$/;"	f
+test	src_SeNet/run.py	/^def test(epoch):$/;"	f
+test_record	previous_code/tf_version/data_utils.py	/^def test_record():$/;"	f
+test_record	previous_code/tf_version/test_Record.py	/^def test_record():$/;"	f
+test_vote	src_PnasNet/models/CNN_Train.py	/^    def test_vote(self, epoch):$/;"	m	class:CNN_Train
+testsetFolder	src_PnasNet/models/DatasetFolder.py	/^class testsetFolder(data.Dataset):$/;"	c
+testsetFolder	src_SeNet/TestDataLoader.py	/^class testsetFolder(data.Dataset):$/;"	c
+timer	auxiliary/timer.py	/^class timer():$/;"	c
+title	src_PnasNet/confusion_matrix.py	/^                          title='Confusion matrix, without normalization')$/;"	v
+title	src_PnasNet/confusion_matrix.py	/^                          title='Normalized confusion matrix')$/;"	v
+train	previous_code/tf_version/train.py	/^def train(hps, val_index):$/;"	f
+train	src_PnasNet/models/CNN_Train.py	/^    def train(self, epoch):$/;"	m	class:CNN_Train
+train	src_SeNet/main.py	/^def train(epoch):$/;"	f
+train	src_SeNet/run.py	/^def train(epoch):$/;"	f
+train_time_end	previous_code/tf_version/xg.py	/^    train_time_end = time.time();$/;"	v
+train_time_start	previous_code/tf_version/xg.py	/^    train_time_start = time.time()$/;"	v
+weight_decay	src_SeNet/main.py	/^                           weight_decay=0.0005)$/;"	v
+weights	src_SeNet/GetConfuse.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	src_SeNet/TestResult.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	src_SeNet/main.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	src_SeNet/run.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+white_patch_retinex	previous_code/tf_version/color_constancy.py	/^def white_patch_retinex(img, para):$/;"	f
+write_record	previous_code/tf_version/data_utils.py	/^    def write_record(self, prefix_directory=FLAGS.ISIC2018, filenames='split_data.csv'):$/;"	m	class:ISIC2018_data
+writer	src_SeNet/run.py	/^writer = SummaryWriter('.\/logdir')$/;"	v
+x	previous_code/tf_version/resnet152.py	/^    x = image.img_to_array(img)$/;"	v
+x	previous_code/tf_version/resnet152.py	/^    x = np.expand_dims(x, axis=0)$/;"	v
+x	previous_code/tf_version/resnet152.py	/^    x = preprocess_input(x)$/;"	v
+xgc	previous_code/tf_version/xg.py	/^    xgc = xgb.XGBClassifier(base_score=0.6, colsample_bylevel=0.7, colsample_bytree=1,$/;"	v
+y_pred	src_PnasNet/confusion_matrix.py	/^    y_pred = data[5]$/;"	v
+y_test	src_PnasNet/confusion_matrix.py	/^    y_test = data[4]$/;"	v
