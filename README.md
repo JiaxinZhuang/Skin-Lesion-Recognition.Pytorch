@@ -14,7 +14,7 @@ Note:  top 2 teams used additional **public dataset** to train models. However, 
 
 You can submit your prediction to [liveboard](https://challenge2018.isic-archive.com/leaderboards/) now, if you want to find some better methods.
 
-![Leaderboard](/Users/lincolnzjx/Desktop/ISIC_2018_Classification/Leaderboard.png)
+![Leaderboard](./Leaderboard.png)
 
 ## Directory
 
@@ -52,4 +52,4 @@ mca, lr
 tensorboard --logdir run
 ```
 
-<img src="/Users/lincolnzjx/Desktop/ISIC_2018_Classification/001.png" style="zoom:33%;" />
+<img src="./001.png" style="zoom:33%;" />
