@@ -1,5 +1,7 @@
 # README
 
+New!!: Code would be updated with using some latest  approaches proposed in Nips/CVPR 2019. [2019/11/26] 
+
 New!!: Code has been updated with very **basic settings**. [2019/11/26]
 
 New!!: Code and README would be updated very soon [2019/11/19]
@@ -10,9 +12,9 @@ New!!: Code and README would be updated very soon [2019/11/19]
 
 Note:  top 2 teams used additional **public dataset** to train models. However, our code don't use any extra data. 
 
-![image-20191126212016992](/Users/lincolnzjx/Library/Application Support/typora-user-images/image-20191126212016992.png)
+You can submit your prediction to [liveboard](https://challenge2018.isic-archive.com/leaderboards/) now, if you want to find some better methods.
 
-
+![Leaderboard](/Users/lincolnzjx/Desktop/ISIC_2018_Classification/Leaderboard.png)
 
 ## Directory
 
