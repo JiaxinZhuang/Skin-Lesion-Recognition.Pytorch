@@ -1,8 +1,16 @@
 # README
 
-New!!: Code has been updated with very basic settings. [2019/11/26]
+New!!: Code has been updated with very **basic settings**. [2019/11/26]
 
 New!!: Code and README would be updated very soon [2019/11/19]
+
+
+
+## Rank-3, MICCAI 2018 grand challenge "ISIC 2018: Skin Lesion Analysis Towards Melanoma Detection", Task 3: "Lesion Diagnosis", 2018
+
+Note:  top 2 teams used additional **public dataset** to train models. However, our code don't use any extra data. 
+
+![image-20191126212016992](/Users/lincolnzjx/Library/Application Support/typora-user-images/image-20191126212016992.png)
 
 
 
