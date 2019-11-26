@@ -3,46 +3,119 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-CNN_Train	src_PnasNet/models/CNN_Train.py	/^class CNN_Train(nn.Module):$/;"	c
-CUDA_VISIBLE_DEVICES	src_SeNet/GetConfuse.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
-CUDA_VISIBLE_DEVICES	src_SeNet/TestResult.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
-CUDA_VISIBLE_DEVICES	src_SeNet/main.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
-DatasetFolder	src_PnasNet/models/DatasetFolder.py	/^class DatasetFolder(data.Dataset):$/;"	c
-DatasetFolder	src_SeNet/DataLoader.py	/^class DatasetFolder(data.Dataset):$/;"	c
-DatasetFolder	src_SeNet/ReadCSV.py	/^class DatasetFolder(data.Dataset):$/;"	c
+!_TAG_PROGRAM_VERSION	5.8	//
+Activation	previous_code/tf_version/resnet152.py	/^from keras.layers import Activation$/;"	i
+AveragePooling2D	previous_code/tf_version/resnet152.py	/^from keras.layers import AveragePooling2D$/;"	i
+BatchNormalization	previous_code/tf_version/resnet152.py	/^from keras.layers import BatchNormalization$/;"	i
+CNN_Train	previous_code/pytorch/src_PnasNet/main.py	/^from models import CNN_Train$/;"	i
+CNN_Train	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^class CNN_Train(nn.Module):$/;"	c
+CUDA_VISIBLE_DEVICES	previous_code/pytorch/src_SeNet/GetConfuse.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+CUDA_VISIBLE_DEVICES	previous_code/pytorch/src_SeNet/TestResult.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+CUDA_VISIBLE_DEVICES	previous_code/pytorch/src_SeNet/main.py	/^CUDA_VISIBLE_DEVICES = "0, 1"$/;"	v
+Config	src/config.py	/^class Config:$/;"	c
+Conv2D	previous_code/tf_version/resnet152.py	/^from keras.layers import Conv2D$/;"	i
+Counter	src/dataset.py	/^    from collections import Counter$/;"	i
+Dataset	src/dataset.py	/^from torch.utils.data import Dataset$/;"	i
+DatasetFolder	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^from DatasetFolder import DatasetFolder$/;"	i
+DatasetFolder	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^class DatasetFolder(data.Dataset):$/;"	c
+DatasetFolder	previous_code/pytorch/src_SeNet/DataLoader.py	/^class DatasetFolder(data.Dataset):$/;"	c
+DatasetFolder	previous_code/pytorch/src_SeNet/GetConfuse.py	/^from ReadCSV import DatasetFolder$/;"	i
+DatasetFolder	previous_code/pytorch/src_SeNet/ReadCSV.py	/^class DatasetFolder(data.Dataset):$/;"	c
+DatasetFolder	previous_code/pytorch/src_SeNet/main.py	/^from DataLoader import DatasetFolder$/;"	i
+DatasetFolder	previous_code/pytorch/src_SeNet/run.py	/^from ReadCSV import DatasetFolder$/;"	i
+Dense	previous_code/tf_version/resnet152.py	/^from keras.layers import Dense$/;"	i
+F	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^import torch.nn.functional as F$/;"	i
+F	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+F	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.nn.functional as F$/;"	i
+F	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.nn.functional as F$/;"	i
+F	previous_code/pytorch/src_SeNet/main.py	/^import torch.nn.functional as F$/;"	i
+F	previous_code/pytorch/src_SeNet/run.py	/^import torch.nn.functional as F$/;"	i
 FLAGS	previous_code/tf_version/data_utils.py	/^FLAGS = tf.flags.FLAGS$/;"	v
 FLAGS	previous_code/tf_version/train.py	/^FLAGS = tf.flags.FLAGS$/;"	v
-FineTuneModel	src_PnasNet/models/FineTune.py	/^class FineTuneModel(nn.Module):$/;"	c
-FineTuneModel	src_SeNet/FineTuneModel.py	/^class FineTuneModel(nn.Module):$/;"	c
-FocalLoss2d	src_PnasNet/models/focalloss2d.py	/^class FocalLoss2d(nn.Module):$/;"	c
-GPU_ids	src_SeNet/GetConfuse.py	/^GPU_ids = 0$/;"	v
-GPU_ids	src_SeNet/TestResult.py	/^GPU_ids = 0$/;"	v
-GPU_ids	src_SeNet/main.py	/^GPU_ids = 0$/;"	v
-GPU_ids	src_SeNet/run.py	/^GPU_ids = 0$/;"	v
+FineTuneModel	previous_code/pytorch/src_PnasNet/main.py	/^from models import FineTuneModel$/;"	i
+FineTuneModel	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^class FineTuneModel(nn.Module):$/;"	c
+FineTuneModel	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^class FineTuneModel(nn.Module):$/;"	c
+FineTuneModel	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import FineTuneModel$/;"	i
+FineTuneModel	previous_code/pytorch/src_SeNet/TestResult.py	/^import FineTuneModel$/;"	i
+FineTuneModel	previous_code/pytorch/src_SeNet/main.py	/^import FineTuneModel$/;"	i
+FineTuneModel	previous_code/pytorch/src_SeNet/run.py	/^import FineTuneModel$/;"	i
+Flatten	previous_code/tf_version/resnet152.py	/^from keras.layers import Flatten$/;"	i
+FocalLoss2d	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^class FocalLoss2d(nn.Module):$/;"	c
+GPU_ids	previous_code/pytorch/src_SeNet/GetConfuse.py	/^GPU_ids = 0$/;"	v
+GPU_ids	previous_code/pytorch/src_SeNet/TestResult.py	/^GPU_ids = 0$/;"	v
+GPU_ids	previous_code/pytorch/src_SeNet/main.py	/^GPU_ids = 0$/;"	v
+GPU_ids	previous_code/pytorch/src_SeNet/run.py	/^GPU_ids = 0$/;"	v
+GlobalAveragePooling2D	previous_code/tf_version/resnet152.py	/^from keras.layers import GlobalAveragePooling2D$/;"	i
+GlobalMaxPooling2D	previous_code/tf_version/resnet152.py	/^from keras.layers import GlobalMaxPooling2D$/;"	i
 HParams	previous_code/tf_version/WideResnetModel.py	/^HParams = namedtuple('HParams',$/;"	v
 HParams	previous_code/tf_version/train.py	/^HParams = namedtuple('HParams',$/;"	v
 HParams	previous_code/tf_version/train_v2.py	/^HParams = namedtuple('HParams',$/;"	v
 HParams	previous_code/tf_version/train_v4.py	/^HParams = namedtuple('HParams',$/;"	v
 HParams	previous_code/tf_version/train_v5.py	/^HParams = namedtuple('HParams',$/;"	v
 ISIC2018_data	previous_code/tf_version/data_utils.py	/^class ISIC2018_data():$/;"	c
+Identity	src/model.py	/^class Identity(nn.Module):$/;"	c
+Image	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^from PIL import Image$/;"	i
+Image	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^from PIL import Image$/;"	i
+Image	previous_code/pytorch/src_SeNet/DataLoader.py	/^from PIL import Image$/;"	i
+Image	previous_code/pytorch/src_SeNet/ReadCSV.py	/^from PIL import Image$/;"	i
+Image	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^from PIL import Image$/;"	i
+Image	src/dataset.py	/^from PIL import Image$/;"	i
+Image	src/utils/function.py	/^from PIL import Image$/;"	i
+Input	previous_code/tf_version/resnet152.py	/^from keras.layers import Input$/;"	i
+InputSpec	previous_code/tf_version/resnet152.py	/^from keras.engine import Layer, InputSpec$/;"	i
+K	previous_code/tf_version/resnet152.py	/^import keras.backend as K$/;"	i
+Layer	previous_code/tf_version/resnet152.py	/^from keras.engine import Layer, InputSpec$/;"	i
+MaxPooling2D	previous_code/tf_version/resnet152.py	/^from keras.layers import MaxPooling2D$/;"	i
 Memory	previous_code/tf_version/memory.py	/^class Memory():$/;"	c
+Model	previous_code/tf_version/resnet152.py	/^from keras.models import Model$/;"	i
+Model	previous_code/tf_version/train_v4.py	/^from keras.models import Model$/;"	i
+NASNetALarge	src/model.py	/^class NASNetALarge(nn.Module):$/;"	c
+Network	src/model.py	/^class Network(nn.Module):$/;"	c
+PCA	previous_code/tf_version/xg.py	/^from sklearn.decomposition import PCA$/;"	i
+PNASNet5Large	src/model.py	/^class PNASNet5Large(nn.Module):$/;"	c
 ResNet	previous_code/tf_version/resNet.py	/^class ResNet():$/;"	c
 ResNet152	previous_code/tf_version/resnet152.py	/^def ResNet152(include_top=True, weights=None,$/;"	f
+ResNet50	src/model.py	/^class ResNet50(nn.Module):$/;"	c
+SGD	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras.optimizers import SGD$/;"	i
+SGD	previous_code/tf_version/train_v3.py	/^from tensorflow.python.keras.optimizers import SGD$/;"	i
+SGD	previous_code/tf_version/train_v4.py	/^from tensorflow.python.keras.optimizers import SGD$/;"	i
+SGD	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras.optimizers import SGD$/;"	i
 Scale	previous_code/tf_version/resnet152.py	/^class Scale(Layer):$/;"	c
+Skin7	src/dataset.py	/^class Skin7(Dataset):$/;"	c
+StandardScaler	previous_code/tf_version/xg.py	/^    from sklearn.preprocessing import StandardScaler$/;"	i
+SummaryWriter	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^from tensorboardX import SummaryWriter$/;"	i
+SummaryWriter	previous_code/pytorch/src_SeNet/run.py	/^from tensorboardX import SummaryWriter$/;"	i
+SummaryWriter	src/trainer.py	/^from torch.utils.tensorboard import SummaryWriter$/;"	i
 VGG_MEAN	previous_code/tf_version/vgg19.py	/^VGG_MEAN = [103.939, 116.779, 123.68]$/;"	v
+Variable	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^from torch.autograd import Variable$/;"	i
+Variable	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^from torch.autograd import Variable$/;"	i
+Variable	previous_code/pytorch/src_SeNet/GetConfuse.py	/^from torch.autograd import Variable$/;"	i
+Variable	previous_code/pytorch/src_SeNet/TestResult.py	/^from torch.autograd import Variable$/;"	i
+Variable	previous_code/pytorch/src_SeNet/main.py	/^from torch.autograd import Variable$/;"	i
+Variable	previous_code/pytorch/src_SeNet/run.py	/^from torch.autograd import Variable$/;"	i
 Vgg19	previous_code/tf_version/vgg19.py	/^class Vgg19:$/;"	c
 WEIGHTS_PATH	previous_code/tf_version/resnet152.py	/^WEIGHTS_PATH = 'https:\/\/github.com\/adamcasson\/resnet152\/releases\/download\/v0.1\/resnet152_weights_tf.h5'$/;"	v
 WEIGHTS_PATH_NO_TOP	previous_code/tf_version/resnet152.py	/^WEIGHTS_PATH_NO_TOP = 'https:\/\/github.com\/adamcasson\/resnet152\/releases\/download\/v0.1\/resnet152_weights_tf_notop.h5'$/;"	v
 WideResNet	previous_code/tf_version/WideResnetModel.py	/^class WideResNet(object):$/;"	c
-__getitem__	src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
-__getitem__	src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
-__getitem__	src_SeNet/DataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
-__getitem__	src_SeNet/ReadCSV.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
-__getitem__	src_SeNet/TestDataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
-__init__	auxiliary/process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
-__init__	auxiliary/statistics.py	/^    def __init__(self, hps, mode='train'):$/;"	m	class:statistics
-__init__	auxiliary/timer.py	/^    def __init__(self):$/;"	m	class:timer
+ZeroPadding2D	previous_code/tf_version/resnet152.py	/^from keras.layers import ZeroPadding2D$/;"	i
+__getitem__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
+__getitem__	previous_code/pytorch/src_SeNet/DataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	previous_code/pytorch/src_SeNet/ReadCSV.py	/^    def __getitem__(self, index):$/;"	m	class:DatasetFolder	file:
+__getitem__	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^    def __getitem__(self, index):$/;"	m	class:testsetFolder	file:
+__getitem__	src/dataset.py	/^    def __getitem__(self, index):$/;"	m	class:Skin7	file:
+__init__	previous_code/pytorch/auxiliary/process_bar.py	/^    def __init__(self, max_step):$/;"	m	class:process_bar
+__init__	previous_code/pytorch/auxiliary/statistics.py	/^    def __init__(self, hps, mode='train'):$/;"	m	class:statistics
+__init__	previous_code/pytorch/auxiliary/timer.py	/^    def __init__(self):$/;"	m	class:timer
+__init__	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def __init__(self, net, args, checkpoint=None):$/;"	m	class:CNN_Train
+__init__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='..\/data\/ISIC2018\/', use_all_data=False, for_vote=False):$/;"	m	class:DatasetFolder
+__init__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, transform=None, data_dir='..\/data\/ISIC2018\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
+__init__	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^    def __init__(self, original_model, arch, args):$/;"	m	class:FineTuneModel
+__init__	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^    def __init__(self, gamma=0, weight=None, size_average=True):$/;"	m	class:FocalLoss2d
+__init__	previous_code/pytorch/src_SeNet/DataLoader.py	/^    def __init__(self, train=True, transform=None, target_transform=None):$/;"	m	class:DatasetFolder
+__init__	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^    def __init__(self, original_model, arch):$/;"	m	class:FineTuneModel
+__init__	previous_code/pytorch/src_SeNet/ReadCSV.py	/^    def __init__(self, train=True, transform=None, fold_index=3):$/;"	m	class:DatasetFolder
+__init__	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^    def __init__(self, transform=None, data_dir='.\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
 __init__	previous_code/tf_version/WideResnetModel.py	/^    def __init__(self, hps, images, labels, imgids, mode):$/;"	m	class:WideResNet
 __init__	previous_code/tf_version/data_utils.py	/^    def __init__(self, index, num_epoch=None):$/;"	m	class:ISIC2018_data
 __init__	previous_code/tf_version/memory.py	/^    def __init__(self, hps, key_dim=192, memory_size=8192, choose_k=1, alpha=0.1, correct_in_top=1, age_noise=8.0, threshold=0.5):$/;"	m	class:Memory
@@ -51,20 +124,21 @@ __init__	previous_code/tf_version/resNet.py	/^    def __init__(self, hps, images
 __init__	previous_code/tf_version/resnet152.py	/^    def __init__(self, weights=None, axis=-1, momentum = 0.9, beta_init='zero', gamma_init='one', **kwargs):$/;"	m	class:Scale
 __init__	previous_code/tf_version/statistics.py	/^    def __init__(self, hps, mode='train'):$/;"	m	class:statistics
 __init__	previous_code/tf_version/vgg19.py	/^    def __init__(self, hps, xs, ys, learning_rate, vgg19_npy_path=None, trainable=True, dropout=0.5):$/;"	m	class:Vgg19
-__init__	src_PnasNet/models/CNN_Train.py	/^    def __init__(self, net, args, checkpoint=None):$/;"	m	class:CNN_Train
-__init__	src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, train=True, transform=None, transform_target=None, iterNo=1, data_dir='..\/data\/ISIC2018\/', use_all_data=False, for_vote=False):$/;"	m	class:DatasetFolder
-__init__	src_PnasNet/models/DatasetFolder.py	/^    def __init__(self, transform=None, data_dir='..\/data\/ISIC2018\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
-__init__	src_PnasNet/models/FineTune.py	/^    def __init__(self, original_model, arch, args):$/;"	m	class:FineTuneModel
-__init__	src_PnasNet/models/focalloss2d.py	/^    def __init__(self, gamma=0, weight=None, size_average=True):$/;"	m	class:FocalLoss2d
-__init__	src_SeNet/DataLoader.py	/^    def __init__(self, train=True, transform=None, target_transform=None):$/;"	m	class:DatasetFolder
-__init__	src_SeNet/FineTuneModel.py	/^    def __init__(self, original_model, arch):$/;"	m	class:FineTuneModel
-__init__	src_SeNet/ReadCSV.py	/^    def __init__(self, train=True, transform=None, fold_index=3):$/;"	m	class:DatasetFolder
-__init__	src_SeNet/TestDataLoader.py	/^    def __init__(self, transform=None, data_dir='.\/ISIC2018_Task3_Validation_Input'):$/;"	m	class:testsetFolder
-__len__	src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
-__len__	src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
-__len__	src_SeNet/DataLoader.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
-__len__	src_SeNet/ReadCSV.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
-__len__	src_SeNet/TestDataLoader.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
+__init__	src/config.py	/^    def __init__(self):$/;"	m	class:Config
+__init__	src/dataset.py	/^    def __init__(self, root=".\/data", iter_fold=1, train=True, transform=None):$/;"	m	class:Skin7
+__init__	src/model.py	/^    def __init__(self):$/;"	m	class:Identity
+__init__	src/model.py	/^    def __init__(self, backbone="resnet50", num_classes=7, input_channel=3,$/;"	m	class:Network
+__init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:NASNetALarge
+__init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:PNASNet5Large
+__init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:ResNet50
+__len__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
+__len__	previous_code/pytorch/src_SeNet/DataLoader.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	previous_code/pytorch/src_SeNet/ReadCSV.py	/^    def __len__(self):$/;"	m	class:DatasetFolder	file:
+__len__	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^    def __len__(self):$/;"	m	class:testsetFolder	file:
+__len__	src/dataset.py	/^    def __len__(self):$/;"	m	class:Skin7	file:
+_add_common_setting	src/config.py	/^    def _add_common_setting(self):$/;"	m	class:Config
+_add_customized_setting	src/config.py	/^    def _add_customized_setting(self):$/;"	m	class:Config
 _batch_norm	previous_code/tf_version/WideResnetModel.py	/^    def _batch_norm(self, name, x):$/;"	m	class:WideResNet
 _batch_norm	previous_code/tf_version/resNet.py	/^    def _batch_norm(self, name, x):$/;"	m	class:ResNet
 _bottleneck_residual	previous_code/tf_version/WideResnetModel.py	/^    def _bottleneck_residual(self, x, in_filter, out_filter, stride):$/;"	m	class:WideResNet
@@ -90,85 +164,178 @@ _get_var	previous_code/tf_version/resNet.py	/^    def _get_var(self, initial_val
 _global_avg_pool	previous_code/tf_version/WideResnetModel.py	/^    def _global_avg_pool(self, x):$/;"	m	class:WideResNet
 _global_avg_pool	previous_code/tf_version/resNet.py	/^    def _global_avg_pool(self, x):$/;"	m	class:ResNet
 _int64_feature	previous_code/tf_version/data_utils.py	/^        def _int64_feature(value):$/;"	f	function:ISIC2018_data._write_record
+_load_common_setting	src/config.py	/^    def _load_common_setting(self):$/;"	m	class:Config
+_load_customized_setting	src/config.py	/^    def _load_customized_setting(self):$/;"	m	class:Config
 _load_img	previous_code/tf_version/data_utils.py	/^        def _load_img(img_path):$/;"	f	function:ISIC2018_data._write_record
 _median_weight_class_loss	previous_code/tf_version/resNet.py	/^    def _median_weight_class_loss(self, labels, logits):$/;"	m	class:ResNet
+_obtain_input_shape	previous_code/tf_version/resnet152.py	/^from keras.applications.imagenet_utils import _obtain_input_shape$/;"	i
 _parse_function	previous_code/tf_version/data_utils.py	/^        def _parse_function(example_proto):$/;"	f	function:ISIC2018_data.read_record
+_path_suitable_for_server	src/config.py	/^    def _path_suitable_for_server(self):$/;"	m	class:Config
 _pre_process_images	previous_code/tf_version/data_utils.py	/^    def _pre_process_images(self, x, is_train=True):$/;"	m	class:ISIC2018_data
 _pre_process_images	previous_code/tf_version/resNet.py	/^    def _pre_process_images(self, x):$/;"	m	class:ResNet
 _pre_process_images	previous_code/tf_version/vgg19.py	/^    def _pre_process_images(self, x):$/;"	m	class:Vgg19
 _preprocess_train	previous_code/tf_version/data_utils.py	/^        def _preprocess_train(image, label, name):$/;"	f	function:ISIC2018_data.read_record
 _preprocess_valid	previous_code/tf_version/data_utils.py	/^        def _preprocess_valid(image, label, name):$/;"	f	function:ISIC2018_data.read_record
+_print	src/trainer.py	/^_print = init_logging(log_dir, exp).info$/;"	v
 _read_csv	previous_code/tf_version/data_utils.py	/^        def _read_csv(filename):$/;"	f	function:ISIC2018_data.write_record
 _read_record	previous_code/tf_version/data_utils.py	/^        def _read_record(path, min_queue_examples=2000, is_train=True, num_epochs=None):$/;"	f	function:ISIC2018_data.read_record
 _relu	previous_code/tf_version/WideResnetModel.py	/^    def _relu(self, x):$/;"	m	class:WideResNet
 _relu	previous_code/tf_version/resNet.py	/^    def _relu(self, x, leakiness=0.0):$/;"	m	class:ResNet
 _residual	previous_code/tf_version/resNet.py	/^    def _residual(self, x, in_filter, out_filter, stride,$/;"	m	class:ResNet
-_save_triples	auxiliary/statistics.py	/^    def _save_triples(self, filename, data, epoch)$/;"	m	class:statistics
+_save_triples	previous_code/pytorch/auxiliary/statistics.py	/^    def _save_triples(self, filename, data, epoch)$/;"	m	class:statistics
 _save_triples	previous_code/tf_version/statistics.py	/^    def _save_triples(self, filename, data, epoch):$/;"	m	class:statistics
 _set_valid_index	previous_code/tf_version/data_utils.py	/^    def _set_valid_index(self, i):$/;"	m	class:ISIC2018_data
 _stride_arr	previous_code/tf_version/WideResnetModel.py	/^    def _stride_arr(self, stride):$/;"	m	class:WideResNet
 _stride_arr	previous_code/tf_version/resNet.py	/^    def _stride_arr(self, stride):$/;"	m	class:ResNet
+_test_dataname2save	src/utils/function.py	/^def _test_dataname2save():$/;"	f
+_test_image_related	src/utils/function.py	/^def _test_image_related():$/;"	f
 _write_record	previous_code/tf_version/data_utils.py	/^    def _write_record(self, labels, images_name, index):$/;"	m	class:ISIC2018_data
-accimage_loader	src_PnasNet/models/DatasetFolder.py	/^def accimage_loader(path):$/;"	f
-accimage_loader	src_SeNet/DataLoader.py	/^def accimage_loader(path):$/;"	f
-accimage_loader	src_SeNet/ReadCSV.py	/^def accimage_loader(path):$/;"	f
-accimage_loader	src_SeNet/TestDataLoader.py	/^def accimage_loader(path):$/;"	f
+acc	src/trainer.py	/^        acc = accuracy_score(y_true, y_pred)$/;"	v
+accimage	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    import accimage$/;"	i
+accimage	previous_code/pytorch/src_SeNet/DataLoader.py	/^    import accimage$/;"	i
+accimage	previous_code/pytorch/src_SeNet/ReadCSV.py	/^    import accimage$/;"	i
+accimage	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^    import accimage$/;"	i
+accimage	src/dataset.py	/^    import accimage$/;"	i
+accimage_loader	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	previous_code/pytorch/src_SeNet/DataLoader.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	previous_code/pytorch/src_SeNet/ReadCSV.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^def accimage_loader(path):$/;"	f
+accimage_loader	src/dataset.py	/^def accimage_loader(path):$/;"	f
+accuracy_score	previous_code/tf_version/xg.py	/^from sklearn.metrics import accuracy_score, precision_score, recall_score$/;"	i
+accuracy_score	src/trainer.py	/^from sklearn.metrics import accuracy_score$/;"	i
 accuracy_test	previous_code/tf_version/xg.py	/^    accuracy_test = accuracy_score(label_test, predictions_test)$/;"	v
 accuracy_train	previous_code/tf_version/xg.py	/^    accuracy_train = accuracy_score(label_train, predictions_train)$/;"	v
-add_labels_predictions	auxiliary/statistics.py	/^    def add_labels_predictions(self, labels, predictions, path):$/;"	m	class:statistics
+add	previous_code/tf_version/resnet152.py	/^from keras.layers import add$/;"	i
+add_labels_predictions	previous_code/pytorch/auxiliary/statistics.py	/^    def add_labels_predictions(self, labels, predictions, path):$/;"	m	class:statistics
 add_labels_predictions	previous_code/tf_version/statistics.py	/^    def add_labels_predictions(self, labels, predictions, path=None, one_hot=False):$/;"	m	class:statistics
-amsgrad	src_SeNet/GetConfuse.py	/^                           amsgrad=True)$/;"	v
-amsgrad	src_SeNet/TestResult.py	/^                           amsgrad=True)$/;"	v
-amsgrad	src_SeNet/run.py	/^                           amsgrad=True)$/;"	v
+amsgrad	previous_code/pytorch/src_SeNet/GetConfuse.py	/^                           amsgrad=True)$/;"	v
+amsgrad	previous_code/pytorch/src_SeNet/TestResult.py	/^                           amsgrad=True)$/;"	v
+amsgrad	previous_code/pytorch/src_SeNet/run.py	/^                           amsgrad=True)$/;"	v
+argparse	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^import argparse$/;"	i
+argparse	previous_code/pytorch/src_PnasNet/main.py	/^import argparse$/;"	i
+argparse	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import argparse$/;"	i
+argparse	previous_code/pytorch/src_SeNet/TestResult.py	/^import argparse$/;"	i
+argparse	previous_code/pytorch/src_SeNet/main.py	/^import argparse$/;"	i
+argparse	previous_code/pytorch/src_SeNet/run.py	/^import argparse$/;"	i
+argparse	src/config.py	/^import argparse$/;"	i
+args	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^args = parser.parse_args()$/;"	v
+args	previous_code/pytorch/src_PnasNet/main.py	/^args = parser.parse_args()$/;"	v
+args	previous_code/pytorch/src_SeNet/GetConfuse.py	/^args = parser.parse_args()$/;"	v
+args	previous_code/pytorch/src_SeNet/TestResult.py	/^args = parser.parse_args()$/;"	v
+args	previous_code/pytorch/src_SeNet/main.py	/^args = parser.parse_args()$/;"	v
+args	previous_code/pytorch/src_SeNet/run.py	/^args = parser.parse_args()$/;"	v
 args	previous_code/tf_version/train_v3.py	/^    args = sys.argv[1]$/;"	v
-args	src_PnasNet/confusion_matrix.py	/^args = parser.parse_args()$/;"	v
-args	src_PnasNet/main.py	/^args = parser.parse_args()$/;"	v
-args	src_SeNet/GetConfuse.py	/^args = parser.parse_args()$/;"	v
-args	src_SeNet/TestResult.py	/^args = parser.parse_args()$/;"	v
-args	src_SeNet/main.py	/^args = parser.parse_args()$/;"	v
-args	src_SeNet/run.py	/^args = parser.parse_args()$/;"	v
+auxiliary	previous_code/tf_version/train.py	/^    import auxiliary.statistics as statistics$/;"	i
+auxiliary	previous_code/tf_version/train.py	/^    import auxiliary.timer as timer$/;"	i
 avg_pool	previous_code/tf_version/vgg19.py	/^    def avg_pool(self, bottom, name):$/;"	m	class:Vgg19
+backbone	src/trainer.py	/^backbone = configs_dict["backbone"]$/;"	v
+backends	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+backends	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.backends.cudnn as cudnn$/;"	i
+backends	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.backends.cudnn as cudnn$/;"	i
+backends	previous_code/pytorch/src_SeNet/main.py	/^import torch.backends.cudnn as cudnn$/;"	i
+backends	previous_code/pytorch/src_SeNet/run.py	/^import torch.backends.cudnn as cudnn$/;"	i
 batch_flatten	previous_code/tf_version/xg.py	/^def batch_flatten(batch_arr):$/;"	f
-batch_size	src_SeNet/GetConfuse.py	/^batch_size = 32$/;"	v
-batch_size	src_SeNet/TestResult.py	/^batch_size = 32$/;"	v
-batch_size	src_SeNet/main.py	/^batch_size = 30$/;"	v
-batch_size	src_SeNet/run.py	/^batch_size = 32$/;"	v
-betas	src_SeNet/GetConfuse.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
-betas	src_SeNet/TestResult.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
-betas	src_SeNet/run.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+batch_size	previous_code/pytorch/src_SeNet/GetConfuse.py	/^batch_size = 32$/;"	v
+batch_size	previous_code/pytorch/src_SeNet/TestResult.py	/^batch_size = 32$/;"	v
+batch_size	previous_code/pytorch/src_SeNet/main.py	/^batch_size = 30$/;"	v
+batch_size	previous_code/pytorch/src_SeNet/run.py	/^batch_size = 32$/;"	v
+batch_size	src/trainer.py	/^batch_size = configs_dict["batch_size"]$/;"	v
+betas	previous_code/pytorch/src_SeNet/GetConfuse.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+betas	previous_code/pytorch/src_SeNet/TestResult.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+betas	previous_code/pytorch/src_SeNet/run.py	/^                           betas=(0.9, 0.99), eps=1e-8,$/;"	v
+betas	src/trainer.py	/^                           betas=(0.9, 0.999), eps=1e-08, amsgrad=True)$/;"	v
 build	previous_code/tf_version/resnet152.py	/^    def build(self, input_shape):$/;"	m	class:Scale
 build_graph	previous_code/tf_version/WideResnetModel.py	/^    def build_graph(self):$/;"	m	class:WideResNet
 build_graph	previous_code/tf_version/resNet.py	/^    def build_graph(self):$/;"	m	class:ResNet
 build_graph	previous_code/tf_version/vgg19.py	/^    def build_graph(self, train_mode=None):$/;"	m	class:Vgg19
 call	previous_code/tf_version/resnet152.py	/^    def call(self, x, mask=None):$/;"	m	class:Scale
-class_weights	src_SeNet/GetConfuse.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
-class_weights	src_SeNet/TestMCA.py	/^class_weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
-class_weights	src_SeNet/TestResult.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
-class_weights	src_SeNet/main.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
-class_weights	src_SeNet/run.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
-cnf_matrix	src_PnasNet/confusion_matrix.py	/^    cnf_matrix = confusion_matrix(y_test, y_pred)$/;"	v
+cc	previous_code/tf_version/data.py	/^import color_constancy as cc$/;"	i
+ckpt	src/trainer.py	/^    ckpt = torch.load(resume_path)$/;"	v
+class_weights	previous_code/pytorch/src_SeNet/GetConfuse.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	previous_code/pytorch/src_SeNet/TestMCA.py	/^class_weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+class_weights	previous_code/pytorch/src_SeNet/TestResult.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	previous_code/pytorch/src_SeNet/main.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	previous_code/pytorch/src_SeNet/run.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_weights	src/trainer.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+cnf_matrix	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^    cnf_matrix = confusion_matrix(y_test, y_pred)$/;"	v
+coloredlogs	previous_code/tf_version/train.py	/^import coloredlogs$/;"	i
+config	src/trainer.py	/^import config$/;"	i
+configs	src/trainer.py	/^configs = config.Config()$/;"	v
+configs_dict	src/trainer.py	/^configs_dict = configs.get_config()$/;"	v
+confusion_matrix	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^from sklearn.metrics import confusion_matrix$/;"	i
 conv_block	previous_code/tf_version/resnet152.py	/^def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2)):$/;"	f
 conv_layer	previous_code/tf_version/vgg19.py	/^    def conv_layer(self, bottom, in_channels, out_channels, name):$/;"	m	class:Vgg19
-correct	src_SeNet/TestMCA.py	/^correct = [0, 1, 1, 2, 3, 4, 5, 6]$/;"	v
-criterion	src_SeNet/GetConfuse.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
-criterion	src_SeNet/TestResult.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
-criterion	src_SeNet/main.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
-criterion	src_SeNet/run.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
-d	src_SeNet/TestResult.py	/^d = defaultdict(list)$/;"	v
-data	src_PnasNet/confusion_matrix.py	/^    data = np.load(args.path)$/;"	v
+copy	src/utils/function.py	/^import copy$/;"	i
+correct	previous_code/pytorch/src_SeNet/TestMCA.py	/^correct = [0, 1, 1, 2, 3, 4, 5, 6]$/;"	v
+criterion	previous_code/pytorch/src_SeNet/GetConfuse.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	previous_code/pytorch/src_SeNet/TestResult.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	previous_code/pytorch/src_SeNet/main.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	previous_code/pytorch/src_SeNet/run.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).cuda(args.GPU_ids)$/;"	v
+criterion	src/trainer.py	/^criterion = nn.CrossEntropyLoss()$/;"	v
+criterion	src/trainer.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)$/;"	v
+csv	previous_code/pytorch/src_SeNet/DataLoader.py	/^import csv$/;"	i
+csv	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import csv$/;"	i
+csv	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import csv$/;"	i
+cuda_ids	src/trainer.py	/^cuda_ids = configs_dict["cudas"]$/;"	v
+cudnn	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+cudnn	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.backends.cudnn as cudnn$/;"	i
+cudnn	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.backends.cudnn as cudnn$/;"	i
+cudnn	previous_code/pytorch/src_SeNet/main.py	/^import torch.backends.cudnn as cudnn$/;"	i
+cudnn	previous_code/pytorch/src_SeNet/run.py	/^import torch.backends.cudnn as cudnn$/;"	i
+cv	previous_code/tf_version/data.py	/^import cv2 as cv$/;"	i
+cv	previous_code/tf_version/data_utils.py	/^import cv2 as cv$/;"	i
+cv2	previous_code/tf_version/color_constancy.py	/^import cv2$/;"	i
+d	previous_code/pytorch/src_SeNet/TestResult.py	/^d = defaultdict(list)$/;"	v
+data	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^    data = np.load(args.path)$/;"	v
+data	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
+data	previous_code/pytorch/src_SeNet/DataLoader.py	/^import torch.utils.data as data$/;"	i
+data	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import torch.utils.data as data$/;"	i
+data	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import torch.utils.data as data$/;"	i
+data	src/trainer.py	/^            data = data.to(device)$/;"	v
 data_dir	previous_code/tf_version/data.py	/^data_dir = '..\/data\/ISIC2018\/ISIC2018_Task3_Validation_Input\/'$/;"	v
 data_test	previous_code/tf_version/xg.py	/^    data_test = np.load(features_path + "images_feature_with_labels_from_vgg16_evaluate.npy")$/;"	v
 data_train	previous_code/tf_version/xg.py	/^    data_train = np.load(features_path + "images_feature_with_labels_from_vgg16_train.npy")$/;"	v
-default_loader	src_PnasNet/models/DatasetFolder.py	/^def default_loader(path):$/;"	f
-default_loader	src_SeNet/DataLoader.py	/^def default_loader(path):$/;"	f
-default_loader	src_SeNet/ReadCSV.py	/^def default_loader(path):$/;"	f
-default_loader	src_SeNet/TestDataLoader.py	/^def default_loader(path):$/;"	f
-df	src_SeNet/TestResult.py	/^df = pd.DataFrame(raw_data, columns=['image', 'MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC'])$/;"	v
-dir	src_SeNet/ReadCSV.py	/^dir = '.\/wpr1\/'$/;"	v
+data_utils	previous_code/tf_version/test_Record.py	/^import data_utils$/;"	i
+data_utils	previous_code/tf_version/train.py	/^import data_utils$/;"	i
+data_utils	previous_code/tf_version/train_v2.py	/^import data_utils$/;"	i
+data_utils	previous_code/tf_version/train_v3.py	/^import data_utils$/;"	i
+data_utils	previous_code/tf_version/train_v4.py	/^import data_utils$/;"	i
+data_utils	previous_code/tf_version/train_v5.py	/^import data_utils$/;"	i
+dataname_2_save	src/utils/function.py	/^def dataname_2_save(imgs_path, saved_dir):$/;"	f
+dataset	src/dataset.py	/^    dataset = Skin7(root=root, train=False, transform=transforms.ToTensor())$/;"	v
+dataset	src/dataset.py	/^    dataset = Skin7(root=root, train=True, transform=transforms.ToTensor())$/;"	v
+dataset	src/trainer.py	/^import dataset$/;"	i
+datasets	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^from sklearn import svm, datasets$/;"	i
+datetime	previous_code/pytorch/auxiliary/timer.py	/^from datetime import datetime$/;"	i
+datetime	previous_code/tf_version/statistics.py	/^from datetime import datetime$/;"	i
+datetime	previous_code/tf_version/train.py	/^from datetime import datetime$/;"	i
+decode_predictions	previous_code/tf_version/resnet152.py	/^from keras.applications.imagenet_utils import decode_predictions$/;"	i
+default_loader	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^def default_loader(path):$/;"	f
+default_loader	previous_code/pytorch/src_SeNet/DataLoader.py	/^def default_loader(path):$/;"	f
+default_loader	previous_code/pytorch/src_SeNet/ReadCSV.py	/^def default_loader(path):$/;"	f
+default_loader	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^def default_loader(path):$/;"	f
+default_loader	src/dataset.py	/^def default_loader(path):$/;"	f
+defaultdict	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^from collections import defaultdict$/;"	i
+defaultdict	previous_code/pytorch/src_SeNet/GetConfuse.py	/^from collections import defaultdict$/;"	i
+defaultdict	previous_code/pytorch/src_SeNet/TestResult.py	/^from collections import defaultdict$/;"	i
+desc	src/trainer.py	/^desc = "Exp-{}-Train".format(exp)$/;"	v
+device	src/model.py	/^    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")$/;"	v
+device	src/trainer.py	/^device = torch.device("cuda" if torch.cuda.is_available() else "cpu")$/;"	v
+device_ids	src/trainer.py	/^device_ids = list(range(len(cuda_ids.split(","))))$/;"	v
+df	previous_code/pytorch/src_SeNet/TestResult.py	/^df = pd.DataFrame(raw_data, columns=['image', 'MEL', 'NV', 'BCC', 'AKIEC', 'BKL', 'DF', 'VASC'])$/;"	v
+dicts	src/trainer.py	/^    dicts = {$/;"	v
+dir	previous_code/pytorch/src_SeNet/ReadCSV.py	/^dir = '.\/wpr1\/'$/;"	v
+dsets	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.datasets as dsets$/;"	i
+dsets	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.datasets as dsets$/;"	i
+dsets	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.datasets as dsets$/;"	i
+dsets	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.datasets as dsets$/;"	i
+error	previous_code/tf_version/train.py	/^    print('import from parent_folder error')$/;"	i
+eval_frequency	src/trainer.py	/^eval_frequency = configs_dict["eval_frequency"]$/;"	v
 evaluate	previous_code/tf_version/train.py	/^def evaluate(hps):$/;"	f
-extract_feature	src_PnasNet/models/CNN_Train.py	/^    def extract_feature(self):$/;"	m	class:CNN_Train
+exp	src/trainer.py	/^exp = configs_dict["experiment_index"]$/;"	v
+extract_feature	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def extract_feature(self):$/;"	m	class:CNN_Train
 fc_layer	previous_code/tf_version/vgg19.py	/^    def fc_layer(self, bottom, in_size, out_size, name):$/;"	m	class:Vgg19
-features	auxiliary/inter_and_intraclass_distance.py	/^features = [[1,2],[3,4],[4,5],[6,7],[1,4],[0,2],[4,4],[2,5]]$/;"	v
+features	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^features = [[1,2],[3,4],[4,5],[6,7],[1,4],[0,2],[4,4],[2,5]]$/;"	v
 features_path	previous_code/tf_version/xg.py	/^    features_path = "\/home\/jiaxin\/myGithub\/Reverse_CISI_Classification\/src\/"$/;"	v
 features_test	previous_code/tf_version/xg.py	/^    features_test = batch_flatten(data_test[0])$/;"	v
 features_test	previous_code/tf_version/xg.py	/^    features_test = scaler.transform(features_test)$/;"	v
@@ -177,208 +344,599 @@ features_train	previous_code/tf_version/xg.py	/^    features_train = scaler.tran
 focal_loss	previous_code/tf_version/train_v2.py	/^def focal_loss(labels, logits):$/;"	f
 focal_loss	previous_code/tf_version/train_v4.py	/^def focal_loss(labels, logits):$/;"	f
 focal_loss	previous_code/tf_version/train_v5.py	/^def focal_loss(labels, logits):$/;"	f
-forward	src_PnasNet/models/FineTune.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
-forward	src_PnasNet/models/focalloss2d.py	/^    def forward(self, input, target):$/;"	m	class:FocalLoss2d
-forward	src_SeNet/FineTuneModel.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
-gamma	src_SeNet/main.py	/^                                                      gamma=0.1)$/;"	v
+focalloss2d	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import focalloss2d$/;"	i
+format_np_output	src/utils/function.py	/^def format_np_output(np_arr):$/;"	f
+forward	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
+forward	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^    def forward(self, input, target):$/;"	m	class:FocalLoss2d
+forward	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^    def forward(self, x):$/;"	m	class:FineTuneModel
+forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Identity
+forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Network
+forward	src/model.py	/^    def forward(self, x):$/;"	m	class:NASNetALarge
+forward	src/model.py	/^    def forward(self, x):$/;"	m	class:PNASNet5Large
+forward	src/model.py	/^    def forward(self, x):$/;"	m	class:ResNet50
+from	previous_code/tf_version/train.py	/^    print('import from parent_folder error')$/;"	i
+gamma	previous_code/pytorch/src_SeNet/main.py	/^                                                      gamma=0.1)$/;"	v
 general_gray_world	previous_code/tf_version/color_constancy.py	/^def general_gray_world(img, power=2, sigma=3):$/;"	f
 generate_record	previous_code/tf_version/data_utils.py	/^def generate_record():$/;"	f
-getIdx	src_SeNet/DataLoader.py	/^def getIdx(lblarr, consider_lbl, ptrain):$/;"	f
-getMCA	src_PnasNet/models/CNN_Train.py	/^    def getMCA(self,correct, predicted):$/;"	m	class:CNN_Train
-getMCA	src_SeNet/GetConfuse.py	/^def getMCA(correct, predicted):$/;"	f
-getMCA	src_SeNet/TestMCA.py	/^def getMCA(correct, predicted):$/;"	f
-getMCA	src_SeNet/TestResult.py	/^def getMCA(correct, predicted):$/;"	f
-getMCA	src_SeNet/main.py	/^def getMCA(correct, predicted):$/;"	f
-getMCA	src_SeNet/run.py	/^def getMCA(correct, predicted):$/;"	f
-get_acc_imbalanced	auxiliary/statistics.py	/^    def get_acc_imbalanced(self):$/;"	m	class:statistics
+getIdx	previous_code/pytorch/src_SeNet/DataLoader.py	/^def getIdx(lblarr, consider_lbl, ptrain):$/;"	f
+getMCA	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def getMCA(self,correct, predicted):$/;"	m	class:CNN_Train
+getMCA	previous_code/pytorch/src_SeNet/GetConfuse.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	previous_code/pytorch/src_SeNet/TestMCA.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	previous_code/pytorch/src_SeNet/TestResult.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	previous_code/pytorch/src_SeNet/main.py	/^def getMCA(correct, predicted):$/;"	f
+getMCA	previous_code/pytorch/src_SeNet/run.py	/^def getMCA(correct, predicted):$/;"	f
+get_acc_imbalanced	previous_code/pytorch/auxiliary/statistics.py	/^    def get_acc_imbalanced(self):$/;"	m	class:statistics
 get_acc_imbalanced	previous_code/tf_version/statistics.py	/^    def get_acc_imbalanced(self):$/;"	m	class:statistics
-get_acc_normal	auxiliary/statistics.py	/^    def get_acc_normal(self):$/;"	m	class:statistics
+get_acc_normal	previous_code/pytorch/auxiliary/statistics.py	/^    def get_acc_normal(self):$/;"	m	class:statistics
 get_acc_normal	previous_code/tf_version/statistics.py	/^    def get_acc_normal(self):$/;"	m	class:statistics
 get_config	previous_code/tf_version/resnet152.py	/^    def get_config(self):$/;"	m	class:Scale
+get_config	src/config.py	/^    def get_config(self):$/;"	m	class:Config
 get_conv_var	previous_code/tf_version/vgg19.py	/^    def get_conv_var(self, filter_size, in_channels, out_channels, name):$/;"	m	class:Vgg19
-get_data	src_PnasNet/models/CNN_Train.py	/^    def get_data(self):$/;"	m	class:CNN_Train
-get_duration	auxiliary/timer.py	/^    def get_duration(self):$/;"	m	class:timer
+get_data	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def get_data(self):$/;"	m	class:CNN_Train
+get_data	src/dataset.py	/^    def get_data(self, iterNo, data_dir):$/;"	m	class:Skin7
+get_duration	previous_code/pytorch/auxiliary/timer.py	/^    def get_duration(self):$/;"	m	class:timer
 get_fc_var	previous_code/tf_version/vgg19.py	/^    def get_fc_var(self, in_size, out_size, name):$/;"	m	class:Vgg19
-get_five_fold	src_SeNet/ReadCSV.py	/^def get_five_fold(datadir):$/;"	f
+get_file	previous_code/tf_version/resnet152.py	/^from keras.utils.data_utils import get_file$/;"	i
+get_five_fold	previous_code/pytorch/src_SeNet/ReadCSV.py	/^def get_five_fold(datadir):$/;"	f
+get_grad_norm	src/utils/function.py	/^def get_grad_norm(processed_images):$/;"	f
 get_hint_pool_idxs	previous_code/tf_version/memory.py	/^    def get_hint_pool_idxs(self, normalized_query):$/;"	m	class:Memory
-get_loaders	src_PnasNet/models/CNN_Train.py	/^    def get_loaders(self):$/;"	m	class:CNN_Train
-get_loaders	src_SeNet/GetConfuse.py	/^def get_loaders():$/;"	f
-get_loaders	src_SeNet/TestResult.py	/^def get_loaders():$/;"	f
-get_loaders	src_SeNet/main.py	/^def get_loaders():$/;"	f
-get_loaders	src_SeNet/run.py	/^def get_loaders():$/;"	f
+get_image_backend	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    from torchvision import get_image_backend$/;"	i
+get_image_backend	previous_code/pytorch/src_SeNet/DataLoader.py	/^    from torchvision import get_image_backend$/;"	i
+get_image_backend	previous_code/pytorch/src_SeNet/ReadCSV.py	/^    from torchvision import get_image_backend$/;"	i
+get_image_backend	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^    from torchvision import get_image_backend$/;"	i
+get_image_backend	src/dataset.py	/^    from torchvision import get_image_backend$/;"	i
+get_loaders	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def get_loaders(self):$/;"	m	class:CNN_Train
+get_loaders	previous_code/pytorch/src_SeNet/GetConfuse.py	/^def get_loaders():$/;"	f
+get_loaders	previous_code/pytorch/src_SeNet/TestResult.py	/^def get_loaders():$/;"	f
+get_loaders	previous_code/pytorch/src_SeNet/main.py	/^def get_loaders():$/;"	f
+get_loaders	previous_code/pytorch/src_SeNet/run.py	/^def get_loaders():$/;"	f
+get_lr	src/trainer.py	/^    print_loss_sometime$/;"	i
+get_lr	src/utils/function.py	/^def get_lr(optimizer):$/;"	f
 get_model	previous_code/tf_version/model.py	/^def get_model(hps, xs, ys, learning_rate, trainable):$/;"	f
-get_print_precision	auxiliary/statistics.py	/^    def get_print_precision(self):$/;"	m	class:statistics
+get_print_precision	previous_code/pytorch/auxiliary/statistics.py	/^    def get_print_precision(self):$/;"	m	class:statistics
 get_print_precision	previous_code/tf_version/statistics.py	/^    def get_print_precision(self):$/;"	m	class:statistics
+get_source_inputs	previous_code/tf_version/resnet152.py	/^from keras.engine.topology import get_source_inputs$/;"	i
 get_var	previous_code/tf_version/vgg19.py	/^    def get_var(self, initial_value, name, idx, var_name):$/;"	m	class:Vgg19
 get_var_count	previous_code/tf_version/vgg19.py	/^    def get_var_count(self):$/;"	m	class:Vgg19
-get_weights_for_balanced_classes	src_PnasNet/models/DatasetFolder.py	/^    def get_weights_for_balanced_classes(self):$/;"	m	class:DatasetFolder
+get_weights_for_balanced_classes	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^    def get_weights_for_balanced_classes(self):$/;"	m	class:DatasetFolder
 gpu	previous_code/tf_version/train_v3.py	/^    gpu = sys.argv[2]$/;"	v
 gray_world	previous_code/tf_version/color_constancy.py	/^def gray_world(img):$/;"	f
-help	src_PnasNet/main.py	/^                     help='split data into 5-fold and select the iterNo fold to evaluate')$/;"	v
-help	src_PnasNet/main.py	/^                    help='cuda device')$/;"	v
-help	src_PnasNet/main.py	/^                    help='load from trained_model')$/;"	v
-help	src_PnasNet/main.py	/^                    help='save log dir')$/;"	v
-help	src_PnasNet/main.py	/^                    help='save model dir')$/;"	v
-help	src_PnasNet/main.py	/^                    help='use all train data so no validation')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                     help='split data into 5-fold and select the iterNo fold to evaluate')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                    help='cuda device')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                    help='load from trained_model')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                    help='save log dir')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                    help='save model dir')$/;"	v
+help	previous_code/pytorch/src_PnasNet/main.py	/^                    help='use all train data so no validation')$/;"	v
 hps	previous_code/tf_version/train_v2.py	/^hps = HParams($/;"	v
 hps	previous_code/tf_version/train_v4.py	/^hps = HParams($/;"	v
 hps	previous_code/tf_version/train_v5.py	/^hps = HParams($/;"	v
 identity_block	previous_code/tf_version/resnet152.py	/^def identity_block(input_tensor, kernel_size, filters, stage, block):$/;"	f
+image	previous_code/tf_version/resnet152.py	/^from keras.preprocessing import image$/;"	i
 image_np	previous_code/tf_version/data.py	/^    image_np = cv.imread(image_path)$/;"	v
 image_path	previous_code/tf_version/data.py	/^    image_path = os.path.join(data_dir, img)$/;"	v
 img	previous_code/tf_version/resnet152.py	/^    img = image.load_img(img_path, target_size=(224,224))$/;"	v
 img_path	previous_code/tf_version/resnet152.py	/^    img_path = 'elephant.jpg'$/;"	v
-ind	auxiliary/inter_and_intraclass_distance.py	/^ind = 2$/;"	v
-iterate_CNN	src_PnasNet/models/CNN_Train.py	/^    def iterate_CNN(self):$/;"	m	class:CNN_Train
-iterate_CNN	src_SeNet/main.py	/^def iterate_CNN():$/;"	f
-iterate_CNN	src_SeNet/run.py	/^def iterate_CNN():$/;"	f
+inception_v3	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras.applications import inception_v3$/;"	i
+inception_v3	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras.applications import inception_v3$/;"	i
+ind	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^ind = 2$/;"	v
+init_environment	src/trainer.py	/^    print_loss_sometime$/;"	i
+init_environment	src/utils/function.py	/^def init_environment(seed=0, cuda_id="0"):$/;"	f
+init_logging	src/trainer.py	/^    print_loss_sometime$/;"	i
+init_logging	src/utils/function.py	/^def init_logging(output_dir, exp):$/;"	f
+initialization	src/trainer.py	/^initialization = configs_dict["initialization"]$/;"	v
+initializers	previous_code/tf_version/resnet152.py	/^from keras import initializers$/;"	i
+input_channel	src/trainer.py	/^input_channel = 3$/;"	v
+input_size	src/model.py	/^    input_size = (3, 331, 331)$/;"	v
+input_size	src/trainer.py	/^    input_size = 224$/;"	v
+input_size	src/trainer.py	/^    input_size = 331$/;"	v
+iter_fold	src/trainer.py	/^iter_fold = configs_dict["iter_fold"]$/;"	v
+iterate_CNN	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def iterate_CNN(self):$/;"	m	class:CNN_Train
+iterate_CNN	previous_code/pytorch/src_SeNet/main.py	/^def iterate_CNN():$/;"	f
+iterate_CNN	previous_code/pytorch/src_SeNet/run.py	/^def iterate_CNN():$/;"	f
+itertools	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^import itertools$/;"	i
+keras	previous_code/tf_version/resnet152.py	/^import keras.backend as K$/;"	i
 label_test	previous_code/tf_version/xg.py	/^    label_test = batch_flatten(data_test[1])$/;"	v
 label_train	previous_code/tf_version/xg.py	/^    label_train = batch_flatten(data_train[1])$/;"	v
-labels	auxiliary/inter_and_intraclass_distance.py	/^labels = [1,2,2,1,2,2,1,2]$/;"	v
+labels	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^labels = [1,2,2,1,2,2,1,2]$/;"	v
+layer_utils	previous_code/tf_version/resnet152.py	/^from keras.utils import layer_utils$/;"	i
+layers	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras import layers$/;"	i
+layers	previous_code/tf_version/train_v3.py	/^from tensorflow.python.keras import layers$/;"	i
+layers	previous_code/tf_version/train_v4.py	/^from tensorflow.python.keras import layers$/;"	i
+layers	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras import layers$/;"	i
+learning_rate	src/trainer.py	/^learning_rate = configs_dict["learning_rate"]$/;"	v
 load	previous_code/tf_version/test_Record.py	/^def load(iter_x, iter_y, init):$/;"	f
-lr	src_SeNet/GetConfuse.py	/^                           lr=args.lr,$/;"	v
-lr	src_SeNet/GetConfuse.py	/^lr = 0.01\/100$/;"	v
-lr	src_SeNet/TestResult.py	/^                           lr=args.lr,$/;"	v
-lr	src_SeNet/TestResult.py	/^lr = 0.01\/100$/;"	v
-lr	src_SeNet/main.py	/^                           lr=args.lr,$/;"	v
-lr	src_SeNet/main.py	/^lr = 0.01\/100$/;"	v
-lr	src_SeNet/run.py	/^                           lr=args.lr,$/;"	v
-lr	src_SeNet/run.py	/^lr = 0.1\/100$/;"	v
+log_dir	src/trainer.py	/^log_dir = configs_dict["log_dir"]$/;"	v
+logging	previous_code/tf_version/data_utils.py	/^import logging$/;"	i
+logging	src/utils/function.py	/^import logging$/;"	i
+loss	src/trainer.py	/^        loss = criterion(predict, target)$/;"	v
+losses	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras import losses$/;"	i
+losses	previous_code/tf_version/train_v3.py	/^from tensorflow.python.keras import losses$/;"	i
+losses	previous_code/tf_version/train_v4.py	/^from tensorflow.python.keras import losses$/;"	i
+losses	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras import losses$/;"	i
+losses	src/trainer.py	/^    losses = []$/;"	v
+lr	previous_code/pytorch/src_SeNet/GetConfuse.py	/^                           lr=args.lr,$/;"	v
+lr	previous_code/pytorch/src_SeNet/GetConfuse.py	/^lr = 0.01\/100$/;"	v
+lr	previous_code/pytorch/src_SeNet/TestResult.py	/^                           lr=args.lr,$/;"	v
+lr	previous_code/pytorch/src_SeNet/TestResult.py	/^lr = 0.01\/100$/;"	v
+lr	previous_code/pytorch/src_SeNet/main.py	/^                           lr=args.lr,$/;"	v
+lr	previous_code/pytorch/src_SeNet/main.py	/^lr = 0.01\/100$/;"	v
+lr	previous_code/pytorch/src_SeNet/run.py	/^                           lr=args.lr,$/;"	v
+lr	previous_code/pytorch/src_SeNet/run.py	/^lr = 0.1\/100$/;"	v
+main	previous_code/pytorch/src_PnasNet/main.py	/^def main():$/;"	f
 main	previous_code/tf_version/train.py	/^def main(argv=None):$/;"	f
 main	previous_code/tf_version/train_v2.py	/^def main(mode='train', gpu='0'):$/;"	f
 main	previous_code/tf_version/train_v3.py	/^def main(mode='train', gpu='0'):$/;"	f
 main	previous_code/tf_version/train_v4.py	/^def main(mode='train', gpu='0'):$/;"	f
 main	previous_code/tf_version/train_v5.py	/^def main(mode='train', gpu='0'):$/;"	f
-main	src_PnasNet/main.py	/^def main():$/;"	f
-make_dataset	src_PnasNet/models/DatasetFolder.py	/^def make_dataset(itrno, data_dir, use_all_data=False, for_vote=False):$/;"	f
-make_dataset	src_SeNet/DataLoader.py	/^def make_dataset(ptrain):$/;"	f
+make_dataset	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^def make_dataset(itrno, data_dir, use_all_data=False, for_vote=False):$/;"	f
+make_dataset	previous_code/pytorch/src_SeNet/DataLoader.py	/^def make_dataset(ptrain):$/;"	f
 make_update_op	previous_code/tf_version/memory.py	/^        def make_update_op():$/;"	f	function:Memory.query_and_make_update
 make_update_op	previous_code/tf_version/memory.py	/^    def make_update_op(self, upd_idxs, upd_keys, upd_vals, batch_size):$/;"	m	class:Memory
-max_intraclass_and_min_interclass_samples	auxiliary/inter_and_intraclass_distance.py	/^def max_intraclass_and_min_interclass_samples(features, labels, ind):$/;"	f
+math	previous_code/pytorch/auxiliary/process_bar.py	/^import math$/;"	i
+math	previous_code/tf_version/process_bar.py	/^import math$/;"	i
+matplotlib	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	previous_code/tf_version/xg.py	/^import matplotlib$/;"	i
+max_intraclass_and_min_interclass_samples	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^def max_intraclass_and_min_interclass_samples(features, labels, ind):$/;"	f
 max_pool	previous_code/tf_version/vgg19.py	/^    def max_pool(self, bottom, name):$/;"	m	class:Vgg19
+mcr	src/trainer.py	/^        mcr = mean_class_recall(y_true, y_pred)$/;"	v
+mean	src/trainer.py	/^    mean = [0.485, 0.456, 0.406]$/;"	v
+mean	src/trainer.py	/^    mean = [0.5, 0.5, 0.5]$/;"	v
+mean_class_recall	src/trainer.py	/^from utils.metric import mean_class_recall$/;"	i
+mean_class_recall	src/utils/metric.py	/^def mean_class_recall(y_true, y_pred):$/;"	f
 median_weight_class_loss	previous_code/tf_version/train_v2.py	/^def median_weight_class_loss(labels, logits):$/;"	f
 median_weight_class_loss	previous_code/tf_version/train_v4.py	/^def median_weight_class_loss(labels, logits):$/;"	f
 median_weight_class_loss	previous_code/tf_version/train_v5.py	/^def median_weight_class_loss(labels, logits):$/;"	f
-milestones	src_SeNet/main.py	/^                                                      milestones=[150, 250, 350, 450],$/;"	v
+memory	previous_code/tf_version/train.py	/^import memory$/;"	i
+metrics	previous_code/tf_version/train_v2.py	/^from keras import metrics$/;"	i
+metrics	previous_code/tf_version/train_v3.py	/^from keras import metrics$/;"	i
+metrics	previous_code/tf_version/train_v4.py	/^from keras import metrics$/;"	i
+metrics	previous_code/tf_version/train_v5.py	/^from keras import metrics$/;"	i
+milestones	previous_code/pytorch/src_SeNet/main.py	/^                                                      milestones=[150, 250, 350, 450],$/;"	v
+model	previous_code/pytorch/src_SeNet/main.py	/^model = 'senet154'$/;"	v
+model	previous_code/pytorch/src_SeNet/run.py	/^model = 'senet154'$/;"	v
 model	previous_code/tf_version/resnet152.py	/^    model = ResNet152(include_top=True, weights='imagenet')$/;"	v
-model	src_SeNet/main.py	/^model = 'senet154'$/;"	v
-model	src_SeNet/run.py	/^model = 'senet154'$/;"	v
-momentum	src_SeNet/main.py	/^                           momentum=0.9,$/;"	v
-n_epochs	src_SeNet/GetConfuse.py	/^n_epochs = 250$/;"	v
-n_epochs	src_SeNet/TestResult.py	/^n_epochs = 250$/;"	v
-n_epochs	src_SeNet/main.py	/^n_epochs = 500$/;"	v
-n_epochs	src_SeNet/run.py	/^n_epochs = 500$/;"	v
-nclass	src_SeNet/GetConfuse.py	/^nclass = 7$/;"	v
-nclass	src_SeNet/TestResult.py	/^nclass = 7$/;"	v
-nclass	src_SeNet/main.py	/^nclass = 7$/;"	v
-nclass	src_SeNet/run.py	/^nclass = 7$/;"	v
-nesterov	src_SeNet/main.py	/^                           nesterov=True,$/;"	v
+model	previous_code/tf_version/train.py	/^import model$/;"	i
+model	src/trainer.py	/^import model$/;"	i
+model_dir	src/trainer.py	/^model_dir = configs_dict["model_dir"]$/;"	v
+model_path	src/trainer.py	/^            model_path = os.path.join(model_dir, str(exp), str(epoch))$/;"	v
+models	previous_code/pytorch/src_SeNet/GetConfuse.py	/^from torchvision import models$/;"	i
+models	previous_code/pytorch/src_SeNet/TestResult.py	/^from torchvision import models$/;"	i
+models	previous_code/pytorch/src_SeNet/main.py	/^from torchvision import models$/;"	i
+models	previous_code/pytorch/src_SeNet/run.py	/^from torchvision import models$/;"	i
+models	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras import models$/;"	i
+models	previous_code/tf_version/train_v3.py	/^from tensorflow.python.keras import models$/;"	i
+models	previous_code/tf_version/train_v4.py	/^from tensorflow.python.keras import models$/;"	i
+models	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras import models$/;"	i
+momentum	previous_code/pytorch/src_SeNet/main.py	/^                           momentum=0.9,$/;"	v
+moving_averages	previous_code/tf_version/WideResnetModel.py	/^from tensorflow.python.training import moving_averages$/;"	i
+moving_averages	previous_code/tf_version/resNet.py	/^from tensorflow.python.training import moving_averages$/;"	i
+n_epochs	previous_code/pytorch/src_SeNet/GetConfuse.py	/^n_epochs = 250$/;"	v
+n_epochs	previous_code/pytorch/src_SeNet/TestResult.py	/^n_epochs = 250$/;"	v
+n_epochs	previous_code/pytorch/src_SeNet/main.py	/^n_epochs = 500$/;"	v
+n_epochs	previous_code/pytorch/src_SeNet/run.py	/^n_epochs = 500$/;"	v
+n_epochs	src/trainer.py	/^n_epochs = configs_dict["n_epochs"]$/;"	v
+namedtuple	previous_code/tf_version/WideResnetModel.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/resNet.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/train.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/train_v2.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/train_v3.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/train_v4.py	/^from collections import namedtuple$/;"	i
+namedtuple	previous_code/tf_version/train_v5.py	/^from collections import namedtuple$/;"	i
+nclass	previous_code/pytorch/src_SeNet/GetConfuse.py	/^nclass = 7$/;"	v
+nclass	previous_code/pytorch/src_SeNet/TestResult.py	/^nclass = 7$/;"	v
+nclass	previous_code/pytorch/src_SeNet/main.py	/^nclass = 7$/;"	v
+nclass	previous_code/pytorch/src_SeNet/run.py	/^nclass = 7$/;"	v
+nesterov	previous_code/pytorch/src_SeNet/main.py	/^                           nesterov=True,$/;"	v
+net	src/model.py	/^    net = Network(backbone="NASNetALarge", num_classes=200)$/;"	v
+net	src/trainer.py	/^    net = net.to(device)$/;"	v
+net	src/trainer.py	/^    net = nn.DataParallel(net, device_ids=device_ids).to(device)$/;"	v
+net	src/trainer.py	/^net = model.Network(backbone=backbone, num_classes=num_classes,$/;"	v
+net_state_dict	src/trainer.py	/^            net_state_dict = net.state_dict()$/;"	v
 new_image_np	previous_code/tf_version/data.py	/^    new_image_np = cc.white_patch_retinex(image_np, 1)$/;"	v
+nn	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^import torch.nn.functional as F$/;"	i
+nn	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+nn	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.nn.functional as F$/;"	i
+nn	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.nn.functional as F$/;"	i
+nn	previous_code/pytorch/src_SeNet/main.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_SeNet/main.py	/^import torch.nn.functional as F$/;"	i
+nn	previous_code/pytorch/src_SeNet/run.py	/^import torch.nn as nn$/;"	i
+nn	previous_code/pytorch/src_SeNet/run.py	/^import torch.nn.functional as F$/;"	i
+nn	src/model.py	/^import torch.nn as nn$/;"	i
+nn	src/trainer.py	/^import torch.nn as nn$/;"	i
+np	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/auxiliary/statistics.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/DataLoader.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/TestResult.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/main.py	/^import numpy as np$/;"	i
+np	previous_code/pytorch/src_SeNet/run.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/WideResnetModel.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/color_constancy.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/data_utils.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/resNet.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/resnet152.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/statistics.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/train.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/train_v2.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/train_v3.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/train_v4.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/train_v5.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/vgg19.py	/^import numpy as np$/;"	i
+np	previous_code/tf_version/xg.py	/^import numpy as np$/;"	i
+np	src/dataset.py	/^import numpy as np$/;"	i
+np	src/trainer.py	/^import numpy as np$/;"	i
+np	src/utils/function.py	/^import numpy as np$/;"	i
+np	src/utils/metric.py	/^import numpy as np$/;"	i
 num_classes	previous_code/tf_version/train_v2.py	/^     num_classes=7)$/;"	v
 num_classes	previous_code/tf_version/train_v4.py	/^     num_classes=7)$/;"	v
 num_classes	previous_code/tf_version/train_v5.py	/^     num_classes=7)$/;"	v
-optimizer	src_SeNet/GetConfuse.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
-optimizer	src_SeNet/TestResult.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
-optimizer	src_SeNet/main.py	/^optimizer = optim.SGD([{'params': resnet_model.parameters(), 'lr': args.lr}],$/;"	v
-optimizer	src_SeNet/run.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
-original_model	src_SeNet/run.py	/^    original_model = pretrainedmodels.__dict__['senet154'](num_classes=1000, pretrained='imagenet')$/;"	v
+num_classes	src/trainer.py	/^num_classes = configs_dict["num_classes"]$/;"	v
+num_workers	src/trainer.py	/^                                          num_workers=num_workers)$/;"	v
+num_workers	src/trainer.py	/^                                        num_workers=num_workers)$/;"	v
+num_workers	src/trainer.py	/^num_workers = configs_dict["num_workers"]$/;"	v
+opt	src/trainer.py	/^    opt = torch.optim.Adam(net.parameters(), lr=learning_rate,$/;"	v
+opt	src/trainer.py	/^    opt = torch.optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9)$/;"	v
+optim	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.optim as optim$/;"	i
+optim	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.optim as optim$/;"	i
+optim	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.optim as optim$/;"	i
+optim	previous_code/pytorch/src_SeNet/main.py	/^import torch.optim as optim$/;"	i
+optim	previous_code/pytorch/src_SeNet/run.py	/^import torch.optim as optim$/;"	i
+optimizer	previous_code/pytorch/src_SeNet/GetConfuse.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+optimizer	previous_code/pytorch/src_SeNet/TestResult.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+optimizer	previous_code/pytorch/src_SeNet/main.py	/^optimizer = optim.SGD([{'params': resnet_model.parameters(), 'lr': args.lr}],$/;"	v
+optimizer	previous_code/pytorch/src_SeNet/run.py	/^optimizer = optim.Adam(resnet_model.parameters(),$/;"	v
+optimizer	src/trainer.py	/^optimizer = configs_dict["optimizer"]$/;"	v
+original_model	previous_code/pytorch/src_SeNet/run.py	/^    original_model = pretrainedmodels.__dict__['senet154'](num_classes=1000, pretrained='imagenet')$/;"	v
+os	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^import os$/;"	i
+os	previous_code/pytorch/src_PnasNet/main.py	/^import os$/;"	i
+os	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import os, sys$/;"	i
+os	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^import os$/;"	i
+os	previous_code/pytorch/src_SeNet/DataLoader.py	/^import os$/;"	i
+os	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import os$/;"	i
+os	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import os$/;"	i
+os	previous_code/pytorch/src_SeNet/run.py	/^import os$/;"	i
+os	previous_code/tf_version/color_constancy.py	/^import os$/;"	i
+os	previous_code/tf_version/data.py	/^import os$/;"	i
+os	previous_code/tf_version/data_utils.py	/^import os$/;"	i
+os	previous_code/tf_version/train.py	/^import os, sys$/;"	i
+os	previous_code/tf_version/train_v2.py	/^import os, sys$/;"	i
+os	previous_code/tf_version/train_v3.py	/^import os, sys$/;"	i
+os	previous_code/tf_version/train_v4.py	/^import os, sys$/;"	i
+os	previous_code/tf_version/train_v5.py	/^import os, sys$/;"	i
+os	src/dataset.py	/^import os$/;"	i
+os	src/trainer.py	/^import os$/;"	i
+os	src/utils/function.py	/^import os$/;"	i
 output_dir	previous_code/tf_version/data.py	/^output_dir = '.\/valid_wpr1'$/;"	v
 output_path	previous_code/tf_version/data.py	/^    output_path = os.path.join(output_dir, img)$/;"	v
+pandas	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import pandas$/;"	i
+parent_folder	previous_code/tf_version/train.py	/^    print('import from parent_folder error')$/;"	i
 parent_path	previous_code/tf_version/train.py	/^parent_path = os.path.abspath('..\/')$/;"	v
 parent_path	previous_code/tf_version/train_v2.py	/^parent_path = os.path.abspath('..\/')$/;"	v
 parent_path	previous_code/tf_version/train_v3.py	/^parent_path = os.path.abspath('..\/')$/;"	v
 parent_path	previous_code/tf_version/train_v4.py	/^parent_path = os.path.abspath('..\/')$/;"	v
 parent_path	previous_code/tf_version/train_v5.py	/^parent_path = os.path.abspath('..\/')$/;"	v
-parser	src_PnasNet/confusion_matrix.py	/^parser = argparse.ArgumentParser(description='Confusion Matrix')$/;"	v
-parser	src_PnasNet/main.py	/^parser = argparse.ArgumentParser(description='Net')$/;"	v
-parser	src_SeNet/GetConfuse.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
-parser	src_SeNet/TestResult.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
-parser	src_SeNet/main.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
-parser	src_SeNet/run.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
-pil_loader	src_PnasNet/models/DatasetFolder.py	/^def pil_loader(path):$/;"	f
-pil_loader	src_SeNet/DataLoader.py	/^def pil_loader(path):$/;"	f
-pil_loader	src_SeNet/ReadCSV.py	/^def pil_loader(path):$/;"	f
-pil_loader	src_SeNet/TestDataLoader.py	/^def pil_loader(path):$/;"	f
-plot_confusion_matrix	src_PnasNet/confusion_matrix.py	/^def plot_confusion_matrix(cm, classes,$/;"	f
-pre	src_SeNet/GetConfuse.py	/^pre = predict()$/;"	v
+parser	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^parser = argparse.ArgumentParser(description='Confusion Matrix')$/;"	v
+parser	previous_code/pytorch/src_PnasNet/main.py	/^parser = argparse.ArgumentParser(description='Net')$/;"	v
+parser	previous_code/pytorch/src_SeNet/GetConfuse.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	previous_code/pytorch/src_SeNet/TestResult.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	previous_code/pytorch/src_SeNet/main.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+parser	previous_code/pytorch/src_SeNet/run.py	/^parser = argparse.ArgumentParser(description='Resnet')$/;"	v
+pd	previous_code/pytorch/auxiliary/statistics.py	/^import pandas as pd$/;"	i
+pd	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import pandas as pd$/;"	i
+pd	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import pandas as pd$/;"	i
+pd	previous_code/pytorch/src_SeNet/TestResult.py	/^import pandas as pd$/;"	i
+pd	previous_code/tf_version/data_utils.py	/^import pandas as pd$/;"	i
+pd	previous_code/tf_version/statistics.py	/^import pandas as pd$/;"	i
+pd	previous_code/tf_version/train.py	/^import pandas as pd$/;"	i
+pd	src/dataset.py	/^import pandas as pd$/;"	i
+pil_loader	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^def pil_loader(path):$/;"	f
+pil_loader	previous_code/pytorch/src_SeNet/DataLoader.py	/^def pil_loader(path):$/;"	f
+pil_loader	previous_code/pytorch/src_SeNet/ReadCSV.py	/^def pil_loader(path):$/;"	f
+pil_loader	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^def pil_loader(path):$/;"	f
+pil_loader	src/dataset.py	/^def pil_loader(path):$/;"	f
+plot_confusion_matrix	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^def plot_confusion_matrix(cm, classes,$/;"	f
+plot_importance	previous_code/tf_version/xg.py	/^from xgboost import plot_importance$/;"	i
+plt	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^import matplotlib.pyplot as plt$/;"	i
+plt	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^import matplotlib.pyplot as plt$/;"	i
+plt	previous_code/tf_version/color_constancy.py	/^from matplotlib import pyplot as plt$/;"	i
+plt	previous_code/tf_version/xg.py	/^from matplotlib import pyplot as plt$/;"	i
+pre	previous_code/pytorch/src_SeNet/GetConfuse.py	/^pre = predict()$/;"	v
+precision_score	previous_code/tf_version/xg.py	/^from sklearn.metrics import accuracy_score, precision_score, recall_score$/;"	i
 pred_test	previous_code/tf_version/xg.py	/^    pred_test = xgc.predict(features_test)$/;"	v
 pred_train	previous_code/tf_version/xg.py	/^    pred_train = xgc.predict(features_train)$/;"	v
-predict	src_PnasNet/models/CNN_Train.py	/^    def predict(self):$/;"	m	class:CNN_Train
-predict	src_SeNet/GetConfuse.py	/^def predict():$/;"	f
-predict	src_SeNet/TestMCA.py	/^predict = [0, 2, 1, 2, 3, 4, 5, 6]$/;"	v
-predict	src_SeNet/TestResult.py	/^def predict():$/;"	f
-predict_test	src_PnasNet/models/CNN_Train.py	/^    def predict_test(self):$/;"	m	class:CNN_Train
-predict_valid	src_PnasNet/models/CNN_Train.py	/^    def predict_valid(self):$/;"	m	class:CNN_Train
+predict	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def predict(self):$/;"	m	class:CNN_Train
+predict	previous_code/pytorch/src_SeNet/GetConfuse.py	/^def predict():$/;"	f
+predict	previous_code/pytorch/src_SeNet/TestMCA.py	/^predict = [0, 2, 1, 2, 3, 4, 5, 6]$/;"	v
+predict	previous_code/pytorch/src_SeNet/TestResult.py	/^def predict():$/;"	f
+predict	src/trainer.py	/^            predict = torch.argmax(net(data), dim=1).cpu().data.numpy()$/;"	v
+predict	src/trainer.py	/^        predict = net(data)$/;"	v
+predict_test	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def predict_test(self):$/;"	m	class:CNN_Train
+predict_valid	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def predict_valid(self):$/;"	m	class:CNN_Train
 predictions_test	previous_code/tf_version/xg.py	/^    predictions_test = [round(value) for value in pred_test]$/;"	v
 predictions_train	previous_code/tf_version/xg.py	/^    predictions_train = [round(value) for value in pred_train]$/;"	v
 preds	previous_code/tf_version/resnet152.py	/^    preds = model.predict(x)$/;"	v
-print_net	src_PnasNet/models/CNN_Train.py	/^    def print_net(self):$/;"	m	class:CNN_Train
-process_bar	auxiliary/process_bar.py	/^class process_bar():$/;"	c
+preprocess_image	src/utils/function.py	/^def preprocess_image(pil_im, mean, std, resize=512, resize_im=True,$/;"	f
+preprocess_input	previous_code/tf_version/resnet152.py	/^from keras.applications.imagenet_utils import preprocess_input$/;"	i
+pretrainedmodels	previous_code/pytorch/src_PnasNet/main.py	/^import pretrainedmodels$/;"	i
+pretrainedmodels	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import pretrainedmodels$/;"	i
+pretrainedmodels	previous_code/pytorch/src_SeNet/TestResult.py	/^import pretrainedmodels$/;"	i
+pretrainedmodels	previous_code/pytorch/src_SeNet/run.py	/^import pretrainedmodels$/;"	i
+pretrainedmodels	src/model.py	/^import pretrainedmodels$/;"	i
+print_config	src/config.py	/^    def print_config(self, _print=None):$/;"	m	class:Config
+print_dataset	src/dataset.py	/^def print_dataset(dataset, print_time):$/;"	f
+print_function	previous_code/pytorch/src_SeNet/GetConfuse.py	/^from __future__ import print_function$/;"	i
+print_function	previous_code/pytorch/src_SeNet/TestResult.py	/^from __future__ import print_function$/;"	i
+print_function	previous_code/pytorch/src_SeNet/main.py	/^from __future__ import print_function$/;"	i
+print_function	previous_code/pytorch/src_SeNet/run.py	/^from __future__ import print_function$/;"	i
+print_loss_sometime	src/trainer.py	/^    print_loss_sometime$/;"	i
+print_loss_sometime	src/utils/function.py	/^def print_loss_sometime(dicts, print_frequency=50, _print=None):$/;"	f
+print_model	src/model.py	/^    def print_model(self, input_size, device):$/;"	m	class:Network
+print_net	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def print_net(self):$/;"	m	class:CNN_Train
+process_bar	previous_code/pytorch/auxiliary/process_bar.py	/^class process_bar():$/;"	c
+process_bar	previous_code/tf_version/data.py	/^import process_bar$/;"	i
+process_bar	previous_code/tf_version/data_utils.py	/^import process_bar$/;"	i
 process_bar	previous_code/tf_version/process_bar.py	/^class process_bar():$/;"	c
 process_bar_	previous_code/tf_version/data.py	/^process_bar_ = process_bar.process_bar(195)$/;"	v
 query	previous_code/tf_version/memory.py	/^    def query(self, query_vec):$/;"	m	class:Memory
 query_and_make_update	previous_code/tf_version/memory.py	/^    def query_and_make_update(self, query_vec, intended_output):$/;"	m	class:Memory
-raw_data	src_SeNet/TestResult.py	/^raw_data = {$/;"	v
+random	previous_code/pytorch/src_SeNet/DataLoader.py	/^import random$/;"	i
+random	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import random$/;"	i
+random	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import random$/;"	i
+raw_data	previous_code/pytorch/src_SeNet/TestResult.py	/^raw_data = {$/;"	v
+re_size	src/trainer.py	/^    re_size = 300$/;"	v
+re_size	src/trainer.py	/^    re_size = 441$/;"	v
 read_record	previous_code/tf_version/data_utils.py	/^    def read_record(self, mode='train'):$/;"	m	class:ISIC2018_data
-reset	auxiliary/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
+recall_score	previous_code/tf_version/xg.py	/^from sklearn.metrics import accuracy_score, precision_score, recall_score$/;"	i
+recreate_image	src/utils/function.py	/^def recreate_image(im_as_var, reverse_mean, reverse_std):$/;"	f
+reduce	previous_code/tf_version/vgg19.py	/^from functools import reduce$/;"	i
+resNet	previous_code/tf_version/model.py	/^import resNet$/;"	i
+reset	previous_code/pytorch/auxiliary/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
 reset	previous_code/tf_version/process_bar.py	/^    def reset(self):$/;"	m	class:process_bar
-resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
-resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = resnet_model.cuda()$/;"	v
-resnet_model	src_SeNet/GetConfuse.py	/^resnet_model = torch.load('.\/model\/senet154150.pkl')$/;"	v
-resnet_model	src_SeNet/TestResult.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
-resnet_model	src_SeNet/TestResult.py	/^resnet_model = resnet_model.cuda()$/;"	v
-resnet_model	src_SeNet/TestResult.py	/^resnet_model = torch.load('.\/model\/senet15410.pkl')$/;"	v
-resnet_model	src_SeNet/main.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
-resnet_model	src_SeNet/main.py	/^resnet_model = torchvision.models.resnet50()$/;"	v
-resnet_model	src_SeNet/run.py	/^resnet_model = FineTuneModel.FineTuneModel(original_model, 'resnet50')$/;"	v
-resnet_model	src_SeNet/run.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
-resnet_model	src_SeNet/run.py	/^resnet_model = resnet_model.cuda()$/;"	v
-save_checkpoint	src_PnasNet/models/CNN_Train.py	/^    def save_checkpoint(self, state, is_best, filename):$/;"	m	class:CNN_Train
+resnet	previous_code/tf_version/train_v2.py	/^import resnet$/;"	i
+resnet	previous_code/tf_version/train_v5.py	/^import resnet$/;"	i
+resnet152	previous_code/tf_version/train_v4.py	/^import resnet152$/;"	i
+resnet50	previous_code/tf_version/train_v2.py	/^from tensorflow.python.keras.applications import resnet50$/;"	i
+resnet50	previous_code/tf_version/train_v3.py	/^from tensorflow.python.keras.applications import resnet50$/;"	i
+resnet50	previous_code/tf_version/train_v4.py	/^from tensorflow.python.keras.applications import resnet50$/;"	i
+resnet50	previous_code/tf_version/train_v5.py	/^from tensorflow.python.keras.applications import resnet50$/;"	i
+resnet_model	previous_code/pytorch/src_SeNet/GetConfuse.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/GetConfuse.py	/^resnet_model = resnet_model.cuda()$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/GetConfuse.py	/^resnet_model = torch.load('.\/model\/senet154150.pkl')$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/TestResult.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/TestResult.py	/^resnet_model = resnet_model.cuda()$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/TestResult.py	/^resnet_model = torch.load('.\/model\/senet15410.pkl')$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/main.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/main.py	/^resnet_model = torchvision.models.resnet50()$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/run.py	/^resnet_model = FineTuneModel.FineTuneModel(original_model, 'resnet50')$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/run.py	/^resnet_model = nn.DataParallel(resnet_model, device_ids=[0, 1])$/;"	v
+resnet_model	previous_code/pytorch/src_SeNet/run.py	/^resnet_model = resnet_model.cuda()$/;"	v
+resume	src/trainer.py	/^resume = configs_dict["resume"]$/;"	v
+resume_path	src/trainer.py	/^    resume_path = os.path.join(model_dir, str(exp), str(resume))$/;"	v
+root	src/dataset.py	/^    root = "..\/data"$/;"	v
+save_checkpoint	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def save_checkpoint(self, state, is_best, filename):$/;"	m	class:CNN_Train
+save_image	src/utils/function.py	/^def save_image(im, path):$/;"	f
 save_npy	previous_code/tf_version/vgg19.py	/^    def save_npy(self, sess, npy_path=".\/vgg19-save.npy"):$/;"	m	class:Vgg19
-save_triples	auxiliary/statistics.py	/^    def save_triples(self, filename):$/;"	m	class:statistics
+save_triples	previous_code/pytorch/auxiliary/statistics.py	/^    def save_triples(self, filename):$/;"	m	class:statistics
 save_triples	previous_code/tf_version/statistics.py	/^    def save_triples(self, filename):$/;"	m	class:statistics
+scale	src/trainer.py	/^                            scale=[0.7, 1.3]),$/;"	v
 scaler	previous_code/tf_version/xg.py	/^    scaler = StandardScaler()$/;"	v
-scheduler	src_SeNet/main.py	/^scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,$/;"	v
-set_maxstep	auxiliary/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
+scheduler	previous_code/pytorch/src_SeNet/main.py	/^scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,$/;"	v
+scheduler	src/trainer.py	/^    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau($/;"	v
+scheduler	src/trainer.py	/^scheduler = None$/;"	v
+seed	src/trainer.py	/^seed = configs_dict["seed"]$/;"	v
+set_maxstep	previous_code/pytorch/auxiliary/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
 set_maxstep	previous_code/tf_version/process_bar.py	/^    def set_maxstep(self, max_step_):$/;"	m	class:process_bar
 shade_of_gray	previous_code/tf_version/color_constancy.py	/^def shade_of_gray(img, power=6, gamma=None):$/;"	f
-show_img_triplets	auxiliary/inter_and_intraclass_distance.py	/^def show_img_triplets(img_root_dir, img_file_names, triplets_of_img_ind, labels):$/;"	f
-show_process	auxiliary/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
+show_img_triplets	previous_code/pytorch/auxiliary/inter_and_intraclass_distance.py	/^def show_img_triplets(img_root_dir, img_file_names, triplets_of_img_ind, labels):$/;"	f
+show_process	previous_code/pytorch/auxiliary/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
 show_process	previous_code/tf_version/process_bar.py	/^    def show_process(self, i=None):$/;"	m	class:process_bar
-sigmod	src_SeNet/TestResult.py	/^def sigmod(x):$/;"	f
-statistics	auxiliary/statistics.py	/^class statistics():$/;"	c
+shuffle	previous_code/tf_version/xg.py	/^    from sklearn.utils import shuffle$/;"	i
+shutil	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import shutil$/;"	i
+sigmod	previous_code/pytorch/src_SeNet/TestResult.py	/^def sigmod(x):$/;"	f
+sota	src/trainer.py	/^sota = {}$/;"	v
+start_epoch	src/trainer.py	/^    start_epoch = resume + 1$/;"	v
+start_epoch	src/trainer.py	/^start_epoch = 0$/;"	v
+statistics	previous_code/pytorch/auxiliary/statistics.py	/^class statistics():$/;"	c
 statistics	previous_code/tf_version/statistics.py	/^class statistics():$/;"	c
-str2bool	src_PnasNet/main.py	/^def str2bool(v):$/;"	f
-test	src_PnasNet/models/CNN_Train.py	/^    def test(self, epoch):$/;"	m	class:CNN_Train
-test	src_SeNet/GetConfuse.py	/^def test(epoch):$/;"	f
-test	src_SeNet/TestResult.py	/^def test(epoch):$/;"	f
-test	src_SeNet/main.py	/^def test(epoch):$/;"	f
-test	src_SeNet/run.py	/^def test(epoch):$/;"	f
+statistics	previous_code/tf_version/train.py	/^    import auxiliary.statistics as statistics$/;"	i
+statistics	previous_code/tf_version/train_v2.py	/^import statistics$/;"	i
+statistics	previous_code/tf_version/train_v3.py	/^import statistics$/;"	i
+statistics	previous_code/tf_version/train_v4.py	/^import statistics$/;"	i
+statistics	previous_code/tf_version/train_v5.py	/^import statistics$/;"	i
+std	src/trainer.py	/^    std = [0.229, 0.224, 0.225]$/;"	v
+std	src/trainer.py	/^    std = [0.5, 0.5, 0.5]$/;"	v
+str2bool	previous_code/pytorch/src_PnasNet/main.py	/^def str2bool(v):$/;"	f
+str2bool	src/utils/function.py	/^def str2bool(val):$/;"	f
+str2list	src/utils/function.py	/^def str2list(val):$/;"	f
+summary	src/model.py	/^from torchsummary import summary$/;"	i
+svm	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^from sklearn import svm, datasets$/;"	i
+sys	previous_code/pytorch/auxiliary/process_bar.py	/^import sys$/;"	i
+sys	previous_code/pytorch/src_PnasNet/main.py	/^import sys$/;"	i
+sys	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import os, sys$/;"	i
+sys	previous_code/tf_version/data.py	/^import sys$/;"	i
+sys	previous_code/tf_version/data_utils.py	/^import sys$/;"	i
+sys	previous_code/tf_version/model.py	/^import sys$/;"	i
+sys	previous_code/tf_version/process_bar.py	/^import sys$/;"	i
+sys	previous_code/tf_version/resnet152.py	/^import sys$/;"	i
+sys	previous_code/tf_version/train.py	/^import os, sys$/;"	i
+sys	previous_code/tf_version/train_v2.py	/^import os, sys$/;"	i
+sys	previous_code/tf_version/train_v3.py	/^import os, sys$/;"	i
+sys	previous_code/tf_version/train_v4.py	/^import os, sys$/;"	i
+sys	previous_code/tf_version/train_v5.py	/^import os, sys$/;"	i
+sys	src/config.py	/^import sys$/;"	i
+sys	src/model.py	/^import sys$/;"	i
+sys	src/trainer.py	/^import sys$/;"	i
+sys	src/utils/function.py	/^import sys$/;"	i
+target	src/trainer.py	/^            target = target.cpu().data.numpy()$/;"	v
+test	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def test(self, epoch):$/;"	m	class:CNN_Train
+test	previous_code/pytorch/src_SeNet/GetConfuse.py	/^def test(epoch):$/;"	f
+test	previous_code/pytorch/src_SeNet/TestResult.py	/^def test(epoch):$/;"	f
+test	previous_code/pytorch/src_SeNet/main.py	/^def test(epoch):$/;"	f
+test	previous_code/pytorch/src_SeNet/run.py	/^def test(epoch):$/;"	f
 test_record	previous_code/tf_version/data_utils.py	/^def test_record():$/;"	f
 test_record	previous_code/tf_version/test_Record.py	/^def test_record():$/;"	f
-test_vote	src_PnasNet/models/CNN_Train.py	/^    def test_vote(self, epoch):$/;"	m	class:CNN_Train
-testsetFolder	src_PnasNet/models/DatasetFolder.py	/^class testsetFolder(data.Dataset):$/;"	c
-testsetFolder	src_SeNet/TestDataLoader.py	/^class testsetFolder(data.Dataset):$/;"	c
-timer	auxiliary/timer.py	/^class timer():$/;"	c
-title	src_PnasNet/confusion_matrix.py	/^                          title='Confusion matrix, without normalization')$/;"	v
-title	src_PnasNet/confusion_matrix.py	/^                          title='Normalized confusion matrix')$/;"	v
+test_vote	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def test_vote(self, epoch):$/;"	m	class:CNN_Train
+testsetFolder	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^from DatasetFolder import testsetFolder$/;"	i
+testsetFolder	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^class testsetFolder(data.Dataset):$/;"	c
+testsetFolder	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^class testsetFolder(data.Dataset):$/;"	c
+testsetFolder	previous_code/pytorch/src_SeNet/TestResult.py	/^from TestDataLoader import testsetFolder$/;"	i
+tf	previous_code/pytorch/auxiliary/statistics.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/WideResnetModel.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/data_utils.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/memory.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/resNet.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/statistics.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/test_Record.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/train.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/train_v2.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/train_v3.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/train_v4.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/train_v5.py	/^import tensorflow as tf$/;"	i
+tf	previous_code/tf_version/vgg19.py	/^import tensorflow as tf$/;"	i
+tf_log	src/trainer.py	/^tf_log = os.path.join(log_dir, exp)$/;"	v
+threshold	src/trainer.py	/^                threshold=1e-4)$/;"	v
+time	previous_code/pytorch/auxiliary/timer.py	/^import time$/;"	i
+time	previous_code/tf_version/train.py	/^import time$/;"	i
+time	previous_code/tf_version/train_v2.py	/^import time$/;"	i
+time	previous_code/tf_version/train_v3.py	/^import time$/;"	i
+time	previous_code/tf_version/train_v4.py	/^import time$/;"	i
+time	previous_code/tf_version/train_v5.py	/^import time$/;"	i
+time	previous_code/tf_version/xg.py	/^import time$/;"	i
+time	src/utils/function.py	/^import time$/;"	i
+timedelta	previous_code/pytorch/auxiliary/timer.py	/^from datetime import timedelta$/;"	i
+timer	previous_code/pytorch/auxiliary/timer.py	/^class timer():$/;"	c
+timer	previous_code/tf_version/test_Record.py	/^import timer$/;"	i
+timer	previous_code/tf_version/train.py	/^    import auxiliary.timer as timer$/;"	i
+timethis	src/utils/function.py	/^def timethis(func, *args, **kwargs):$/;"	f
+title	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^                          title='Confusion matrix, without normalization')$/;"	v
+title	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^                          title='Normalized confusion matrix')$/;"	v
+torch	previous_code/pytorch/src_PnasNet/main.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torch.optim as optim$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/FineTune.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_PnasNet/models/focalloss2d.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_SeNet/DataLoader.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/DataLoader.py	/^import torch.utils.data as data$/;"	i
+torch	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/FineTuneModel.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torch.optim as optim$/;"	i
+torch	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import torch.utils.data as data$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import torch.utils.data as data$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_SeNet/TestResult.py	/^import torch.optim as optim$/;"	i
+torch	previous_code/pytorch/src_SeNet/main.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/main.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	previous_code/pytorch/src_SeNet/main.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_SeNet/main.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_SeNet/main.py	/^import torch.optim as optim$/;"	i
+torch	previous_code/pytorch/src_SeNet/run.py	/^import torch$/;"	i
+torch	previous_code/pytorch/src_SeNet/run.py	/^import torch.backends.cudnn as cudnn$/;"	i
+torch	previous_code/pytorch/src_SeNet/run.py	/^import torch.nn as nn$/;"	i
+torch	previous_code/pytorch/src_SeNet/run.py	/^import torch.nn.functional as F$/;"	i
+torch	previous_code/pytorch/src_SeNet/run.py	/^import torch.optim as optim$/;"	i
+torch	src/model.py	/^import torch$/;"	i
+torch	src/model.py	/^import torch.nn as nn$/;"	i
+torch	src/trainer.py	/^import torch$/;"	i
+torch	src/trainer.py	/^import torch.nn as nn$/;"	i
+torch	src/utils/function.py	/^import torch$/;"	i
+torchvision	previous_code/pytorch/src_PnasNet/main.py	/^import torchvision$/;"	i
+torchvision	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torchvision.transforms as transforms$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.datasets as dsets$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.transforms as transform$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.transforms as transforms$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.datasets as dsets$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.transforms as transform$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.transforms as transforms$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/main.py	/^import torchvision$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.datasets as dsets$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.transforms as transform$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.transforms as transforms$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/run.py	/^import torchvision$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.datasets as dsets$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.transforms as transform$/;"	i
+torchvision	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.transforms as transforms$/;"	i
+torchvision	src/model.py	/^import torchvision$/;"	i
+train	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^    def train(self, epoch):$/;"	m	class:CNN_Train
+train	previous_code/pytorch/src_SeNet/main.py	/^def train(epoch):$/;"	f
+train	previous_code/pytorch/src_SeNet/run.py	/^def train(epoch):$/;"	f
 train	previous_code/tf_version/train.py	/^def train(hps, val_index):$/;"	f
-train	src_PnasNet/models/CNN_Train.py	/^    def train(self, epoch):$/;"	m	class:CNN_Train
-train	src_SeNet/main.py	/^def train(epoch):$/;"	f
-train	src_SeNet/run.py	/^def train(epoch):$/;"	f
+train_avg_loss	src/trainer.py	/^    train_avg_loss = np.mean(losses)$/;"	v
+train_test_split	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^from sklearn.model_selection import train_test_split$/;"	i
 train_time_end	previous_code/tf_version/xg.py	/^    train_time_end = time.time();$/;"	v
 train_time_start	previous_code/tf_version/xg.py	/^    train_time_start = time.time()$/;"	v
-weight_decay	src_SeNet/main.py	/^                           weight_decay=0.0005)$/;"	v
-weights	src_SeNet/GetConfuse.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
-weights	src_SeNet/TestResult.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
-weights	src_SeNet/main.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
-weights	src_SeNet/run.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+train_transform	src/trainer.py	/^train_transform = transforms.Compose([$/;"	v
+trainloader	src/trainer.py	/^trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,$/;"	v
+trainset	src/trainer.py	/^trainset = dataset.Skin7(root=".\/data\/", iter_fold=iter_fold, train=True,$/;"	v
+transform	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.transforms as transform$/;"	i
+transform	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.transforms as transform$/;"	i
+transform	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.transforms as transform$/;"	i
+transform	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.transforms as transform$/;"	i
+transform	src/trainer.py	/^                         transform=train_transform)$/;"	v
+transform	src/trainer.py	/^                       transform=val_transform)$/;"	v
+transforms	previous_code/pytorch/src_PnasNet/models/CNN_Train.py	/^import torchvision.transforms as transforms$/;"	i
+transforms	previous_code/pytorch/src_SeNet/GetConfuse.py	/^import torchvision.transforms as transforms$/;"	i
+transforms	previous_code/pytorch/src_SeNet/TestResult.py	/^import torchvision.transforms as transforms$/;"	i
+transforms	previous_code/pytorch/src_SeNet/main.py	/^import torchvision.transforms as transforms$/;"	i
+transforms	previous_code/pytorch/src_SeNet/run.py	/^import torchvision.transforms as transforms$/;"	i
+transforms	src/dataset.py	/^from torchvision import transforms$/;"	i
+transforms	src/trainer.py	/^from torchvision import transforms$/;"	i
+utils	previous_code/pytorch/src_PnasNet/models/DatasetFolder.py	/^import torch.utils.data as data$/;"	i
+utils	previous_code/pytorch/src_SeNet/DataLoader.py	/^import torch.utils.data as data$/;"	i
+utils	previous_code/pytorch/src_SeNet/ReadCSV.py	/^import torch.utils.data as data$/;"	i
+utils	previous_code/pytorch/src_SeNet/TestDataLoader.py	/^import torch.utils.data as data$/;"	i
+val_transform	src/trainer.py	/^val_transform = transforms.Compose([$/;"	v
+valloader	src/trainer.py	/^valloader = torch.utils.data.DataLoader(valset, batch_size=batch_size,$/;"	v
+valset	src/trainer.py	/^valset = dataset.Skin7(root=".\/data\/", iter_fold=iter_fold, train=False,$/;"	v
+warnings	previous_code/tf_version/resnet152.py	/^import warnings$/;"	i
+weight_decay	previous_code/pytorch/src_SeNet/main.py	/^                           weight_decay=0.0005)$/;"	v
+weights	previous_code/pytorch/src_SeNet/GetConfuse.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	previous_code/pytorch/src_SeNet/TestResult.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	previous_code/pytorch/src_SeNet/main.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	previous_code/pytorch/src_SeNet/run.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	src/trainer.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
 white_patch_retinex	previous_code/tf_version/color_constancy.py	/^def white_patch_retinex(img, para):$/;"	f
+wrapper	src/utils/function.py	/^    def wrapper(*args, **kwargs):$/;"	f	function:timethis
+wraps	src/utils/function.py	/^from functools import wraps$/;"	i
 write_record	previous_code/tf_version/data_utils.py	/^    def write_record(self, prefix_directory=FLAGS.ISIC2018, filenames='split_data.csv'):$/;"	m	class:ISIC2018_data
-writer	src_SeNet/run.py	/^writer = SummaryWriter('.\/logdir')$/;"	v
+writer	previous_code/pytorch/src_SeNet/run.py	/^writer = SummaryWriter('.\/logdir')$/;"	v
+writer	src/trainer.py	/^writer = SummaryWriter(log_dir=tf_log)$/;"	v
 x	previous_code/tf_version/resnet152.py	/^    x = image.img_to_array(img)$/;"	v
 x	previous_code/tf_version/resnet152.py	/^    x = np.expand_dims(x, axis=0)$/;"	v
 x	previous_code/tf_version/resnet152.py	/^    x = preprocess_input(x)$/;"	v
+xgb	previous_code/tf_version/xg.py	/^import xgboost as xgb$/;"	i
 xgc	previous_code/tf_version/xg.py	/^    xgc = xgb.XGBClassifier(base_score=0.6, colsample_bylevel=0.7, colsample_bytree=1,$/;"	v
-y_pred	src_PnasNet/confusion_matrix.py	/^    y_pred = data[5]$/;"	v
-y_test	src_PnasNet/confusion_matrix.py	/^    y_test = data[4]$/;"	v
+y_pred	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^    y_pred = data[5]$/;"	v
+y_pred	src/trainer.py	/^        y_pred = []$/;"	v
+y_pred	src/utils/metric.py	/^    y_pred = [0, 0, 1, 1, 2, 2, 2]$/;"	v
+y_test	previous_code/pytorch/src_PnasNet/confusion_matrix.py	/^    y_test = data[4]$/;"	v
+y_true	src/trainer.py	/^        y_true = []$/;"	v
+y_true	src/utils/metric.py	/^    y_true = [0, 0, 0, 0, 1, 2, 2]$/;"	v
