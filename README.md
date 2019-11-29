@@ -16,7 +16,7 @@ You can submit your prediction to [liveboard](https://challenge2018.isic-archive
 
 ![Leaderboard](./Leaderboard.png)
 
-## Directory
+## 0. Directory
 
 * src: contains all source codes
 * scripts: bash scripts to train the model under different settings
@@ -31,7 +31,18 @@ You can submit your prediction to [liveboard](https://challenge2018.isic-archive
 └── tags
 ```
 
-# Some ways to solve imbalanced data
+You can download the dataset from Google Driver. 
+
+## 1. Run
+
+You can run the code from top directory. 
+
+```
+bash ./scripts/xxx.sh
+```
+
+## 2. Some ways to solve imbalanced data
+
 1. median class weight
 ```
 weight_sample_ = np.array([1113,6705,514,327,1099,115,142])/10015
@@ -40,7 +51,7 @@ weight_sample_ = 0.05132302/weight_sample_
 
 2. Class weight
 
-### Train & Evaluate
+## 3. Training & Evaluation
 
 See the scripts file.
 

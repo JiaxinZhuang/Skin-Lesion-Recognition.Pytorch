@@ -8,10 +8,10 @@ experiment_index=${file_name##*_}
 experiment_index=${experiment_index%%.*}
 
 
-CUDA_VISIBLE_DEVICES=3,5 python -u -m torch.utils.bottleneck src/trainer.py \
+CUDA_VISIBLE_DEVICES=1,2 python -u src/trainer.py \
     --experiment_index=$experiment_index \
     --cudas=0,1 \
-    --n_epochs=10 \
+    --n_epochs=1000 \
     --batch_size=14 \
     --server=lab_center \
     --eval_frequency=10 \
@@ -20,7 +20,7 @@ CUDA_VISIBLE_DEVICES=3,5 python -u -m torch.utils.bottleneck src/trainer.py \
     --optimizer=SGD \
     --initialization=pretrained \
     --num_classes=7 \
-    --num_worker=6 \
+    --num_worker=12 \
     --input_channel=3 \
     --iter_fold=1 \
     --seed=47 \
