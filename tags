@@ -4,9 +4,11 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+CB_loss	src/loss/class_balanced_loss.py	/^def CB_loss(labels, logits, samples_per_cls, no_of_classes, loss_type, beta, gamma):$/;"	f
 Config	src/config.py	/^class Config:$/;"	c
 Counter	src/dataset.py	/^    from collections import Counter$/;"	i
 Dataset	src/dataset.py	/^from torch.utils.data import Dataset$/;"	i
+F	src/loss/class_balanced_loss.py	/^import torch.nn.functional as F$/;"	i
 Identity	src/model.py	/^class Identity(nn.Module):$/;"	c
 Image	src/dataset.py	/^from PIL import Image$/;"	i
 Image	src/utils/function.py	/^from PIL import Image$/;"	i
@@ -40,15 +42,18 @@ accuracy_score	src/trainer.py	/^from sklearn.metrics import accuracy_score$/;"	i
 argparse	src/config.py	/^import argparse$/;"	i
 backbone	src/trainer.py	/^backbone = configs_dict["backbone"]$/;"	v
 batch_size	src/trainer.py	/^batch_size = configs_dict["batch_size"]$/;"	v
+beta	src/loss/class_balanced_loss.py	/^    beta = 0.9999$/;"	v
 betas	src/trainer.py	/^                           betas=(0.9, 0.999), eps=1e-08, amsgrad=True)$/;"	v
+cb_loss	src/loss/class_balanced_loss.py	/^    cb_loss = CB_loss(labels, logits, samples_per_cls, no_of_classes,loss_type, beta, gamma)$/;"	v
 ckpt	src/trainer.py	/^    ckpt = torch.load(resume_path)$/;"	v
-class_weights	src/trainer.py	/^class_weights = torch.FloatTensor(weights).cuda()$/;"	v
+class_balanced_loss	src/trainer.py	/^from loss import class_balanced_loss$/;"	i
+class_weights	src/trainer.py	/^    class_weights = torch.FloatTensor(weights).cuda()$/;"	v
 config	src/trainer.py	/^import config$/;"	i
 configs	src/trainer.py	/^configs = config.Config()$/;"	v
 configs_dict	src/trainer.py	/^configs_dict = configs.get_config()$/;"	v
 copy	src/utils/function.py	/^import copy$/;"	i
-criterion	src/trainer.py	/^criterion = nn.CrossEntropyLoss()$/;"	v
-criterion	src/trainer.py	/^criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)$/;"	v
+criterion	src/trainer.py	/^    criterion = nn.CrossEntropyLoss().to(device)$/;"	v
+criterion	src/trainer.py	/^    criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)$/;"	v
 cuda_ids	src/trainer.py	/^cuda_ids = configs_dict["cudas"]$/;"	v
 data	src/trainer.py	/^            data = data.to(device)$/;"	v
 dataname_2_save	src/utils/function.py	/^def dataname_2_save(imgs_path, saved_dir):$/;"	f
@@ -63,12 +68,14 @@ device_ids	src/trainer.py	/^device_ids = list(range(len(cuda_ids.split(","))))$/
 dicts	src/trainer.py	/^    dicts = {$/;"	v
 eval_frequency	src/trainer.py	/^eval_frequency = configs_dict["eval_frequency"]$/;"	v
 exp	src/trainer.py	/^exp = configs_dict["experiment_index"]$/;"	v
+focal_loss	src/loss/class_balanced_loss.py	/^def focal_loss(labels, logits, alpha, gamma):$/;"	f
 format_np_output	src/utils/function.py	/^def format_np_output(np_arr):$/;"	f
 forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Identity
 forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Network
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:NASNetALarge
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:PNASNet5Large
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:ResNet50
+gamma	src/loss/class_balanced_loss.py	/^    gamma = 2.0$/;"	v
 get_config	src/config.py	/^    def get_config(self):$/;"	m	class:Config
 get_data	src/dataset.py	/^    def get_data(self, iterNo, data_dir):$/;"	m	class:Skin7
 get_grad_norm	src/utils/function.py	/^def get_grad_norm(processed_images):$/;"	f
@@ -85,10 +92,14 @@ input_size	src/model.py	/^    input_size = (3, 331, 331)$/;"	v
 input_size	src/trainer.py	/^    input_size = 224$/;"	v
 input_size	src/trainer.py	/^    input_size = 331$/;"	v
 iter_fold	src/trainer.py	/^iter_fold = configs_dict["iter_fold"]$/;"	v
+labels	src/loss/class_balanced_loss.py	/^    labels = torch.randint(0,no_of_classes, size = (10,))$/;"	v
 learning_rate	src/trainer.py	/^learning_rate = configs_dict["learning_rate"]$/;"	v
 log_dir	src/trainer.py	/^log_dir = configs_dict["log_dir"]$/;"	v
 logging	src/utils/function.py	/^import logging$/;"	i
+logits	src/loss/class_balanced_loss.py	/^    logits = torch.rand(10,no_of_classes).float()$/;"	v
 loss	src/trainer.py	/^        loss = criterion(predict, target)$/;"	v
+loss_fn	src/trainer.py	/^loss_fn = configs_dict["loss_fn"]$/;"	v
+loss_type	src/loss/class_balanced_loss.py	/^    loss_type = "focal"$/;"	v
 losses	src/trainer.py	/^    losses = []$/;"	v
 mcr	src/trainer.py	/^        mcr = mean_class_recall(y_true, y_pred)$/;"	v
 mean	src/trainer.py	/^    mean = [0.485, 0.456, 0.406]$/;"	v
@@ -104,15 +115,18 @@ net	src/trainer.py	/^    net = net.to(device)$/;"	v
 net	src/trainer.py	/^    net = nn.DataParallel(net, device_ids=device_ids).to(device)$/;"	v
 net	src/trainer.py	/^net = model.Network(backbone=backbone, num_classes=num_classes,$/;"	v
 net_state_dict	src/trainer.py	/^            net_state_dict = net.state_dict()$/;"	v
+nn	src/loss/class_balanced_loss.py	/^import torch.nn.functional as F$/;"	i
 nn	src/model.py	/^import torch.nn as nn$/;"	i
 nn	src/trainer.py	/^import torch.nn as nn$/;"	i
+no_of_classes	src/loss/class_balanced_loss.py	/^    no_of_classes = 5$/;"	v
 np	src/dataset.py	/^import numpy as np$/;"	i
+np	src/loss/class_balanced_loss.py	/^import numpy as np$/;"	i
 np	src/trainer.py	/^import numpy as np$/;"	i
 np	src/utils/function.py	/^import numpy as np$/;"	i
 np	src/utils/metric.py	/^import numpy as np$/;"	i
 num_classes	src/trainer.py	/^num_classes = configs_dict["num_classes"]$/;"	v
-num_workers	src/trainer.py	/^                                          num_workers=num_workers)$/;"	v
-num_workers	src/trainer.py	/^                                        num_workers=num_workers)$/;"	v
+num_workers	src/trainer.py	/^                                          num_workers=num_workers,$/;"	v
+num_workers	src/trainer.py	/^                                        num_workers=num_workers,$/;"	v
 num_workers	src/trainer.py	/^num_workers = configs_dict["num_workers"]$/;"	v
 opt	src/trainer.py	/^    opt = torch.optim.Adam(net.parameters(), lr=learning_rate,$/;"	v
 opt	src/trainer.py	/^    opt = torch.optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9)$/;"	v
@@ -137,6 +151,9 @@ recreate_image	src/utils/function.py	/^def recreate_image(im_as_var, reverse_mea
 resume	src/trainer.py	/^resume = configs_dict["resume"]$/;"	v
 resume_path	src/trainer.py	/^    resume_path = os.path.join(model_dir, str(exp), str(resume))$/;"	v
 root	src/dataset.py	/^    root = "..\/data"$/;"	v
+sampler	src/trainer.py	/^                                          sampler=train_sampler)$/;"	v
+sampler	src/trainer.py	/^                                        sampler=val_sampler)$/;"	v
+samples_per_cls	src/loss/class_balanced_loss.py	/^    samples_per_cls = [2,3,1,2,2]$/;"	v
 save_image	src/utils/function.py	/^def save_image(im, path):$/;"	f
 scale	src/trainer.py	/^                            scale=[0.7, 1.3]),$/;"	v
 scheduler	src/trainer.py	/^    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau($/;"	v
@@ -159,6 +176,8 @@ tf_log	src/trainer.py	/^tf_log = os.path.join(log_dir, exp)$/;"	v
 threshold	src/trainer.py	/^                threshold=1e-4)$/;"	v
 time	src/utils/function.py	/^import time$/;"	i
 timethis	src/utils/function.py	/^def timethis(func, *args, **kwargs):$/;"	f
+torch	src/loss/class_balanced_loss.py	/^import torch$/;"	i
+torch	src/loss/class_balanced_loss.py	/^import torch.nn.functional as F$/;"	i
 torch	src/model.py	/^import torch$/;"	i
 torch	src/model.py	/^import torch.nn as nn$/;"	i
 torch	src/trainer.py	/^import torch$/;"	i
@@ -176,7 +195,7 @@ transforms	src/trainer.py	/^from torchvision import transforms$/;"	i
 val_transform	src/trainer.py	/^val_transform = transforms.Compose([$/;"	v
 valloader	src/trainer.py	/^valloader = torch.utils.data.DataLoader(valset, batch_size=batch_size,$/;"	v
 valset	src/trainer.py	/^valset = dataset.Skin7(root=".\/data\/", iter_fold=iter_fold, train=False,$/;"	v
-weights	src/trainer.py	/^weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
+weights	src/trainer.py	/^    weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]$/;"	v
 wrapper	src/utils/function.py	/^    def wrapper(*args, **kwargs):$/;"	f	function:timethis
 wraps	src/utils/function.py	/^from functools import wraps$/;"	i
 writer	src/trainer.py	/^writer = SummaryWriter(log_dir=tf_log)$/;"	v

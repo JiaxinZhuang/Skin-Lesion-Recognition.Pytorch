@@ -7,10 +7,10 @@ file_name=`basename $0`
 experiment_index=${file_name##*_}
 experiment_index=${experiment_index%%.*}
 
-CUDA_VISIBLE_DEVICES=7 python -u src/trainer.py \
+CUDA_VISIBLE_DEVICES=0 python -u src/trainer.py \
     --experiment_index=$experiment_index \
     --cudas=0 \
-    --n_epochs=700 \
+    --n_epochs=1500 \
     --batch_size=96 \
     --server=lab_center \
     --eval_frequency=5 \

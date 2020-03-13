@@ -64,3 +64,16 @@ tensorboard --logdir run
 ```
 
 <img src="./001.png" style="zoom:33%;" />
+
+
+
+## 4. Results
+
+Baseline
+
+| BackBone | ACC  | MCA  |
+| -------- | ---- | ---- |
+| ResNet50 |      |      |
+|          |      |      |
+|          |      |      |
+

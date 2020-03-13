@@ -105,6 +105,13 @@ class Config:
                                  help="number of classes to classify.")
         self.parser.add_argument("--iter_fold", default=1, type=int,
                                  help="iter_fold to do cross validation.")
+        self.parser.add_argument("--nproc_per_node", default=4, type=int,
+                                 help="nproc per node.")
+        self.parser.add_argument("--local_rank", default=0, type=int,
+                                 help="gpu device")
+        self.parser.add_argument("--loss_fn", default="WCE", type=str,
+                                 choices=["CE", "WCE", "BCE"],
+                                 help="Loss function for code.")
 
     def _load_common_setting(self):
         """Load default setting from Parser
@@ -140,6 +147,9 @@ class Config:
         self.config["server"] = self.args.server
         self.config["num_classes"] = self.args.num_classes
         self.config["iter_fold"] = self.args.iter_fold
+        self.config["nproc_per_node"] = self.args.nproc_per_node
+        self.config["local_rank"] = self.args.local_rank
+        self.config["loss_fn"] = self.args.loss_fn
 
     def _path_suitable_for_server(self):
         """Path suitable for server

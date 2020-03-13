@@ -19,6 +19,7 @@ from utils.metric import mean_class_recall
 import config
 import dataset
 import model
+from loss import class_balanced_loss
 
 
 configs = config.Config()
@@ -40,6 +41,7 @@ optimizer = configs_dict["optimizer"]
 initialization = configs_dict["initialization"]
 num_classes = configs_dict["num_classes"]
 iter_fold = configs_dict["iter_fold"]
+loss_fn = configs_dict["loss_fn"]
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 init_environment(seed=seed, cuda_id=cuda_ids)
@@ -85,35 +87,50 @@ val_transform = transforms.Compose([
     ])
 
 input_channel = 3
-_print("=> iter_fold is {}".format(iter_fold))
 trainset = dataset.Skin7(root="./data/", iter_fold=iter_fold, train=True,
                          transform=train_transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-                                          shuffle=True, pin_memory=True,
-                                          num_workers=num_workers)
 valset = dataset.Skin7(root="./data/", iter_fold=iter_fold, train=False,
                        transform=val_transform)
-valloader = torch.utils.data.DataLoader(valset, batch_size=batch_size,
-                                        shuffle=False, pin_memory=True,
-                                        num_workers=num_workers)
 
 net = model.Network(backbone=backbone, num_classes=num_classes,
                     input_channel=input_channel, pretrained=initialization)
 
 _print("=> Using device ids: {}".format(cuda_ids))
 device_ids = list(range(len(cuda_ids.split(","))))
+train_sampler = val_sampler = None
 if len(device_ids) == 1:
     _print("Model single cuda")
     net = net.to(device)
 else:
     _print("Model parallel !!")
+    # torch.distributed.init_process_group(backend="nccl")
+    # train_sampler = torch.utils.data.distributed.DistributedSampler(trainset)
+    # val_sampler = torch.utils.data.distributed.DistributedSampler(valset)
+    # net = torch.nn.parallel.DistributedDataParallel(net)
     net = nn.DataParallel(net, device_ids=device_ids).to(device)
 
+_print("=> iter_fold is {}".format(iter_fold))
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
+                                          shuffle=True, pin_memory=True,
+                                          num_workers=num_workers,
+                                          sampler=train_sampler)
+valloader = torch.utils.data.DataLoader(valset, batch_size=batch_size,
+                                        shuffle=False, pin_memory=True,
+                                        num_workers=num_workers,
+                                        sampler=val_sampler)
+
+
 # Loss
-criterion = nn.CrossEntropyLoss()
-weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]
-class_weights = torch.FloatTensor(weights).cuda()
-criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)
+if loss_fn == "WCE":
+    _print("Loss function is WCE")
+    weights = [0.036, 0.002, 0.084, 0.134, 0.037, 0.391, 0.316]
+    class_weights = torch.FloatTensor(weights).cuda()
+    criterion = nn.CrossEntropyLoss(weight=class_weights).to(device)
+elif loss_fn == "CE":
+    _print("Loss function is CE")
+    criterion = nn.CrossEntropyLoss().to(device)
+else:
+    _print("Need loss function.")
 
 # Optmizer
 scheduler = None

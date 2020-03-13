@@ -8,7 +8,7 @@ experiment_index=${file_name##*_}
 experiment_index=${experiment_index%%.*}
 
 
-CUDA_VISIBLE_DEVICES=7 python -u src/trainer.py \
+CUDA_VISIBLE_DEVICES=4 python -u src/trainer.py \
     --experiment_index=$experiment_index \
     --cudas=0 \
     --n_epochs=800 \
@@ -17,10 +17,10 @@ CUDA_VISIBLE_DEVICES=7 python -u src/trainer.py \
     --eval_frequency=10 \
     --backbone=resnet50 \
     --learning_rate=1e-4 \
-    --optimizer=SGD \
+    --optimizer=Adam \
     --initialization=pretrained \
     --num_classes=7 \
     --num_worker=6 \
     --input_channel=3 \
-    --iter_fold=4 \
+    --iter_fold=5 \
     2>&1 | tee $log_file

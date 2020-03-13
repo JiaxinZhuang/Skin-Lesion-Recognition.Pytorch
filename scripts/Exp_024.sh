@@ -8,15 +8,15 @@ experiment_index=${file_name##*_}
 experiment_index=${experiment_index%%.*}
 
 
-CUDA_VISIBLE_DEVICES=3,5,6,7 python -u src/trainer.py \
+CUDA_VISIBLE_DEVICES=2,3,4,5 python -u src/trainer.py \
     --experiment_index=$experiment_index \
     --cudas=0,1,2,3 \
-    --n_epochs=800 \
+    --n_epochs=2000 \
     --batch_size=28 \
     --server=lab_center \
     --eval_frequency=10 \
     --backbone=PNASNet5Large \
-    --learning_rate=1e-4 \
+    --learning_rate=1e-2 \
     --optimizer=Adam \
     --initialization=pretrained \
     --num_classes=7 \
