@@ -15,6 +15,7 @@ Image	src/utils/function.py	/^from PIL import Image$/;"	i
 NASNetALarge	src/model.py	/^class NASNetALarge(nn.Module):$/;"	c
 Network	src/model.py	/^class Network(nn.Module):$/;"	c
 PNASNet5Large	src/model.py	/^class PNASNet5Large(nn.Module):$/;"	c
+ResNet18	src/model.py	/^class ResNet18(nn.Module):$/;"	c
 ResNet50	src/model.py	/^class ResNet50(nn.Module):$/;"	c
 Skin7	src/dataset.py	/^class Skin7(Dataset):$/;"	c
 SummaryWriter	src/trainer.py	/^from torch.utils.tensorboard import SummaryWriter$/;"	i
@@ -25,6 +26,7 @@ __init__	src/model.py	/^    def __init__(self):$/;"	m	class:Identity
 __init__	src/model.py	/^    def __init__(self, backbone="resnet50", num_classes=7, input_channel=3,$/;"	m	class:Network
 __init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:NASNetALarge
 __init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:PNASNet5Large
+__init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:ResNet18
 __init__	src/model.py	/^    def __init__(self, num_classes, input_channel, pretrained):$/;"	m	class:ResNet50
 __len__	src/dataset.py	/^    def __len__(self):$/;"	m	class:Skin7	file:
 _add_common_setting	src/config.py	/^    def _add_common_setting(self):$/;"	m	class:Config
@@ -74,6 +76,7 @@ forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Identity
 forward	src/model.py	/^    def forward(self, inputs):$/;"	m	class:Network
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:NASNetALarge
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:PNASNet5Large
+forward	src/model.py	/^    def forward(self, x):$/;"	m	class:ResNet18
 forward	src/model.py	/^    def forward(self, x):$/;"	m	class:ResNet50
 gamma	src/loss/class_balanced_loss.py	/^    gamma = 2.0$/;"	v
 get_config	src/config.py	/^    def get_config(self):$/;"	m	class:Config

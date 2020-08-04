@@ -1,12 +1,8 @@
 # README
 
-New!!: Code would be updated with using some latest  approaches proposed in Nips/CVPR 2019. [2019/11/26] 
-
 New!!: Code has been updated with very **basic settings**. [2019/11/26]
 
 New!!: Code and README would be updated very soon [2019/11/19]
-
-
 
 ## Rank-3, MICCAI 2018 grand challenge "ISIC 2018: Skin Lesion Analysis Towards Melanoma Detection", Task 3: "Lesion Diagnosis", 2018
 
@@ -14,26 +10,25 @@ Note:  top 2 teams used additional **public dataset** to train models. However, 
 
 You can submit your prediction to [liveboard](https://challenge2018.isic-archive.com/leaderboards/) now, if you want to find some better methods.
 
+Our submission **csv** and **prediction score npy** can be downloaded from  [Google Drive](https://drive.google.com/drive/folders/14YAAAD5DQPep0VDpBBsKuksJ2iIbs-bz?usp=sharing)
+
 ![Leaderboard](./Leaderboard.png)
 
-## 0. Directory
+## Requirement.
+
+* Python3
+* Pytorch
+* Tensorboard
+
+## Directory
 
 * src: contains all source codes
 * scripts: bash scripts to train the model under different settings
 * data: all images and csv file for splitting all data into training set and validation set.
 
-```bash
-. 
-├── README.md
-├── data
-├── scripts
-├── src
-└── tags
-```
-
 You can download the dataset from Google Driver. 
 
-## 1. Run
+## Run
 
 You can run the code from top directory. 
 
@@ -41,7 +36,7 @@ You can run the code from top directory.
 bash ./scripts/xxx.sh
 ```
 
-## 2. Some ways to solve imbalanced data
+## Some ways to solve imbalanced data
 
 1. median class weight
 ```
@@ -50,30 +45,3 @@ weight_sample_ = 0.05132302/weight_sample_
 ```
 
 2. Class weight
-
-## 3. Training & Evaluation
-
-See the scripts file.
-
-### tensorboard
-
-mca, lr 
-
-```
-tensorboard --logdir run
-```
-
-<img src="./001.png" style="zoom:33%;" />
-
-
-
-## 4. Results
-
-Baseline
-
-| BackBone | ACC  | MCA  |
-| -------- | ---- | ---- |
-| ResNet50 |      |      |
-|          |      |      |
-|          |      |      |
-

@@ -52,7 +52,7 @@ writer = SummaryWriter(log_dir=tf_log)
 
 
 # Pre-peocessed input image
-if backbone == "resnet50":
+if backbone in ["resnet50", "resnet18"]:
     re_size = 300
     input_size = 224
     mean = [0.485, 0.456, 0.406]

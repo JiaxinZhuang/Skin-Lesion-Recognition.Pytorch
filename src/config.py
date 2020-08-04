@@ -82,7 +82,7 @@ class Config:
         # Backbone
         self.parser.add_argument("--backbone", default="resnet50", type=str,
                                  choices=["resnet50", "PNASNet5Large",
-                                          "NASNetALarge"],
+                                          "NASNetALarge", "resnet18"],
                                  help="backbone for model")
         # Initialization
         self.parser.add_argument("--initialization", default="pretrained",
@@ -158,8 +158,8 @@ class Config:
             self.config["log_dir"] = "/home/lincolnzjx/Desktop/ISIC_2018_Classification/saved/logdirs"
             self.config["model_dir"] = "/home/lincolnzjx/Desktop/ISIC_2018_Classification/saved/models"
         if self.config["server"] == "local":
-            self.config["log_dir"] = "/media/lincolnzjx/Disk21/ISIC_2018_Classification/saved/logdirs"
-            self.config["model_dir"] = "/media/lincolnzjx/Disk21/ISIC_2018_Classification/saved/models"
+            self.config["log_dir"] = "/media/lincolnzjx/HardDisk/myGithub/ISIC_2018_Classification/saved/logdirs"
+            self.config["model_dir"] = "/media/lincolnzjx/HardDisk/myGithub/ISIC_2018_Classification/saved/models"
         elif self.config["server"] == "ls15":
             self.config["log_dir"] = "/data15/jiaxin/ISIC_2018_Classification/saved/logdirs"
             self.config["model_dir"] = "/data15/jiaxin/ISIC_2018_Classification/saved/models"
