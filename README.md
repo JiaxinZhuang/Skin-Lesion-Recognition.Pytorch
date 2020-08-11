@@ -45,3 +45,27 @@ weight_sample_ = 0.05132302/weight_sample_
 ```
 
 2. Class weight
+
+
+
+## Citation
+
+If you use this code in your research, please cite this project.
+
+```
+@article{zhuang2018skin,
+  title={Skin lesion analysis towards melanoma detection using deep neural network ensemble},
+  author={Zhuang, J and Li, W and Manivannan, S and Wang, R and Zhang, JL Jian-Guo and Pan, J and Jiang, G and Yin, Z},
+  journal={ISIC Challenge 2018},
+  volume={2},
+  year={2018}
+}
+```
+
+
+
+## :watermelon: ​Related Paper using Skin7, especially handling data imbalance.
+
+1. [CARE: Class Attention to Regions of Lesion for Classification on Imbalanced Data, MIDL2019](http://proceedings.mlr.press/v102/zhuang19a/zhuang19a.pdf)
+2. [FUSING METADATA AND DERMOSCOPY IMAGES FOR SKIN DISEASE DIAGNOSIS, ISBI2020](https://jiaxinzhuang.github.io/research/metanet/MetaNet.pdf) 
+
